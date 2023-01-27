@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovemenController : MonoBehaviour
+public class PlayerMovementController : MonoBehaviour
 {
     private bool isMoving;
     private Vector3 origPos, targetPos, moveDirection;
