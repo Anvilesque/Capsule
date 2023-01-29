@@ -10,26 +10,46 @@ public class PlayerMovementController : MonoBehaviour
     public float movementSpeed;
     public float angle;
     private float lastInput;
+    private List<string> lastDirection;
     // Start is called before the first frame update
     void Start()
     {
         movementSpeed = Mathf.Sqrt(0.3125f); // To find hypotenuse: (0.5)^2 + (0.25)^2 = 0.3125
         timeToMove = 0.2f;
         angle = Mathf.Atan2(1f,2f);
+        lastDirection = new List<string>();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         float inputHoriz = Input.GetAxis("Horizontal");
         float inputVert = Input.GetAxis("Vertical");
-        if(inputVert > 0 && !isMoving)
+        if (Input.GetKeyDown("w"))
+            lastDirection.Add("up");
+        if(Input.GetKeyDown("a"))
+            lastDirection.Add("left");
+        if(Input.GetKeyDown("s"))
+            lastDirection.Add("down");
+        if(Input.GetKeyDown("d"))
+            lastDirection.Add("right");
+        if (Input.GetKeyUp("w"))
+            lastDirection.Remove("up");
+        if (Input.GetKeyUp("a"))
+            lastDirection.Remove("left");
+        if (Input.GetKeyUp("s"))
+            lastDirection.Remove("down");
+        if (Input.GetKeyUp("d"))
+            lastDirection.Remove("right");
+        if(lastDirection.Count == 0)
+            return;
+        if(inputVert > 0 && !isMoving && lastDirection[lastDirection.Count-1] == "up")
             StartCoroutine(MovePlayer(new Vector3(Mathf.Cos(angle),Mathf.Sin(angle),0)));
-        if(inputHoriz < 0 && !isMoving)
+        else if(inputHoriz < 0 && !isMoving && lastDirection[lastDirection.Count-1] == "left")
             StartCoroutine(MovePlayer(new Vector3(-Mathf.Cos(angle),Mathf.Sin(angle),0)));
-        if(inputVert < 0  && !isMoving)
+        else if(inputVert < 0  && !isMoving && lastDirection[lastDirection.Count-1] == "down")
             StartCoroutine(MovePlayer(new Vector3(-Mathf.Cos(angle),-Mathf.Sin(angle),0)));
-        if(inputHoriz > 0 && !isMoving)
+        else if(inputHoriz > 0 && !isMoving && lastDirection[lastDirection.Count-1] == "right")
             StartCoroutine(MovePlayer(new Vector3(Mathf.Cos(angle),-Mathf.Sin(angle),0)));
     }
     private IEnumerator MovePlayer(Vector3 direction)
