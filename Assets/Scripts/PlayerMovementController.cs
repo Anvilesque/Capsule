@@ -8,11 +8,12 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 origPos, targetPos, moveDirection;
     private float timeToMove;
     public float movementSpeed;
-    private float angle;
+    public float angle;
+    private float lastInput;
     // Start is called before the first frame update
     void Start()
     {
-        movementSpeed = 1f;
+        movementSpeed = Mathf.Sqrt(0.3125f); // To find hypotenuse: (0.5)^2 + (0.25)^2 = 0.3125
         timeToMove = 0.2f;
         angle = Mathf.Atan2(1f,2f);
     }
