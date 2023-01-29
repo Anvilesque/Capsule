@@ -6,32 +6,37 @@ public class PlayerMovementController : MonoBehaviour
 {
     private bool isMoving;
     private Vector3 origPos, targetPos, moveDirection;
-    private float timeToMove = 0.2f;
-    public float movementSpeed = 1f;
+    private float timeToMove;
+    public float movementSpeed;
+    private float angle;
     // Start is called before the first frame update
     void Start()
     {
-
+        movementSpeed = 1f;
+        timeToMove = 0.2f;
+        angle = Mathf.Atan2(1f,2f);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.W) && !isMoving)
-            StartCoroutine(MovePlayer(new Vector3(1,1,0)));
-        if(Input.GetKey(KeyCode.A) && !isMoving)
-            StartCoroutine(MovePlayer(new Vector3(-1,1,0)));
-        if(Input.GetKey(KeyCode.S) && !isMoving)
-            StartCoroutine(MovePlayer(new Vector3(-1,-1,0)));
-        if(Input.GetKey(KeyCode.D) && !isMoving)
-            StartCoroutine(MovePlayer(new Vector3(1,-1,0)));
+        float inputHoriz = Input.GetAxis("Horizontal");
+        float inputVert = Input.GetAxis("Vertical");
+        if(inputVert > 0 && !isMoving)
+            StartCoroutine(MovePlayer(new Vector3(Mathf.Cos(angle),Mathf.Sin(angle),0)));
+        if(inputHoriz < 0 && !isMoving)
+            StartCoroutine(MovePlayer(new Vector3(-Mathf.Cos(angle),Mathf.Sin(angle),0)));
+        if(inputVert < 0  && !isMoving)
+            StartCoroutine(MovePlayer(new Vector3(-Mathf.Cos(angle),-Mathf.Sin(angle),0)));
+        if(inputHoriz > 0 && !isMoving)
+            StartCoroutine(MovePlayer(new Vector3(Mathf.Cos(angle),-Mathf.Sin(angle),0)));
     }
     private IEnumerator MovePlayer(Vector3 direction)
     {
         isMoving = true;
         float elapsedTime = 0f;
         origPos = transform.position;
-        targetPos = origPos + direction;
+        targetPos = origPos + direction*movementSpeed;
         while(elapsedTime < timeToMove)
         {
             // Lerp moves from one position to the other in some amount of time.
@@ -39,7 +44,6 @@ public class PlayerMovementController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
         transform.position = targetPos;
         isMoving = false;
     }
