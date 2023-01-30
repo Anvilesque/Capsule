@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovementController : MonoBehaviour
 {
-   private bool isMoving;
+    public Tilemap floorMap;
+    public Tilemap wallMap;
+
+    private bool isMoving;
     private Vector3 origPos, targetPos, moveDirection;
     private float timeToMove;
     public float movementSpeed;
     // private float angle;
     private float distX;
     private float distY;
-    
+
     private List<string> lastDirection;
     // Start is called before the first frame update
     void Start()
@@ -58,11 +62,27 @@ public class PlayerMovementController : MonoBehaviour
     }
     private IEnumerator MovePlayer(Vector3 direction)
     {
+
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
         origPos = transform.position;
         targetPos = origPos + direction;
+
+        // Get Tilemap coords of next position
+        Vector3Int targetPosGrid = new Vector3Int();
+        targetPosGrid.x = (int)(targetPos.x / distX + targetPos.y / distY) / 2 - 1; // https://clintbellanger.net/articles/isometric_math/
+        targetPosGrid.y = (int)(targetPos.y / distY - targetPos.x / distX) / 2 - 1; // Subtract 1 b/c Player is rendered as being on (1, 1)
+        // Check for wall in front
+        for (int i = wallMap.cellBounds.zMin; i <= wallMap.cellBounds.zMax; i++)
+        {
+            targetPosGrid.z = i;
+            if (wallMap.HasTile(targetPosGrid)) yield break;
+        }
+        // Check for floor in front (floor is always z = 1)
+        targetPosGrid.z = 1;
+        if (!floorMap.HasTile(targetPosGrid)) yield break;
+
         isMoving = true;
         float elapsedTime = 0f;
         while(elapsedTime < timeToMove)
