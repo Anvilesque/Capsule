@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    private bool isMoving;
+   private bool isMoving;
     private Vector3 origPos, targetPos, moveDirection;
     private float timeToMove;
     public float movementSpeed;
-    public float angle;
-    private float lastInput;
+    // private float angle;
+    private float distX;
+    private float distY;
+    
     private List<string> lastDirection;
     // Start is called before the first frame update
     void Start()
     {
-        movementSpeed = Mathf.Sqrt(0.3125f); // To find hypotenuse: (0.5)^2 + (0.25)^2 = 0.3125
-        timeToMove = 0.2f;
-        angle = Mathf.Atan2(1f,2f);
+        movementSpeed = 5;
+        // angle = Mathf.Atan(1/2f);
+        distX = 0.5f; // Cell width = 1 --> X-dist to next cell = half of 1
+        distY = 0.25f; // Cell height = 0.5 --> Y-dist to next cell = half of 0.5
         lastDirection = new List<string>();
     }
 
@@ -41,27 +44,31 @@ public class PlayerMovementController : MonoBehaviour
             lastDirection.Remove("down");
         if (Input.GetKeyUp("d"))
             lastDirection.Remove("right");
-        if(lastDirection.Count == 0)
-            return;
-        if(inputVert > 0 && !isMoving && lastDirection[lastDirection.Count-1] == "up")
-            StartCoroutine(MovePlayer(new Vector3(Mathf.Cos(angle),Mathf.Sin(angle),0)));
-        else if(inputHoriz < 0 && !isMoving && lastDirection[lastDirection.Count-1] == "left")
-            StartCoroutine(MovePlayer(new Vector3(-Mathf.Cos(angle),Mathf.Sin(angle),0)));
-        else if(inputVert < 0  && !isMoving && lastDirection[lastDirection.Count-1] == "down")
-            StartCoroutine(MovePlayer(new Vector3(-Mathf.Cos(angle),-Mathf.Sin(angle),0)));
-        else if(inputHoriz > 0 && !isMoving && lastDirection[lastDirection.Count-1] == "right")
-            StartCoroutine(MovePlayer(new Vector3(Mathf.Cos(angle),-Mathf.Sin(angle),0)));
+
+        if (lastDirection.Count == 0) return;
+        if (isMoving) return;
+        if(inputVert > 0 && lastDirection[lastDirection.Count-1] == "up")
+            StartCoroutine(MovePlayer(new Vector3(distX, distY, 0)));
+        else if(inputHoriz < 0 && lastDirection[lastDirection.Count-1] == "left")
+            StartCoroutine(MovePlayer(new Vector3(-distX, distY, 0)));
+        else if(inputVert < 0  && lastDirection[lastDirection.Count-1] == "down")
+            StartCoroutine(MovePlayer(new Vector3(-distX, -distY, 0)));
+        else if(inputHoriz > 0 && lastDirection[lastDirection.Count-1] == "right")
+            StartCoroutine(MovePlayer(new Vector3(distX, -distY, 0)));
     }
     private IEnumerator MovePlayer(Vector3 direction)
     {
+        timeToMove = 1 / movementSpeed;
+        if (timeToMove < 0) yield break;
+
+        origPos = transform.position;
+        targetPos = origPos + direction;
         isMoving = true;
         float elapsedTime = 0f;
-        origPos = transform.position;
-        targetPos = origPos + direction*movementSpeed;
         while(elapsedTime < timeToMove)
         {
             // Lerp moves from one position to the other in some amount of time.
-            transform.position = Vector3.Lerp(origPos, targetPos, (elapsedTime/timeToMove));
+            transform.position = Vector3.Lerp(origPos, targetPos, (elapsedTime / timeToMove));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
