@@ -9,6 +9,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+    public Vector3 startingPoint;
 
     private void Awake() 
     {
@@ -21,6 +22,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         Debug.Log("On Begin Drag");
         canvasGroup.alpha = .6f;
         canvasGroup.blocksRaycasts = false;
+        startingPoint = transform.position;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -34,6 +36,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         Debug.Log("On End Drag");
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+        // transform.position = startingPoint;
     }
 
     public void OnPointerDown(PointerEventData eventData) 
