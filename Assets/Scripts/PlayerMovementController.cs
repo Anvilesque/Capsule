@@ -13,17 +13,13 @@ public class PlayerMovementController : MonoBehaviour
     private float timeToMove;
     public float movementSpeed;
     // private float angle;
-    private float distX;
-    private float distY;
 
     private List<string> lastDirection;
     // Start is called before the first frame update
     void Start()
     {
-        movementSpeed = 5;
+        // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
-        distX = 0.5f; // Cell width = 1 --> X-dist to next cell = half of 1
-        distY = 0.25f; // Cell height = 0.5 --> Y-dist to next cell = half of 0.5
         lastDirection = new List<string>();
     }
 
@@ -52,14 +48,15 @@ public class PlayerMovementController : MonoBehaviour
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
         if(inputVert > 0 && lastDirection[lastDirection.Count-1] == "up")
-            StartCoroutine(MovePlayer(new Vector3(distX, distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, TileManager.distY, 0)));
         else if(inputHoriz < 0 && lastDirection[lastDirection.Count-1] == "left")
-            StartCoroutine(MovePlayer(new Vector3(-distX, distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, TileManager.distY, 0)));
         else if(inputVert < 0  && lastDirection[lastDirection.Count-1] == "down")
-            StartCoroutine(MovePlayer(new Vector3(-distX, -distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, -TileManager.distY, 0)));
         else if(inputHoriz > 0 && lastDirection[lastDirection.Count-1] == "right")
-            StartCoroutine(MovePlayer(new Vector3(distX, -distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, -TileManager.distY, 0)));
     }
+    
     private IEnumerator MovePlayer(Vector3 direction)
     {
 
@@ -70,9 +67,9 @@ public class PlayerMovementController : MonoBehaviour
         targetPos = origPos + direction;
 
         // Get Tilemap coords of next position
-        Vector3Int targetPosGrid = new Vector3Int();
-        targetPosGrid.x = (int)(targetPos.x / distX + targetPos.y / distY) / 2 - 1; // https://clintbellanger.net/articles/isometric_math/
-        targetPosGrid.y = (int)(targetPos.y / distY - targetPos.x / distX) / 2 - 1; // Subtract 1 b/c Player is rendered as being on (1, 1)
+        Vector3Int targetPosGrid = TileManager.WorldCoordsToGridCoords(targetPos);  // https://clintbellanger.net/articles/isometric_math/
+        targetPosGrid.x -= 1;                                                       // Subtract 1 b/c Player is rendered as being on (1, 1)
+        targetPosGrid.y -= 1;
         // Check for wall in front
         for (int i = wallMap.cellBounds.zMin; i <= wallMap.cellBounds.zMax; i++)
         {
