@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6590a8d34ad4b9d4f8813c5a4ffeca93, type: 3}
   m_Name: Transition_Data
   m_EditorClassIdentifier: 
-  tiles: []
-  newPos: 0
+  tiles:
+  - {fileID: 11400000, guid: f4c35ec354609d54b8f7f6afa186eec6, type: 2}
+  newPos: {x: 8, y: 0, z: 1}

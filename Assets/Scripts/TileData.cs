@@ -7,5 +7,5 @@ using UnityEngine.Tilemaps;
 public class TileData : ScriptableObject
 {
     public TileBase[] tiles;
-    public Vector3Int newPos;
+    public Vector3 newPos;
 }
