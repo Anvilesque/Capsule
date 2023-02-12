@@ -8,6 +8,7 @@ public class PlayerMovementController : MonoBehaviour
     public Tilemap floorMap;
     public Tilemap wallMap;
     public Tilemap transitionMap;
+    public TileManager tileManager;
 
     private bool isMoving;
     private Vector3 origPos, targetPos, moveDirection;
@@ -22,6 +23,7 @@ public class PlayerMovementController : MonoBehaviour
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
         lastDirection = new List<string>();
+        tileManager = FindObjectOfType<TileManager>();
     }
 
     // Update is called once per frame
@@ -49,13 +51,13 @@ public class PlayerMovementController : MonoBehaviour
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
         if(inputVert > 0 && lastDirection[lastDirection.Count-1] == "up")
-            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, TileManager.distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(tileManager.distX, tileManager.distY, 0)));
         else if(inputHoriz < 0 && lastDirection[lastDirection.Count-1] == "left")
-            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, TileManager.distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(-tileManager.distX, tileManager.distY, 0)));
         else if(inputVert < 0  && lastDirection[lastDirection.Count-1] == "down")
-            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, -TileManager.distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(-tileManager.distX, -tileManager.distY, 0)));
         else if(inputHoriz > 0 && lastDirection[lastDirection.Count-1] == "right")
-            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, -TileManager.distY, 0)));
+            StartCoroutine(MovePlayer(new Vector3(tileManager.distX, -tileManager.distY, 0)));
     }
     
     private IEnumerator MovePlayer(Vector3 direction)
@@ -68,7 +70,7 @@ public class PlayerMovementController : MonoBehaviour
         targetPos = origPos + direction;
 
         // Get Tilemap coords of next position
-        Vector3Int targetPosGrid = TileManager.WorldCoordsToGridCoords(targetPos);  // https://clintbellanger.net/articles/isometric_math/
+        Vector3Int targetPosGrid = tileManager.WorldCoordsToGridCoords(targetPos);  // https://clintbellanger.net/articles/isometric_math/
         targetPosGrid.x -= 1;                                                       // Subtract 1 b/c Player is rendered as being on (1, 1)
         targetPosGrid.y -= 1;
         // Check for wall in front
@@ -94,10 +96,9 @@ public class PlayerMovementController : MonoBehaviour
         isMoving = false;
         if (elapsedTime > timeToMove)
         {
-            /* TileBase tile = transitionMap.GetTile(targetPosGrid);
-            if(!tile)
-                yield return null;
-            // transform.position = TileManager.dataFromTiles[tile].newPos; */
+            TileData data = tileManager.GetTileData(targetPosGrid);
+            if(data)
+                transform.position = data.newPos;
         }
     }
 }
