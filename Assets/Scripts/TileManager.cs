@@ -7,8 +7,14 @@ using UnityEngine.Tilemaps;
 public class TileManager : MonoBehaviour
 {
     private List<Tilemap> tilemaps;
-    public static float distX {get; private set;}
-    public static float distY {get; private set;}
+    public float distX {get; private set;}
+    public float distY {get; private set;}
+
+    [SerializeField]
+    private Tilemap map;
+    [SerializeField]
+    private List<TileData> tileDatas;
+    public Dictionary<TileBase, TileData> dataFromTiles;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +23,14 @@ public class TileManager : MonoBehaviour
         distY = FindObjectOfType<Grid>().cellSize.y / 2; // Y-dist to next cell = half of cell height
         // tilemaps = new List<Tilemap>(FindObjectsOfType<Tilemap>());
         // SceneManager.sceneLoaded += ProcessTilemaps;
+        dataFromTiles = new Dictionary<TileBase, TileData>();
+        foreach(var tileData in tileDatas)
+        {
+            foreach(var tile in tileData.tiles)
+            {
+                dataFromTiles.Add(tile, tileData);
+            }
+        }
     }
 
     // void ProcessTilemaps(Scene scene, LoadSceneMode mode)
@@ -34,7 +48,7 @@ public class TileManager : MonoBehaviour
         
     // }
 
-    public static Vector3Int WorldCoordsToGridCoords(Vector3 localCoords)
+    public Vector3Int WorldCoordsToGridCoords(Vector3 localCoords)
     {
         Vector3Int gridCoordsInt = new Vector3Int();
         gridCoordsInt.x = (int)(localCoords.x / distX + localCoords.y / distY) / 2;
@@ -42,4 +56,13 @@ public class TileManager : MonoBehaviour
         return gridCoordsInt;
     }
 
+    public TileData GetTileData(Vector3Int tilePosition)
+    {
+        TileBase tile = map.GetTile(tilePosition);
+
+        if (tile == null)
+            return null;
+        else
+            return dataFromTiles[tile];
+    }
 }
