@@ -7,5 +7,11 @@ using UnityEngine.Tilemaps;
 public class TileData : ScriptableObject
 {
     public TileBase[] tiles;
+
+    [Header("Transitions")]
     public Vector3 newPos;
+
+    [Header("Interactables")]
+    public string taskName;
+    
 }
