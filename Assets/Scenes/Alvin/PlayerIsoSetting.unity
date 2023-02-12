@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1565278315}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 2.5
+    OrthographicSize: 2
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -4434,7 +4434,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4544,7 +4544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b27af72fcd47a43b619af804db157b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 231744828}
   tileDatas:
   - {fileID: 11400000, guid: 0621be315e0bf5b469c071340460cfeb, type: 2}
   - {fileID: 11400000, guid: 035689b9a0d8f0e4a81de45313016ac9, type: 2}
+  - {fileID: 11400000, guid: 4d7c082e2e410c247b594c9c8c4bc031, type: 2}

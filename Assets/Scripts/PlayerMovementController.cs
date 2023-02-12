@@ -15,9 +15,9 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, currentPosWorld, moveDirection;
     private float timeToMove;
     public float movementSpeed;
-    // private float angle;
 
     private List<string> lastDirection;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,35 +38,31 @@ public class PlayerMovementController : MonoBehaviour
     
     private void UpdateMovement()
     {
-        float inputHoriz = Input.GetAxis("Horizontal");
-        float inputVert = Input.GetAxis("Vertical");
-        if (Input.GetKeyDown("w"))
-            lastDirection.Add("up");
-        if(Input.GetKeyDown("a"))
-            lastDirection.Add("left");
-        if(Input.GetKeyDown("s"))
-            lastDirection.Add("down");
-        if(Input.GetKeyDown("d"))
-            lastDirection.Add("right");
-        if (Input.GetKeyUp("w"))
-            lastDirection.Remove("up");
-        if (Input.GetKeyUp("a"))
-            lastDirection.Remove("left");
-        if (Input.GetKeyUp("s"))
-            lastDirection.Remove("down");
-        if (Input.GetKeyUp("d"))
-            lastDirection.Remove("right");
+        List<string> buttonNames = new List<string>() {"Left", "Right", "Up", "Down"};
+        foreach (string button in buttonNames)
+        {
+            if (Input.GetButtonDown(button))
+            {
+                lastDirection.Add(button);
+                // Debug.Log("Button check: pressed " + button);
+            }
+            if (Input.GetButtonUp(button))
+            {
+                lastDirection.Remove(button);
+                // Debug.Log("Button check: released " + button);
+            }
+        }
 
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
-        if(inputVert > 0 && lastDirection[lastDirection.Count-1] == "up")
-            StartCoroutine(MovePlayer(new Vector3(tileManager.distX, tileManager.distY, 0)));
-        else if(inputHoriz < 0 && lastDirection[lastDirection.Count-1] == "left")
+        if(Input.GetButton("Left") && lastDirection[lastDirection.Count-1] == "Left")
             StartCoroutine(MovePlayer(new Vector3(-tileManager.distX, tileManager.distY, 0)));
-        else if(inputVert < 0  && lastDirection[lastDirection.Count-1] == "down")
-            StartCoroutine(MovePlayer(new Vector3(-tileManager.distX, -tileManager.distY, 0)));
-        else if(inputHoriz > 0 && lastDirection[lastDirection.Count-1] == "right")
+        else if(Input.GetButton("Right") && lastDirection[lastDirection.Count-1] == "Right")
             StartCoroutine(MovePlayer(new Vector3(tileManager.distX, -tileManager.distY, 0)));
+        else if(Input.GetButton("Up") && lastDirection[lastDirection.Count-1] == "Up")
+            StartCoroutine(MovePlayer(new Vector3(tileManager.distX, tileManager.distY, 0)));
+        else if(Input.GetButton("Down") && lastDirection[lastDirection.Count-1] == "Down")
+            StartCoroutine(MovePlayer(new Vector3(-tileManager.distX, -tileManager.distY, 0)));
     }
 
     private void CheckInteractables()
@@ -85,13 +81,14 @@ public class PlayerMovementController : MonoBehaviour
                 tempTile.z = i;
                 if (interactableMap.HasTile(tempTile))
                 {
-                    // Handle interactable here
+                    string taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
+                    // TaskManager.startTask(taskName);
                 }
             }
         }
     }
 
-    private IEnumerator MovePlayer(Vector3 direction)
+    private IEnumerator MovePlayer(Vector3 distance)
     {
 
         timeToMove = 1 / movementSpeed;
@@ -99,8 +96,8 @@ public class PlayerMovementController : MonoBehaviour
 
         prevPosPoint = transform.position;
         prevPosWorld = transform.position + new Vector3(0, -2 * tileManager.distY, 0); // Player is rendered as being on (1, 1)
-        currentPosPoint = prevPosPoint + direction;
-        currentPosWorld = prevPosWorld + direction;
+        currentPosPoint = prevPosPoint + distance;
+        currentPosWorld = prevPosWorld + distance;
 
         // Get Tilemap coords of next position
         Vector3Int currentPosGrid = tileManager.WorldCoordsToGridCoords(currentPosWorld);  // https://clintbellanger.net/articles/isometric_math/
@@ -128,7 +125,7 @@ public class PlayerMovementController : MonoBehaviour
         isMoving = false;
         if (elapsedTime > timeToMove)
         {
-            TileData data = tileManager.GetTileData(currentPosGrid);
+            TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
             if(data)
                 transform.position = data.newPos;
         }

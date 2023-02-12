@@ -6,12 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
-    private List<Tilemap> tilemaps;
     public float distX {get; private set;}
     public float distY {get; private set;}
 
-    [SerializeField]
-    private Tilemap map;
     [SerializeField]
     private List<TileData> tileDatas;
     public Dictionary<TileBase, TileData> dataFromTiles;
@@ -45,7 +42,7 @@ public class TileManager : MonoBehaviour
         return gridCoordsInt;
     }
 
-    public TileData GetTileData(Vector3Int tilePosition)
+    public TileData GetTileData(Tilemap map, Vector3Int tilePosition)
     {
         TileBase tile = map.GetTile(tilePosition);
 
