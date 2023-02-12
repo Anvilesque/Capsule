@@ -21,38 +21,27 @@ public class TileManager : MonoBehaviour
     {
         distX = FindObjectOfType<Grid>().cellSize.x / 2; // X-dist to next cell = half of cell width
         distY = FindObjectOfType<Grid>().cellSize.y / 2; // Y-dist to next cell = half of cell height
-        // tilemaps = new List<Tilemap>(FindObjectsOfType<Tilemap>());
-        // SceneManager.sceneLoaded += ProcessTilemaps;
+        CreateTileDictionary();
+    }
+
+    private void CreateTileDictionary()
+    {
         dataFromTiles = new Dictionary<TileBase, TileData>();
-        foreach(var tileData in tileDatas)
+        foreach(var tileData in tileDatas) // iterates through Scriptable Objects
         {
-            foreach(var tile in tileData.tiles)
+            foreach(var tile in tileData.tiles) // iterates through TileBases to which Scriptable Object assigns TileData
             {
                 dataFromTiles.Add(tile, tileData);
             }
         }
     }
 
-    // void ProcessTilemaps(Scene scene, LoadSceneMode mode)
-    // {
-    //     foreach (Tilemap tilemap in tilemaps)
-    //     {
-    //         Vector3Int gridMin = WorldCoordsToGridCoords(tilemap.localBounds.min);
-    //         Vector3Int gridMax = WorldCoordsToGridCoords(tilemap.localBounds.max);
-    //     }
-    // }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
-
     public Vector3Int WorldCoordsToGridCoords(Vector3 localCoords)
     {
         Vector3Int gridCoordsInt = new Vector3Int();
         gridCoordsInt.x = (int)(localCoords.x / distX + localCoords.y / distY) / 2;
         gridCoordsInt.y = (int)(localCoords.y / distY - localCoords.x / distX) / 2;
+        gridCoordsInt.z = (int)localCoords.z;
         return gridCoordsInt;
     }
 
