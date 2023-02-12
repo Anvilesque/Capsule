@@ -7,6 +7,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     public Tilemap floorMap;
     public Tilemap wallMap;
+    public Tilemap transitionMap;
 
     private bool isMoving;
     private Vector3 origPos, targetPos, moveDirection;
@@ -78,7 +79,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         // Check for floor in front (floor is always z = 1)
         targetPosGrid.z = 1;
-        if (!floorMap.HasTile(targetPosGrid)) yield break;
+        if (!floorMap.HasTile(targetPosGrid) && !transitionMap.HasTile(targetPosGrid)) yield break;
 
         isMoving = true;
         float elapsedTime = 0f;
@@ -91,5 +92,12 @@ public class PlayerMovementController : MonoBehaviour
         }
         transform.position = targetPos;
         isMoving = false;
+        if (elapsedTime > timeToMove)
+        {
+            /* TileBase tile = transitionMap.GetTile(targetPosGrid);
+            if(!tile)
+                yield return null;
+            // transform.position = TileManager.dataFromTiles[tile].newPos; */
+        }
     }
 }
