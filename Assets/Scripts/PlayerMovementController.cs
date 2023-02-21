@@ -15,6 +15,7 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, currentPosWorld, moveDirection;
     private float timeToMove;
     public float movementSpeed;
+    public bool canMove;
 
     private List<string> lastDirection;
 
@@ -27,6 +28,7 @@ public class PlayerMovementController : MonoBehaviour
         tileManager = FindObjectOfType<TileManager>();
         prevPosPoint = transform.position;
         prevPosWorld = transform.position + new Vector3(0, -2 * tileManager.distY, 0); // // Player is rendered as being on (1, 1)
+        canMove = true;
     }
 
     // Update is called once per frame
@@ -90,7 +92,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private IEnumerator MovePlayer(Vector3 distance)
     {
-
+        Debug.Log(canMove);
+        if (!canMove) yield break;
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
@@ -129,5 +132,14 @@ public class PlayerMovementController : MonoBehaviour
             if(data)
                 transform.position = data.newPos;
         }
+    }
+    
+    public void disableMovement()
+    {
+        canMove = false;
+    }
+    public void enableMovement()
+    {
+        canMove = true;
     }
 }
