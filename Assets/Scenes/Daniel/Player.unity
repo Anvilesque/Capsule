@@ -158,8 +158,9 @@ MonoBehaviour:
   transitionMap: {fileID: 1191705402}
   interactableMap: {fileID: 1736865653}
   tileManager: {fileID: 777504351}
+  timeToMove: 0
   movementSpeed: 3
-  canMove: 0
+  canMove: 1
 --- !u!212 &79516930
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2978,7 +2979,7 @@ MonoBehaviour:
   mins: 55
   hours: 20
   days: 1
-  movementController: {fileID: 79516929}
+  movementController: {fileID: 0}
   newX: 10.5
   newY: 6.75
 --- !u!4 &1689766530
