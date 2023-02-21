@@ -13,7 +13,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool isMoving;
     private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, currentPosWorld, moveDirection;
-    private float timeToMove;
+    public float timeToMove;
     public float movementSpeed;
     public bool canMove;
 
@@ -92,7 +92,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private IEnumerator MovePlayer(Vector3 distance)
     {
-        Debug.Log(canMove);
         if (!canMove) yield break;
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
