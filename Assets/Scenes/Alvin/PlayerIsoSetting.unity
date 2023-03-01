@@ -1197,8 +1197,8 @@ Tilemap:
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -10, y: -12, z: -2}
-  m_Size: {x: 14, y: 19, z: 15}
+  m_Origin: {x: -10, y: -15, z: -2}
+  m_Size: {x: 22, y: 28, z: 15}
   m_TileAnchor: {x: 0, y: 0, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -4097,7 +4097,9 @@ MonoBehaviour:
   transitionMap: {fileID: 231744828}
   interactableMap: {fileID: 2009848398}
   tileManager: {fileID: 2109959506}
+  timeToMove: 0
   movementSpeed: 3
+  canMove: 0
 --- !u!1 &1688317104
 GameObject:
   m_ObjectHideFlags: 3
