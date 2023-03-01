@@ -10,6 +10,8 @@ public class PlayerMovementController : MonoBehaviour
     public Tilemap transitionMap;
     public Tilemap interactableMap;
     public TileManager tileManager;
+    public GameObject NPC;
+    public DialogueManager dialogueManager;
 
     private bool isMoving;
     private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, currentPosWorld, moveDirection;
@@ -87,6 +89,10 @@ public class PlayerMovementController : MonoBehaviour
                     // TaskManager.startTask(taskName);
                 }
             }
+        }
+        if ((Vector3.Distance(NPC.transform.position, transform.position) <= 0.8) && !dialogueManager.Dialog())
+        {
+            dialogueManager.StartDialogueRunner();
         }
     }
 
