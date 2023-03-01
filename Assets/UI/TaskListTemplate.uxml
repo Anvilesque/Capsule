@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="TaskListBackground" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; padding-left: 180px; padding-top: 65px; -unity-font: url(&apos;project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&amp;guid=c632cdf9515d84874812b408108183ef&amp;type=3#Caramel Chestnut DEMO&apos;); -unity-font-definition: url(&apos;project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&amp;guid=55dfdcc6c40174a89a2cff09cfccd46e&amp;type=2#Caramel Chestnut DEMO SDF&apos;); font-size: 20px;">
+        <ui:VisualElement name="TaskListWindow" style="height: 210px; width: 128px; align-items: center; background-color: rgb(253, 236, 187); border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px;">
+            <ui:Label text="Today&apos;s Tasks" display-tooltip-when-elided="true" name="TaskTitle" style="border-bottom-width: 1px; border-bottom-color: rgba(0, 0, 0, 255); padding-bottom: 2px; padding-top: 5px; font-size: 25px; margin-top: 8px;" />
+            <ui:Label text="- Restock shelves" display-tooltip-when-elided="true" name="TaskOne" />
+            <ui:Label text="- Clean counter" display-tooltip-when-elided="true" name="TaskTwo" />
+            <ui:Label text="- Sweep floor" display-tooltip-when-elided="true" name="TaskThree" />
+            <ui:Label text="-Count money" display-tooltip-when-elided="true" name="TaskFour" />
+            <ui:Label text="- Dust displays" display-tooltip-when-elided="true" name="TaskFour" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
