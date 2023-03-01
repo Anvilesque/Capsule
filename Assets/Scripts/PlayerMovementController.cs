@@ -90,7 +90,7 @@ public class PlayerMovementController : MonoBehaviour
                 }
             }
         }
-        if (Vector3.Distance(NPC.transform.position, transform.position) <=1 && !dialogueManager.Dialog())
+        if ((Vector3.Distance(NPC.transform.position, transform.position) <= 0.8) && !dialogueManager.Dialog())
         {
             dialogueManager.StartDialogueRunner();
         }
