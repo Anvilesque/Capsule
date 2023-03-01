@@ -11,9 +11,6 @@
 /[Mm]emoryCaptures/
 /[Uu]serSettings/
 
-# The stubborn little default-2021.dwlt file
-.dwlt
-
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
