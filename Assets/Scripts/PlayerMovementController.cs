@@ -24,10 +24,18 @@ public class PlayerMovementController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (Tilemap tilemap in FindObjectsOfType<Tilemap>())
+        {
+            if (tilemap.gameObject.name.Contains("Floor")) floorMap = tilemap;
+            if (tilemap.gameObject.name.Contains("Wall")) wallMap = tilemap;
+            if (tilemap.gameObject.name.Contains("Transition")) transitionMap = tilemap;
+            if (tilemap.gameObject.name.Contains("Interactable")) interactableMap = tilemap;
+        }
+        tileManager = FindObjectOfType<TileManager>();
+
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
         lastDirection = new List<string>();
-        tileManager = FindObjectOfType<TileManager>();
         prevPosPoint = transform.position;
         prevPosWorld = transform.position + new Vector3(0, -2 * tileManager.distY, 0); // // Player is rendered as being on (1, 1)
         canMove = true;
