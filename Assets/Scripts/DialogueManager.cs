@@ -6,14 +6,10 @@ using Yarn.Unity;
 public class DialogueManager : MonoBehaviour
 {
     public DialogueRunner dialogueRunner;
-    private bool dialogueRunning;
-    public void StartDialogueRunner()
+    public bool isRunningDialogue {get; private set;}
+    public void StartDialogueRunner(string dialogueTitle)
     {
-        dialogueRunning=true;
-        dialogueRunner.StartDialogue("Intro");
-    }
-    public bool Dialog()
-    {
-        return dialogueRunning;
+        isRunningDialogue = true;
+        dialogueRunner.StartDialogue(dialogueTitle);
     }
 }

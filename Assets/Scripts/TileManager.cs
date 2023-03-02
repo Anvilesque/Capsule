@@ -6,8 +6,8 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
-    public float distX {get; private set;}
-    public float distY {get; private set;}
+    public static float distX {get; private set;}
+    public static float distY {get; private set;}
 
     [SerializeField]
     private List<TileData> tileDatas;
@@ -21,6 +21,15 @@ public class TileManager : MonoBehaviour
         CreateTileDictionary();
     }
 
+    public static Vector3Int WorldCoordsToGridCoords(Vector3 localCoords)
+    {
+        Vector3Int gridCoordsInt = new Vector3Int();
+        gridCoordsInt.x = (int)(localCoords.x / distX + localCoords.y / distY) / 2;
+        gridCoordsInt.y = (int)(localCoords.y / distY - localCoords.x / distX) / 2;
+        gridCoordsInt.z = (int)localCoords.z;
+        return gridCoordsInt;
+    }
+
     private void CreateTileDictionary()
     {
         dataFromTiles = new Dictionary<TileBase, TileData>();
@@ -31,15 +40,6 @@ public class TileManager : MonoBehaviour
                 dataFromTiles.Add(tile, tileData);
             }
         }
-    }
-
-    public Vector3Int WorldCoordsToGridCoords(Vector3 localCoords)
-    {
-        Vector3Int gridCoordsInt = new Vector3Int();
-        gridCoordsInt.x = (int)(localCoords.x / distX + localCoords.y / distY) / 2;
-        gridCoordsInt.y = (int)(localCoords.y / distY - localCoords.x / distX) / 2;
-        gridCoordsInt.z = (int)localCoords.z;
-        return gridCoordsInt;
     }
 
     public TileData GetTileData(Tilemap map, Vector3Int tilePosition)

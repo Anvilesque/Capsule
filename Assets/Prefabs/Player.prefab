@@ -102,6 +102,8 @@ MonoBehaviour:
   transitionMap: {fileID: 0}
   interactableMap: {fileID: 0}
   tileManager: {fileID: 0}
+  NPC: {fileID: 0}
+  dialogueManager: {fileID: 0}
   timeToMove: 0
   movementSpeed: 3
   canMove: 0
