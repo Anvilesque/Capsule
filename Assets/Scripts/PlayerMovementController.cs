@@ -9,10 +9,11 @@ public class PlayerMovementController : MonoBehaviour
     private Tilemap wallMap;
     private Tilemap transitionMap;
     private Tilemap interactableMap;
-    private TileManager TileManager;
+    private TileManager tileManager;
 
     private bool isMoving;
     private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, currentPosWorld, moveDirection;
+    public Vector3Int currentPosGrid;
     public float timeToMove;
     public float movementSpeed;
     public bool canMove;
@@ -22,14 +23,11 @@ public class PlayerMovementController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Tilemap tilemap in FindObjectsOfType<Tilemap>())
-        {
-            if (tilemap.gameObject.name.Contains("Floor")) floorMap = tilemap;
-            if (tilemap.gameObject.name.Contains("Wall")) wallMap = tilemap;
-            if (tilemap.gameObject.name.Contains("Transition")) transitionMap = tilemap;
-            if (tilemap.gameObject.name.Contains("Interactable")) interactableMap = tilemap;
-        }
-        TileManager = FindObjectOfType<TileManager>();
+        tileManager = FindObjectOfType<TileManager>();
+        floorMap = tileManager.floorMap;
+        wallMap = tileManager.wallMap;
+        transitionMap = tileManager.transitionMap;
+        interactableMap = tileManager.interactableMap;
 
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
@@ -75,6 +73,11 @@ public class PlayerMovementController : MonoBehaviour
             StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, -TileManager.distY, 0)));
     }
 
+    private void UpdateTilemaps()
+    {
+
+    }
+
     private void CheckInteractables()
     {
         if (isMoving) return;
@@ -91,7 +94,7 @@ public class PlayerMovementController : MonoBehaviour
                 tempTile.z = i;
                 if (interactableMap.HasTile(tempTile))
                 {
-                    string taskName = TileManager.GetTileData(interactableMap, tempTile).taskName;
+                    string taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
                     // TaskManager.startTask(taskName);
                 }
             }
@@ -110,7 +113,7 @@ public class PlayerMovementController : MonoBehaviour
         currentPosWorld = prevPosWorld + distance;
 
         // Get Tilemap coords of next position
-        Vector3Int currentPosGrid = TileManager.WorldCoordsToGridCoords(currentPosWorld);  // https://clintbellanger.net/articles/isometric_math/
+        currentPosGrid = TileManager.WorldCoordsToGridCoords(currentPosWorld);  // https://clintbellanger.net/articles/isometric_math/
         // Check for wall or interactable in front
         for (int i = wallMap.cellBounds.zMin; i <= wallMap.cellBounds.zMax; i++)
         {
@@ -135,7 +138,7 @@ public class PlayerMovementController : MonoBehaviour
         isMoving = false;
         if (elapsedTime > timeToMove)
         {
-            TileData data = TileManager.GetTileData(transitionMap, currentPosGrid);
+            TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
             if(data)
                 transform.position = data.newPos;
         }

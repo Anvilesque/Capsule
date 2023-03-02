@@ -13,7 +13,6 @@ public class PlayerNPCEncounter : MonoBehaviour
     void Start()
     {
         nonPCs = new List<NonPC>(FindObjectsOfType<NonPC>());
-        Debug.Log(nonPCs.Count);
         dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
