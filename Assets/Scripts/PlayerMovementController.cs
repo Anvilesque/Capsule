@@ -10,9 +10,11 @@ public class PlayerMovementController : MonoBehaviour
     private Tilemap transitionMap;
     private Tilemap interactableMap;
     private TileManager tileManager;
+    private TaskManager taskManager;
 
-    private bool isMoving;
-    private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, currentPosWorld, moveDirection;
+    public bool isMoving {get; private set;}
+    private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, moveDirection;
+    public Vector3 currentPosWorld {get; private set;}
     public Vector3Int currentPosGrid;
     public float timeToMove;
     public float movementSpeed;
@@ -24,6 +26,7 @@ public class PlayerMovementController : MonoBehaviour
     void Start()
     {
         tileManager = FindObjectOfType<TileManager>();
+        taskManager = FindObjectOfType<TaskManager>();
         floorMap = tileManager.floorMap;
         wallMap = tileManager.wallMap;
         transitionMap = tileManager.transitionMap;
@@ -34,6 +37,7 @@ public class PlayerMovementController : MonoBehaviour
         lastDirection = new List<string>();
         prevPosPoint = transform.position;
         prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // // Player is rendered as being on (1, 1)
+        currentPosWorld = prevPosWorld;
         canMove = true;
     }
 
@@ -41,7 +45,6 @@ public class PlayerMovementController : MonoBehaviour
     void Update()
     {
         UpdateMovement();
-        CheckInteractables();
     }
     
     private void UpdateMovement()
@@ -76,29 +79,6 @@ public class PlayerMovementController : MonoBehaviour
     private void UpdateTilemaps()
     {
 
-    }
-
-    private void CheckInteractables()
-    {
-        if (isMoving) return;
-        Vector3Int tileUp = TileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(0, -1, 0);
-        Vector3Int tileDown = TileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(0, +1, 0);
-        Vector3Int tileLeft = TileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(-1, 0, 0);
-        Vector3Int tileRight = TileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(+1, 0, 0);
-        List<Vector3Int> adjacentTiles = new List<Vector3Int>() {tileUp, tileDown, tileLeft, tileRight};
-        foreach (Vector3Int tile in adjacentTiles)
-        {
-            Vector3Int tempTile = tile;
-            for (int i = interactableMap.cellBounds.zMin; i <= interactableMap.cellBounds.zMax; i++)
-            {
-                tempTile.z = i;
-                if (interactableMap.HasTile(tempTile))
-                {
-                    string taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
-                    // TaskManager.startTask(taskName);
-                }
-            }
-        }
     }
 
     private IEnumerator MovePlayer(Vector3 distance)
@@ -141,7 +121,7 @@ public class PlayerMovementController : MonoBehaviour
             TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
             if(data)
             {
-                Vector3 newCoords =TileManager.GridCoordsToWorldCoords(data.newPos);
+                Vector3 newCoords = TileManager.GridCoordsToWorldCoords(data.newPos);
                 transform.position += newCoords;
             }
         }

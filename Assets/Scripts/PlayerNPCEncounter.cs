@@ -10,6 +10,7 @@ public class PlayerNPCEncounter : MonoBehaviour
     private PlayerMovementController mvmtControl;
     private DialogueRunner dialogueRunner;
     private bool canInteract;
+    private NonPC nearestNPC;
     public bool isInteracting {get; private set;}
     private UnityAction ActionMovement;
 
@@ -22,6 +23,7 @@ public class PlayerNPCEncounter : MonoBehaviour
 
         ActionMovement += MovementAfterDialogue;
         dialogueRunner.onDialogueComplete.AddListener(MovementAfterDialogue);
+        canInteract = false;
     }
 
     // Update is called once per frame
@@ -33,27 +35,28 @@ public class PlayerNPCEncounter : MonoBehaviour
             Vector3Int playerCell = TileManager.WorldCoordsToGridCoords(transform.position);
             int cellDistX = Mathf.Abs(playerCell.x - nonPCCell.x);
             int cellDistY = Mathf.Abs(playerCell.y - nonPCCell.y);
-            CheckInteractNPC(cellDistX, cellDistY);
-            InteractNPC(nonPC);
+            CheckInteractNPC(cellDistX, cellDistY, nonPC);
         }
+        InteractNPC();
     }
 
-    void CheckInteractNPC(int cellDistX, int cellDistY)
+    void CheckInteractNPC(int cellDistX, int cellDistY, NonPC nonPC)
     {
         if (dialogueRunner.IsDialogueRunning) {} //dialogue is running
         else if (cellDistX <= 1 && cellDistY <= 1)
         {
+            nearestNPC = nonPC;
             canInteract = true;
         }
     }
 
-    void InteractNPC(NonPC nonPC)
+    void InteractNPC()
     {
-        if (Input.GetButton("Interact") && canInteract)
+        if (Input.GetButtonDown("Interact") && canInteract)
         {
             canInteract = false;
             mvmtControl.DisableMovement();
-            dialogueRunner.StartDialogue(nonPC.introTitle);
+            dialogueRunner.StartDialogue(nearestNPC.introTitle);
         }
     }
 
