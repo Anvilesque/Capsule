@@ -49,7 +49,7 @@ public class NonPC : MonoBehaviour
         }
         if (randMvmtTimer <= 0)
         {
-            Move();
+            // Move();
             ResetRandMvmt();
         }
     }
