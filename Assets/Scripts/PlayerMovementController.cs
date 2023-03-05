@@ -140,7 +140,10 @@ public class PlayerMovementController : MonoBehaviour
         {
             TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
             if(data)
-                transform.position = data.newPos;
+            {
+                Vector3 newCoords =TileManager.GridCoordsToWorldCoords(data.newPos);
+                transform.position += newCoords;
+            }
         }
     }
     
