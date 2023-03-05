@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8389408299536495300}
   - component: {fileID: 8389408299536495301}
   - component: {fileID: 8389408299536495302}
+  - component: {fileID: 7443441885095859560}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -97,13 +98,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44dc184e1b89a6f408b1f3d1b59691f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorMap: {fileID: 0}
-  wallMap: {fileID: 0}
-  transitionMap: {fileID: 0}
-  interactableMap: {fileID: 0}
-  tileManager: {fileID: 0}
-  NPC: {fileID: 0}
-  dialogueManager: {fileID: 0}
+  currentPosGrid: {x: 0, y: 0, z: 0}
   timeToMove: 0
   movementSpeed: 3
   canMove: 0
+--- !u!114 &7443441885095859560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389408299536495303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66fc62eefd6c9e40aa5444bdcac9249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

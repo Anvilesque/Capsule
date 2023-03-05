@@ -6,13 +6,16 @@ using Yarn.Unity;
 public class PlayerNPCEncounter : MonoBehaviour
 {
     private List<NonPC> nonPCs;
+    private PlayerMovementController mvmtControl;
     private DialogueRunner dialogueRunner;
     private bool canInteract;
+    public bool isInteracting {get; private set;}
 
     // Start is called before the first frame update
     void Start()
     {
         nonPCs = new List<NonPC>(FindObjectsOfType<NonPC>());
+        mvmtControl = GetComponent<PlayerMovementController>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
@@ -44,6 +47,8 @@ public class PlayerNPCEncounter : MonoBehaviour
         if (Input.GetButton("Interact") && canInteract)
         {
             canInteract = false;
+            isInteracting = true;
+            mvmtControl.DisableMovement();
             dialogueRunner.StartDialogue(nonPC.introTitle);
         }
     }

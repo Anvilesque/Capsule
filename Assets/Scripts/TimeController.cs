@@ -67,10 +67,10 @@ public class TimeController : MonoBehaviour
         // check for shop closing and teleport player out if closed
         if (hours == 21 && mins == 0 && seconds == 0) // check for whole minute so that transform happen even if the player is moving
         {
-            movementController.disableMovement();
+            movementController.DisableMovement();
             yield return new WaitForSeconds(movementController.timeToMove); // wait for movement to finish to tp and reenable movement
             player.transform.position = new Vector3(newX,newY,0); // teleport player outside of shop
-            movementController.enableMovement();
+            movementController.EnableMovement();
         }
     }
 }
