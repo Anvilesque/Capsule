@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Yarn.Unity;
 
 public class PlayerNPCEncounter : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerNPCEncounter : MonoBehaviour
     private DialogueRunner dialogueRunner;
     private bool canInteract;
     public bool isInteracting {get; private set;}
+    private UnityAction ActionMovement;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,9 @@ public class PlayerNPCEncounter : MonoBehaviour
         nonPCs = new List<NonPC>(FindObjectsOfType<NonPC>());
         mvmtControl = GetComponent<PlayerMovementController>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
+
+        ActionMovement += MovementAfterDialogue;
+        dialogueRunner.onDialogueComplete.AddListener(MovementAfterDialogue);
     }
 
     // Update is called once per frame
@@ -47,9 +52,13 @@ public class PlayerNPCEncounter : MonoBehaviour
         if (Input.GetButton("Interact") && canInteract)
         {
             canInteract = false;
-            isInteracting = true;
             mvmtControl.DisableMovement();
             dialogueRunner.StartDialogue(nonPC.introTitle);
         }
+    }
+
+    void MovementAfterDialogue()
+    {
+        mvmtControl.EnableMovement();
     }
 }
