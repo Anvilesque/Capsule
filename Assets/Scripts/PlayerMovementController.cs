@@ -108,6 +108,7 @@ public class PlayerMovementController : MonoBehaviour
         // All checks cleared --> handle movement
         currentPosPoint = tempPosPoint;
         currentPosWorld = tempPosWorld;
+        currentPosGrid = tempPosGrid;
         isMoving = true;
         float elapsedTime = 0f;
         while(elapsedTime < timeToMove)
