@@ -8,10 +8,13 @@ public class TaskManager : MonoBehaviour
 {
     private Camera mainCam;
     private List<Camera> gameCams;
-    private string currentMinigame;
     private PlayerMovementController mvmtControl;
     private TileManager tileManager;
     private Tilemap interactableMap;
+
+    private Camera bookshelfCam;
+
+    private string currentMinigame;
     private bool taskAvailable;
     private bool isTasking;
     private string taskName;
@@ -21,20 +24,27 @@ public class TaskManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        mainCam = Camera.main;
         gameCams = new List<Camera>();
         foreach (Camera cam in FindObjectsOfType<Camera>())
         {
-            if (cam.tag == "MainCamera") continue;
-            else gameCams.Add(cam);
+            if (cam == Camera.main) continue;
+            else
+            {
+                gameCams.Add(cam);
+                cam.transparencySortMode = TransparencySortMode.Default;
+            }
         }
         mvmtControl = FindObjectOfType<PlayerMovementController>();
         tileManager = FindObjectOfType<TileManager>();
         interactableMap = tileManager.interactableMap;
         
+        bookshelfCam = gameCams.Find(x=> x.name.Contains("Bookshelf"));
+        bookshelfCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
+
         isoViewRatio = 0.2f;
         isTasking = false;
-        canvasBookshelf.gameObject.SetActive(false);
+        // canvasBookshelf.gameObject.SetActive(false);
         DOTween.Init();
     }
 
@@ -44,8 +54,12 @@ public class TaskManager : MonoBehaviour
         CheckInteractables();
         if (Input.GetButtonDown("Interact"))
         {
-            if (isTasking) {}
-            else if (!taskAvailable) {}
+            
+            if (!taskAvailable) {}
+            else if (isTasking)
+            {
+                StopTask();
+            }
             else {
                 StartTask(taskName);
             }
@@ -79,7 +93,7 @@ public class TaskManager : MonoBehaviour
         }
     }
 
-    public void StartTask(string taskName)
+    void StartTask(string taskName)
     {
         isTasking = true;
         if (taskName == "Bookshelf")
@@ -91,27 +105,32 @@ public class TaskManager : MonoBehaviour
 
     public void StopTask()
     {
-        isTasking = false;
+        switch (currentMinigame)
+        {
+            case "Bookshelf":
+            {
+                StopBookshelf();
+                break;
+            }
+        }
+        currentMinigame = null;
     }
 
     void StartBookshelf()
     {
         mvmtControl.DisableMovement();
-        Camera bookshelfCam = gameCams.Find(x=> x.name.Contains(currentMinigame));
-        bookshelfCam.transparencySortMode = TransparencySortMode.Default;
-        Debug.Log("Main camera's TransparencySort: " + mainCam.transparencySortMode);
-        bookshelfCam.rect = new UnityEngine.Rect(1f, 0, (1 - isoViewRatio), 1f);
         Sequence seqBookshelfStart = DOTween.Sequence();
-        seqBookshelfStart.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new UnityEngine.Rect(0, 0, isoViewRatio, 1f), 1));
-        seqBookshelfStart.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new UnityEngine.Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
-        seqBookshelfStart.onComplete = (()=> canvasBookshelf.gameObject.SetActive(true));
+        seqBookshelfStart.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
+        seqBookshelfStart.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
+        // seqBookshelfStart.onComplete = (()=> canvasBookshelf.gameObject.SetActive(true));
     }
 
-    public void StopBookshelf()
+    void StopBookshelf()
     {
         mvmtControl.EnableMovement();
-        Tween expandIsometric = DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new UnityEngine.Rect(0, 0, 1f, 1f), 1);
-        // expandIsometric.onComplete = ()=> canvasBookshelf.gameObject.SetActive(false);
-        StopTask();
+        Sequence seqBookshelfStop = DOTween.Sequence();
+        seqBookshelfStop.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
+        seqBookshelfStop.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(1f, 0, (1-isoViewRatio), 1f), 1));
+        seqBookshelfStop.onComplete = ()=> isTasking = false;
     }
 }
