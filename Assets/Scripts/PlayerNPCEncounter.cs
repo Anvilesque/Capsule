@@ -9,7 +9,7 @@ public class PlayerNPCEncounter : MonoBehaviour
     private List<NonPC> nonPCs;
     private PlayerMovementController mvmtControl;
     private DialogueRunner dialogueRunner;
-    private bool canInteract;
+    public bool canInteract;
     private NonPC nearestNPC;
     public bool isInteracting {get; private set;}
     private UnityAction ActionMovement;
@@ -29,24 +29,29 @@ public class PlayerNPCEncounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (NonPC nonPC in nonPCs)
+        if (nonPCs == null) {}
+        else foreach (NonPC nonPC in nonPCs)
         {
             Vector3Int nonPCCell = TileManager.WorldCoordsToGridCoords(nonPC.position);
             Vector3Int playerCell = TileManager.WorldCoordsToGridCoords(transform.position);
-            int cellDistX = Mathf.Abs(playerCell.x - nonPCCell.x);
-            int cellDistY = Mathf.Abs(playerCell.y - nonPCCell.y);
-            CheckInteractNPC(cellDistX, cellDistY, nonPC);
+            int playerDistX = Mathf.Abs(playerCell.x - nonPCCell.x);
+            int playerDistY = Mathf.Abs(playerCell.y - nonPCCell.y);
+            CheckInteractNPC(playerDistX, playerDistY, nonPC);
         }
         InteractNPC();
     }
 
-    void CheckInteractNPC(int cellDistX, int cellDistY, NonPC nonPC)
+    void CheckInteractNPC(int playerDistX, int playerDistY, NonPC nonPC)
     {
         if (dialogueRunner.IsDialogueRunning) {} //dialogue is running
-        else if (cellDistX <= 1 && cellDistY <= 1)
+        else if (playerDistX <= 1 && playerDistY <= 1)
         {
             nearestNPC = nonPC;
             canInteract = true;
+        }
+        else
+        {
+            canInteract = false;
         }
     }
 

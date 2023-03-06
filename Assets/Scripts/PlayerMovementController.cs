@@ -89,22 +89,25 @@ public class PlayerMovementController : MonoBehaviour
 
         prevPosPoint = transform.position;
         prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // Player is rendered as being on (1, 1)
-        currentPosPoint = prevPosPoint + distance;
-        currentPosWorld = prevPosWorld + distance;
+        Vector3 tempPosPoint = prevPosPoint + distance;
+        Vector3 tempPosWorld = prevPosWorld + distance;
 
         // Get Tilemap coords of next position
-        currentPosGrid = TileManager.WorldCoordsToGridCoords(currentPosWorld);  // https://clintbellanger.net/articles/isometric_math/
+        Vector3Int tempPosGrid = TileManager.WorldCoordsToGridCoords(tempPosWorld);  // https://clintbellanger.net/articles/isometric_math/
         // Check for wall or interactable in front
         for (int i = wallMap.cellBounds.zMin; i <= wallMap.cellBounds.zMax; i++)
         {
-            currentPosGrid.z = i;
-            if (wallMap.HasTile(currentPosGrid)) yield break;
-            if (interactableMap.HasTile(currentPosGrid)) yield break;
+            tempPosGrid.z = i;
+            if (wallMap.HasTile(tempPosGrid)) yield break;
+            if (interactableMap.HasTile(tempPosGrid)) yield break;
         }
         // Check for floor in front (floor is always z = 1)
-        currentPosGrid.z = 1;
-        if (!floorMap.HasTile(currentPosGrid) && !transitionMap.HasTile(currentPosGrid)) yield break;
+        tempPosGrid.z = 1;
+        if (!floorMap.HasTile(tempPosGrid) && !transitionMap.HasTile(tempPosGrid)) yield break;
 
+        // All checks cleared --> handle movement
+        currentPosPoint = tempPosPoint;
+        currentPosWorld = tempPosWorld;
         isMoving = true;
         float elapsedTime = 0f;
         while(elapsedTime < timeToMove)
