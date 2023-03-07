@@ -137,12 +137,14 @@ public class PlayerMovementController : MonoBehaviour
 
     IEnumerator TeleportFadeInOut(TileData data)
     {
+        DisableMovement();
         FadeController fadeController = FindObjectOfType<FadeController>();
         fadeController.FadeIn();
         while (fadeController.isFading) yield return null;
         Vector3 newCoords = TileManager.GridCoordsToWorldCoords(data.newPos);
         transform.position += newCoords;
         yield return new WaitForSeconds(2f);
+        EnableMovement();
         fadeController.FadeOut();
     }
     
