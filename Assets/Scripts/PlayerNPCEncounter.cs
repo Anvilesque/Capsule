@@ -12,7 +12,6 @@ public class PlayerNPCEncounter : MonoBehaviour
     public bool canInteract;
     private NonPC nearestNPC;
     public bool isInteracting {get; private set;}
-    private UnityAction ActionMovement;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +20,8 @@ public class PlayerNPCEncounter : MonoBehaviour
         mvmtControl = GetComponent<PlayerMovementController>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
 
-        ActionMovement += MovementAfterDialogue;
-        dialogueRunner.onDialogueComplete.AddListener(MovementAfterDialogue);
+        if (dialogueRunner == null) {}
+        else dialogueRunner.onDialogueComplete.AddListener(MovementAfterDialogue);
         canInteract = false;
     }
 
