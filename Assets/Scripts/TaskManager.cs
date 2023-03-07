@@ -11,6 +11,7 @@ public class TaskManager : MonoBehaviour
     private PlayerMovementController mvmtControl;
     private TileManager tileManager;
     private Tilemap interactableMap;
+    public GameObject interactIndicator;
 
     private Camera bookshelfCam;
 
@@ -52,6 +53,7 @@ public class TaskManager : MonoBehaviour
     void Update()
     {
         CheckInteractables();
+        IndicateInteract();
         if (Input.GetButtonDown("Interact"))
         {
             
@@ -91,6 +93,35 @@ public class TaskManager : MonoBehaviour
             }
             if (taskAvailable) break;
         }
+    }
+
+    void IndicateInteract()
+    {
+        if (isTasking)
+        {
+            DestroyIndicator();
+        }
+        else if (taskAvailable)
+        {
+            if (interactIndicator != null) {}
+            else
+            {
+                interactIndicator = Instantiate((GameObject)Resources.Load("Prefabs/InteractIndicator"), mvmtControl.transform.position, Quaternion.identity, mvmtControl.transform);
+                interactIndicator.transform.localPosition = new Vector3(-2f, 5f, 100f);
+            }
+        }
+        else
+        {
+            DestroyIndicator();
+        }
+    }
+
+    void DestroyIndicator()
+    {
+        if (interactIndicator != null)
+            {
+                Destroy(interactIndicator);
+            }
     }
 
     void StartTask(string taskName)

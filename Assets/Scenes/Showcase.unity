@@ -5511,6 +5511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33bf560dbbf51f744a1416cb352d1902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactIndicator: {fileID: 0}
   canvasBookshelf: {fileID: 211693060}
 --- !u!1001 &1494126966
 PrefabInstance:
