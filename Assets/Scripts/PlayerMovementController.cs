@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -119,16 +121,29 @@ public class PlayerMovementController : MonoBehaviour
             yield return null;
         }
         transform.position = currentPosPoint;
+        HandleTeleport(true);
         isMoving = false;
-        if (elapsedTime > timeToMove)
+    }
+
+    public void HandleTeleport(bool fade)
+    {
+        TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
+        
+        if (data)
         {
-            TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
-            if(data)
-            {
-                Vector3 newCoords = TileManager.GridCoordsToWorldCoords(data.newPos);
-                transform.position += newCoords;
-            }
+            StartCoroutine (TeleportFadeInOut(data));
         }
+    }
+
+    IEnumerator TeleportFadeInOut(TileData data)
+    {
+        FadeController fadeController = FindObjectOfType<FadeController>();
+        fadeController.FadeIn();
+        while (fadeController.isFading) yield return null;
+        Vector3 newCoords = TileManager.GridCoordsToWorldCoords(data.newPos);
+        transform.position += newCoords;
+        yield return new WaitForSeconds(2f);
+        fadeController.FadeOut();
     }
     
     public void DisableMovement()

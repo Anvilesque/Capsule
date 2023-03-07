@@ -9,7 +9,7 @@ public class PlayerNPCEncounter : MonoBehaviour
     private List<NonPC> nonPCs;
     private PlayerMovementController mvmtControl;
     private DialogueRunner dialogueRunner;
-    public bool canInteract;
+    private bool canInteract;
     private NonPC nearestNPC;
     public bool isInteracting {get; private set;}
 
