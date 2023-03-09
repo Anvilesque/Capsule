@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: green wall tile
+  m_Name: Floor_CarpetRed
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 1470e916bd2b64f1f88ba253d67755df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 02fbbefaa948c0b4fb54986f71e9fd02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
