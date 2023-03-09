@@ -9,6 +9,7 @@ public class SaveDiary : MonoBehaviour
     //Make sure to attach these Buttons in the Inspector
     public Button saveDiaryButton;
     public GameObject inputField;
+    public TaskManager taskManager;
     List<string> previousDiaryEntries = new List<string>();
            
     void Start()
@@ -20,6 +21,8 @@ public class SaveDiary : MonoBehaviour
     public void Save()
     {
         string text = inputField.GetComponent<TMP_InputField>().text;
+        inputField.GetComponent<TMP_InputField>().text = "";
+        taskManager.StopTask();
         previousDiaryEntries.Add(text);
         foreach(var entry in previousDiaryEntries)
         {
