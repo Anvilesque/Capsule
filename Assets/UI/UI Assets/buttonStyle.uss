@@ -4,18 +4,27 @@
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    width: 90px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    width: 60%;
     align-items: center;
     justify-content: space-around;
-    height: 30px;
+    height: 6%;
     -unity-font: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
-    font-size: 20px;
+    font-size: 50px;
     -unity-font-style: normal;
     -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
+    -unity-text-align: lower-center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 10%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
 }
 
 .inventory-button {
@@ -76,24 +85,12 @@
     -unity-font-style: normal;
 }
 
+.menu-button {
+    background-color: rgb(229, 214, 186);
+}
+
 .button-style:hover {
     background-color: rgb(113, 204, 224);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    width: 90px;
-    align-items: center;
-    justify-content: space-around;
-    height: 30px;
-    -unity-font: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
-    font-size: 20px;
-    -unity-font-style: normal;
-    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
 }
 
 .inventory-button:hover {
@@ -154,42 +151,6 @@
     -unity-font-style: normal;
 }
 
-.menu-button {
-    background-color: rgb(229, 214, 186);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    width: 90px;
-    align-items: center;
-    justify-content: space-around;
-    height: 30px;
-    -unity-font: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
-    font-size: 20px;
-    -unity-font-style: normal;
-    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
-}
-
 .menu-button:hover {
     background-color: rgb(236, 203, 141);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    width: 90px;
-    align-items: center;
-    justify-content: space-around;
-    height: 30px;
-    -unity-font: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
-    font-size: 20px;
-    -unity-font-style: normal;
-    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
 }
