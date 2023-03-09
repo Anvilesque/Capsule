@@ -15,6 +15,7 @@ public class TaskManager : MonoBehaviour
     public GameObject interactIndicator;
 
     private Camera bookshelfCam;
+    private Camera diaryCam;
 
     private string currentMinigame;
     private bool taskAvailable;
@@ -44,6 +45,9 @@ public class TaskManager : MonoBehaviour
         
         bookshelfCam = gameCams.Find(x=> x.name.Contains("Bookshelf"));
         bookshelfCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
+
+        diaryCam = gameCams.Find(x=> x.name.Contains("Diary"));
+        diaryCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
 
         isoViewRatio = 0.2f;
         isTasking = false;
@@ -135,6 +139,11 @@ public class TaskManager : MonoBehaviour
             currentMinigame = taskName;
             StartBookshelf();
         }
+        else if(taskName == "Diary")
+        {
+            currentMinigame = taskName;
+            StartDiary();
+        }
     }
 
     public void StopTask()
@@ -144,6 +153,11 @@ public class TaskManager : MonoBehaviour
             case "Bookshelf":
             {
                 StopBookshelf();
+                break;
+            }
+            case "Diary":
+            {
+                StopDiary();
                 break;
             }
         }
@@ -166,5 +180,20 @@ public class TaskManager : MonoBehaviour
         seqBookshelfStop.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
         seqBookshelfStop.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(1f, 0, (1-isoViewRatio), 1f), 1));
         seqBookshelfStop.onComplete = ()=> isTasking = false;
+    }
+    void StartDiary()
+    {
+        mvmtControl.DisableMovement();
+        Sequence seqDiaryStart = DOTween.Sequence();
+        seqDiaryStart.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
+        seqDiaryStart.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
+    }
+    void StopDiary()
+    {
+        mvmtControl.EnableMovement();
+        Sequence seqDiaryStop = DOTween.Sequence();
+        seqDiaryStop.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
+        seqDiaryStop.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(1f, 0, (1-isoViewRatio), 1f), 1));
+        seqDiaryStop.onComplete = ()=> isTasking = false;
     }
 }
