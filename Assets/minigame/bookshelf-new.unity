@@ -696,7 +696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 2.3531218
+  m_AspectRatio: 2.1257427
 --- !u!114 &413324451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,7 +744,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 413324448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c22e4292023e4b6f9ab41176fec8d2c, type: 3}
+  m_Script: {fileID: 11500000, guid: bfde4a74ace8a48d388b246a12968d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &668928400
