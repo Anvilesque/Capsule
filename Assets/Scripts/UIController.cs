@@ -6,45 +6,47 @@ using UnityEngine.UIElements;
 public class UIController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Button menuButton;
-    public Button taskButton;
-    public Button inventoryButton;
-    public Button moodButton;
-    public Button settingsButton;
-    public UIDocument taskList;
+    public Label timeTime;
+    public Label timeDay;
+    public Button buttonMenu;
+    public Button buttonTask;
+    public Button buttonInventory;
+    public Button buttonMood;
+    public Button buttonSettings;
+    public UIDocument tasklist;
     void Start()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-        menuButton = root.Q<Button>("MenuButton");
-        taskButton = root.Q<Button>("TaskButton");
-        inventoryButton = root.Q<Button>("InventoryButton");
-        moodButton = root.Q<Button>("MoodButton");
-        settingsButton = root.Q<Button>("SettingsButton");
+        buttonMenu = root.Q<Button>("buttonMenu");
+        buttonTask = root.Q<Button>("buttonTask");
+        buttonInventory = root.Q<Button>("buttonInventory");
+        buttonMood = root.Q<Button>("buttonMood");
+        buttonSettings = root.Q<Button>("buttonSettings");
 
-        menuButton.clicked += MenuButtonPressed;
-        taskButton.clicked += TaskButtonPressed;
-        inventoryButton.clicked += InventoryButtonPressed;
-        moodButton.clicked += MoodButtonPressed;
-        settingsButton.clicked += SettingsButtonPressed;
+        buttonMenu.clicked += buttonMenuPressed;
+        buttonTask.clicked += buttonTaskPressed;
+        buttonInventory.clicked += buttonInventoryPressed;
+        buttonMood.clicked += buttonMoodPressed;
+        buttonSettings.clicked += buttonSettingsPressed;
     }
 
-    void MenuButtonPressed() {
+    void buttonMenuPressed() {
 
     }
 
-    void TaskButtonPressed() {
+    void buttonTaskPressed() {
         
     }
 
-    void InventoryButtonPressed() {
+    void buttonInventoryPressed() {
 
     }
 
-    void MoodButtonPressed() {
+    void buttonMoodPressed() {
 
     }
 
-    void SettingsButtonPressed() {
+    void buttonSettingsPressed() {
 
     }
 }

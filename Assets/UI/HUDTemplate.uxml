@@ -1,18 +1,28 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/UI%20Assets/buttonStyle.uss?fileID=7433441132597879392&amp;guid=40eaad5d9b18f4980ac4918b76198861&amp;type=3#buttonStyle" />
-    <ui:VisualElement name="Root" style="height: 100%; width: 30%; flex-direction: row-reverse; position: absolute; right: 0;">
-        <ui:VisualElement name="EdgePanel" style="width: 20%; background-color: rgb(99, 97, 97); opacity: 0.8;" />
-        <ui:VisualElement name="MiddleDivider" style="width: 5%; background-color: rgb(185, 179, 169); opacity: 0.8;" />
-        <ui:VisualElement name="ContentPanel" style="align-items: center; justify-content: flex-start; background-color: rgb(248, 236, 191); width: 75%;">
-            <ui:Button text="Menu" display-tooltip-when-elided="true" name="MenuButton" class="button-style menu-button" style="margin-top: 30%;" />
-            <ui:Button text="Task List" display-tooltip-when-elided="true" name="TaskButton" class="button-style" />
-            <ui:Button text="Inventory" display-tooltip-when-elided="true" name="InventoryButton" class="button-style" />
-            <ui:Button display-tooltip-when-elided="true" name="MoodButton" class="button-style">
-                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/face%20icon.png?fileID=2800000&amp;guid=3c0efa5c0262446bd88234839a236b6d&amp;type=3#face icon&apos;); width: 80%; height: 80%; -unity-background-scale-mode: scale-to-fit;" />
-            </ui:Button>
-            <ui:Button display-tooltip-when-elided="true" name="SettingsButton" class="button-style">
-                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/settings%20icon.png?fileID=2800000&amp;guid=b43cae7ea56814e0abcfb3d5382d8119&amp;type=3#settings icon&apos;); width: 80%; height: 80%; -unity-background-scale-mode: scale-to-fit;" />
-            </ui:Button>
+    <Style src="project://database/Assets/UI/UI%20Assets/uss/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=40eaad5d9b18f4980ac4918b76198861&amp;type=3#ButtonStyle" />
+    <Style src="project://database/Assets/UI/UI%20Assets/uss/TextStyle.uss?fileID=7433441132597879392&amp;guid=f473a6b0e58e27d428d8b85d1b61c50a&amp;type=3#TextStyle" />
+    <ui:VisualElement name="root" style="height: 100%; width: 20%; flex-direction: row; position: absolute; right: auto;">
+        <ui:VisualElement name="panelEdge" style="width: 20%; background-color: rgb(110, 97, 97); opacity: 0.8;" />
+        <ui:VisualElement name="dividerMiddle" style="width: 5%; background-color: rgb(218, 202, 185); opacity: 0.8;" />
+        <ui:VisualElement name="panelContent" style="align-items: center; justify-content: flex-start; background-color: rgb(254, 237, 215); width: 100%;">
+            <ui:GroupBox name="time" style="width: 100%; height: 20%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: center; align-items: center;">
+                <ui:VisualElement name="timeBG" style="background-color: rgb(188, 197, 118); width: 90%; height: 80%; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+                    <ui:Label text="00:00" display-tooltip-when-elided="true" name="timeTime" class="text-time" style="font-size: 150%; top: 5%; -unity-text-outline-width: 4px;" />
+                    <ui:Label text="Day 1" display-tooltip-when-elided="true" name="timeDay" class="text-time" style="font-size: 60px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; width: 100%; position: absolute; bottom: 0;" />
+                </ui:VisualElement>
+            </ui:GroupBox>
+            <ui:GroupBox name="buttons" style="width: 100%; height: 50%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; align-items: center; justify-content: flex-start;">
+                <ui:Button text="Menu" display-tooltip-when-elided="true" name="buttonMenu" class="button-general button-menu" />
+                <ui:Button text="Tasks" display-tooltip-when-elided="true" name="buttonTask" class="button-general" />
+                <ui:Button text="Inventory" display-tooltip-when-elided="true" name="buttonInventory" class="button-general" />
+                <ui:Button display-tooltip-when-elided="true" name="buttonMood" class="button-general">
+                    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/icons/face%20icon.png?fileID=2800000&amp;guid=3c0efa5c0262446bd88234839a236b6d&amp;type=3#face icon&apos;); width: 80%; height: 80%; -unity-background-scale-mode: scale-to-fit;" />
+                </ui:Button>
+                <ui:Button display-tooltip-when-elided="true" name="buttonSettings" class="button-general">
+                    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/icons/settings%20icon.png?fileID=2800000&amp;guid=b43cae7ea56814e0abcfb3d5382d8119&amp;type=3#settings icon&apos;); width: 80%; height: 80%; -unity-background-scale-mode: scale-to-fit;" />
+                </ui:Button>
+            </ui:GroupBox>
+            <ui:Button text="Quit" display-tooltip-when-elided="true" name="buttonQuit" class="button-general button-quit" style="height: 6%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
