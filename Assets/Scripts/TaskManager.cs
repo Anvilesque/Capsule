@@ -9,6 +9,7 @@ public class TaskManager : MonoBehaviour
     private Camera mainCam;
     private List<Camera> gameCams;
     private PlayerMovementController mvmtControl;
+    private Sprite playerSprite;
     private TileManager tileManager;
     private Tilemap interactableMap;
     public GameObject interactIndicator;
@@ -37,6 +38,7 @@ public class TaskManager : MonoBehaviour
             }
         }
         mvmtControl = FindObjectOfType<PlayerMovementController>();
+        playerSprite = GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().sprite;
         tileManager = FindObjectOfType<TileManager>();
         interactableMap = tileManager.interactableMap;
         
@@ -107,7 +109,8 @@ public class TaskManager : MonoBehaviour
             else
             {
                 interactIndicator = Instantiate((GameObject)Resources.Load("Prefabs/InteractIndicator"), mvmtControl.transform.position, Quaternion.identity, mvmtControl.transform);
-                interactIndicator.transform.localPosition = new Vector3(-2f, 5f, 100f);
+                interactIndicator.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                interactIndicator.transform.localPosition = new Vector3(-0.5f, 1f, 100f);
             }
         }
         else
