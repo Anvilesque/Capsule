@@ -13,6 +13,9 @@ public class PlayerMovementController : MonoBehaviour
     private Tilemap interactableMap;
     private TileManager tileManager;
     private TaskManager taskManager;
+    private SpriteRenderer playerSprite;
+    [SerializeField] private List<Sprite> sprites;
+    private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
 
     public bool isMoving {get; private set;}
     private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, moveDirection;
@@ -20,7 +23,7 @@ public class PlayerMovementController : MonoBehaviour
     public Vector3Int currentPosGrid;
     public float timeToMove;
     public float movementSpeed;
-    public bool canMove;
+    public bool canMove {get; private set;}
 
     private List<string> lastDirection;
 
@@ -33,6 +36,7 @@ public class PlayerMovementController : MonoBehaviour
         wallMap = tileManager.wallMap;
         transitionMap = tileManager.transitionMap;
         interactableMap = tileManager.interactableMap;
+        playerSprite = GetComponent<SpriteRenderer>();
 
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
@@ -68,14 +72,14 @@ public class PlayerMovementController : MonoBehaviour
 
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
-        if(Input.GetButton("Left") && lastDirection[lastDirection.Count-1] == "Left")
-            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, TileManager.distY, 0)));
-        else if(Input.GetButton("Right") && lastDirection[lastDirection.Count-1] == "Right")
-            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, -TileManager.distY, 0)));
-        else if(Input.GetButton("Up") && lastDirection[lastDirection.Count-1] == "Up")
-            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, TileManager.distY, 0)));
-        else if(Input.GetButton("Down") && lastDirection[lastDirection.Count-1] == "Down")
-            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, -TileManager.distY, 0)));
+        if (Input.GetButton("Left") && lastDirection[lastDirection.Count - 1] == "Left")
+            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, TileManager.distY, 0), "Left"));
+        else if (Input.GetButton("Right") && lastDirection[lastDirection.Count - 1] == "Right")
+            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, -TileManager.distY, 0), "Right"));
+        else if (Input.GetButton("Up") && lastDirection[lastDirection.Count - 1] == "Up")
+            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, TileManager.distY, 0), "Up"));
+        else if (Input.GetButton("Down") && lastDirection[lastDirection.Count - 1] == "Down")
+            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, -TileManager.distY, 0), "Down"));
     }
 
     private void UpdateTilemaps()
@@ -83,11 +87,16 @@ public class PlayerMovementController : MonoBehaviour
 
     }
 
-    private IEnumerator MovePlayer(Vector3 distance)
+    private IEnumerator MovePlayer(Vector3 distance, string direction)
     {
         if (!canMove) yield break;
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
+
+        if (direction == "Left") playerSprite.sprite = sprites[LEFT];
+        else if (direction == "Right") playerSprite.sprite = sprites[RIGHT];
+        else if (direction == "Up") playerSprite.sprite = sprites[UP];
+        else if (direction == "Down") playerSprite.sprite = sprites[DOWN];
 
         prevPosPoint = transform.position;
         prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // Player is rendered as being on (1, 1)
