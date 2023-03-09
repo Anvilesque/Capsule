@@ -5,9 +5,12 @@ using TMPro; // using text mesh for the clock display
  
 public class TimeController : MonoBehaviour
 {
-    public TextMeshProUGUI timeDisplay; // Display Time
-    public TextMeshProUGUI dayDisplay; // Display Day
- 
+    // public TextMeshProUGUI timeDisplay; // Display Time
+    // public TextMeshProUGUI dayDisplay; // Display Day
+    public string timeTextTime {get; private set;}
+    public string timeTextDay {get; private set;}
+    private int displayInterval; // Changes how often display text updates
+    
     public float tick; // Increasing the tick, increases second rate
     public float seconds; 
     public int mins;
@@ -23,13 +26,14 @@ public class TimeController : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         movementController = player.GetComponent<PlayerMovementController>();
+        displayInterval = 10;
     }
  
     // Update is called once per frame
     void FixedUpdate() // we used fixed update, since update is frame dependant. 
     {
         CalcTime();
-        DisplayTime();
+        UpdateTimeText();
         StartCoroutine(HandleEvents());
     }
  
@@ -56,10 +60,10 @@ public class TimeController : MonoBehaviour
         }
     }
  
-    public void DisplayTime() // Shows time and day in ui
+    public void UpdateTimeText() // Shows time and day in ui
     {
-        timeDisplay.text = string.Format("{0:00}:{1:00}", hours, mins); // The formatting ensures that there will always be 0's in empty spaces
-        dayDisplay.text = "Day: " + days; // display day counter
+        timeTextTime = string.Format("{0:00}:{1:00}", hours, (int)(mins / displayInterval) * displayInterval); // The formatting ensures that there will always be 0's in empty spaces
+        timeTextDay = "Day " + days; // display day counter
     }
 
     private IEnumerator HandleEvents() // checks the current time and performs events at a certain time

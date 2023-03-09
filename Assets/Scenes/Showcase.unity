@@ -405,8 +405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6f2a7e25546904fb24015f04d4d253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeDisplay: {fileID: 375615476}
-  dayDisplay: {fileID: 1047304154}
   tick: 100
   seconds: 0
   mins: 55

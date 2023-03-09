@@ -1,7 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/UI%20Assets/uss/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=40eaad5d9b18f4980ac4918b76198861&amp;type=3#ButtonStyle" />
     <Style src="project://database/Assets/UI/UI%20Assets/uss/TextStyle.uss?fileID=7433441132597879392&amp;guid=f473a6b0e58e27d428d8b85d1b61c50a&amp;type=3#TextStyle" />
-    <ui:VisualElement name="root" style="height: 100%; width: 20%; flex-direction: row; position: absolute; right: auto;">
+    <Style src="project://database/Assets/UI/UI%20Assets/uss/Animations.uss?fileID=7433441132597879392&amp;guid=f97338aab273a5247a739b07eb985c90&amp;type=3#Animations" />
+    <ui:VisualElement name="root" style="height: 100%; width: 20%; flex-direction: row; position: absolute; align-items: stretch; justify-content: flex-start;">
         <ui:VisualElement name="panelEdge" style="width: 20%; background-color: rgb(110, 97, 97); opacity: 0.8;" />
         <ui:VisualElement name="dividerMiddle" style="width: 5%; background-color: rgb(218, 202, 185); opacity: 0.8;" />
         <ui:VisualElement name="panelContent" style="align-items: center; justify-content: flex-start; background-color: rgb(254, 237, 215); width: 100%;">

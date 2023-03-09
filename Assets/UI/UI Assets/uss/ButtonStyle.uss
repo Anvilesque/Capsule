@@ -26,7 +26,8 @@
     margin-right: 0;
     margin-bottom: 0;
     letter-spacing: 5px;
-    -unity-text-outline-color: rgba(173, 173, 173, 255);
+    -unity-text-outline-color: rgb(173, 173, 173);
+    color: rgba(115, 96, 88, 255);
 }
 
 .button-menu {

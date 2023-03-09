@@ -13,6 +13,7 @@ public class TaskManager : MonoBehaviour
     private TileManager tileManager;
     private Tilemap interactableMap;
     public GameObject interactIndicator;
+    private UIController uiController;
 
     private Camera bookshelfCam;
     private Camera diaryCam;
@@ -42,6 +43,7 @@ public class TaskManager : MonoBehaviour
         playerSprite = GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().sprite;
         tileManager = FindObjectOfType<TileManager>();
         interactableMap = tileManager.interactableMap;
+        uiController = FindObjectOfType<UIController>();
         
         bookshelfCam = gameCams.Find(x=> x.name.Contains("Bookshelf"));
         bookshelfCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
@@ -170,15 +172,18 @@ public class TaskManager : MonoBehaviour
         Sequence seqBookshelfStart = DOTween.Sequence();
         seqBookshelfStart.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
         seqBookshelfStart.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
+        seqBookshelfStart.AppendCallback(()=> uiController.TranslateHUD(false, 1f));
         // seqBookshelfStart.onComplete = (()=> canvasBookshelf.gameObject.SetActive(true));
     }
 
     void StopBookshelf()
     {
-        mvmtControl.EnableMovement();
+        uiController.TranslateHUD(true, 0.5f);
         Sequence seqBookshelfStop = DOTween.Sequence();
+        seqBookshelfStop.SetDelay(0.5f);
         seqBookshelfStop.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
         seqBookshelfStop.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
+        seqBookshelfStop.InsertCallback(1f, ()=> mvmtControl.EnableMovement());
         seqBookshelfStop.onComplete = ()=> isTasking = false;
     }
     void StartDiary()
@@ -187,13 +192,16 @@ public class TaskManager : MonoBehaviour
         Sequence seqDiaryStart = DOTween.Sequence();
         seqDiaryStart.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
         seqDiaryStart.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
+        seqDiaryStart.AppendCallback(()=> uiController.TranslateHUD(false, 1f));
     }
     void StopDiary()
     {
-        mvmtControl.EnableMovement();
+        uiController.TranslateHUD(true, 0.5f);
         Sequence seqDiaryStop = DOTween.Sequence();
+        seqDiaryStop.SetDelay(0.5f);
         seqDiaryStop.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
         seqDiaryStop.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
+        seqDiaryStop.InsertCallback(1f, ()=> mvmtControl.EnableMovement());
         seqDiaryStop.onComplete = ()=> isTasking = false;
     }
 }
