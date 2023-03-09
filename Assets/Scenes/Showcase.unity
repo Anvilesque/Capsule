@@ -435,38 +435,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3743244727493307847, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3743244727493307847, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5416391081001638225, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5416391081001638225, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5416391081001638225, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5416391081001638225, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5416391081001638225, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5416391081001638225, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5980796737809072787, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
       propertyPath: taskManager
       value: 
@@ -562,10 +530,6 @@ PrefabInstance:
     - target: {fileID: 7002433335442372957, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
       propertyPath: m_Name
       value: Diary
-      objectReference: {fileID: 0}
-    - target: {fileID: 7002433336973772957, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
-      propertyPath: m_text
-      value: Dear diary...
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
