@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Transition_Data
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: f4c35ec354609d54b8f7f6afa186eec6, type: 2}
-  newPos: {x: 8, y: 0, z: 1}
+  - {fileID: 11400000, guid: 38da42a5b64c10d48b61ea23ab4a66e2, type: 2}
+  newPos: {x: -20, y: 0, z: 0}
+  taskName: 

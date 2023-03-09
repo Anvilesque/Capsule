@@ -1,0 +1,25 @@
+title: Intro
+tags:
+position: 0,0
+---
+// declare only sets the variable on the first run-through! (You can also declare variables in the Project file itself)
+<<declare $firstAsk to true>>
+<<if $firstAsk>>
+    System: Are you ready to start?
+<<else>>
+    System: Are you ready now?
+<<endif>>
+-> Yes!
+    <<jump NewGame>>
+-> Nah
+    // set will set the variable on any run-through
+    <<set $firstAsk to false>>
+    <<jump Intro>>
+
+===
+title: NewGame
+tags:
+position: -27,165
+---
+System: Welcome!
+===

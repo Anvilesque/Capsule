@@ -9,7 +9,7 @@ public class TileData : ScriptableObject
     public TileBase[] tiles;
 
     [Header("Transitions")]
-    public Vector3 newPos;
+    public Vector3Int newPos;
 
     [Header("Interactables")]
     public string taskName;

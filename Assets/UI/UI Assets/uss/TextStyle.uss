@@ -1,0 +1,9 @@
+.text-time {
+    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/fonts/Notebook%20SDF.asset?fileID=11400000&guid=27b4acc0a9ffa4805b1467a5e52803d0&type=2#Notebook SDF');
+    -unity-text-align: upper-center;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgb(144, 192, 75);
+    color: rgb(236, 236, 236);
+    -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Notebook.otf?fileID=12800000&guid=eba2a83507f6548b4877227620badc8e&type=3#Notebook');
+    -unity-font-style: bold;
+}

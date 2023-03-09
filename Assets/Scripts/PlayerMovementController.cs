@@ -2,32 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    public Tilemap floorMap;
-    public Tilemap wallMap;
-    public Tilemap transitionMap;
-    public Tilemap interactableMap;
-    public TileManager tileManager;
+    private Tilemap floorMap;
+    private Tilemap wallMap;
+    private Tilemap transitionMap;
+    private Tilemap interactableMap;
+    private TileManager tileManager;
+    private TaskManager taskManager;
+    private SpriteRenderer playerSprite;
+    [SerializeField] private List<Sprite> sprites;
+    private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
 
-    private bool isMoving;
-    private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, currentPosWorld, moveDirection;
+    public bool isMoving {get; private set;}
+    private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, moveDirection;
+    public Vector3 currentPosWorld {get; private set;}
+    public Vector3Int currentPosGrid;
     public float timeToMove;
     public float movementSpeed;
-    public bool canMove;
+    public bool canMove {get; private set;}
 
     private List<string> lastDirection;
 
     // Start is called before the first frame update
     void Start()
     {
+        tileManager = FindObjectOfType<TileManager>();
+        taskManager = FindObjectOfType<TaskManager>();
+        floorMap = tileManager.floorMap;
+        wallMap = tileManager.wallMap;
+        transitionMap = tileManager.transitionMap;
+        interactableMap = tileManager.interactableMap;
+        playerSprite = GetComponent<SpriteRenderer>();
+
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
         lastDirection = new List<string>();
-        tileManager = FindObjectOfType<TileManager>();
         prevPosPoint = transform.position;
-        prevPosWorld = transform.position + new Vector3(0, -2 * tileManager.distY, 0); // // Player is rendered as being on (1, 1)
+        prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // // Player is rendered as being on (1, 1)
+        currentPosWorld = prevPosWorld;
         canMove = true;
     }
 
@@ -35,7 +51,6 @@ public class PlayerMovementController : MonoBehaviour
     void Update()
     {
         UpdateMovement();
-        CheckInteractables();
     }
     
     private void UpdateMovement()
@@ -57,63 +72,54 @@ public class PlayerMovementController : MonoBehaviour
 
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
-        if(Input.GetButton("Left") && lastDirection[lastDirection.Count-1] == "Left")
-            StartCoroutine(MovePlayer(new Vector3(-tileManager.distX, tileManager.distY, 0)));
-        else if(Input.GetButton("Right") && lastDirection[lastDirection.Count-1] == "Right")
-            StartCoroutine(MovePlayer(new Vector3(tileManager.distX, -tileManager.distY, 0)));
-        else if(Input.GetButton("Up") && lastDirection[lastDirection.Count-1] == "Up")
-            StartCoroutine(MovePlayer(new Vector3(tileManager.distX, tileManager.distY, 0)));
-        else if(Input.GetButton("Down") && lastDirection[lastDirection.Count-1] == "Down")
-            StartCoroutine(MovePlayer(new Vector3(-tileManager.distX, -tileManager.distY, 0)));
+        if (Input.GetButton("Left") && lastDirection[lastDirection.Count - 1] == "Left")
+            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, TileManager.distY, 0), "Left"));
+        else if (Input.GetButton("Right") && lastDirection[lastDirection.Count - 1] == "Right")
+            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, -TileManager.distY, 0), "Right"));
+        else if (Input.GetButton("Up") && lastDirection[lastDirection.Count - 1] == "Up")
+            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, TileManager.distY, 0), "Up"));
+        else if (Input.GetButton("Down") && lastDirection[lastDirection.Count - 1] == "Down")
+            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, -TileManager.distY, 0), "Down"));
     }
 
-    private void CheckInteractables()
+    private void UpdateTilemaps()
     {
-        if (isMoving) return;
-        Vector3Int tileUp = tileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(0, -1, 0);
-        Vector3Int tileDown = tileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(0, +1, 0);
-        Vector3Int tileLeft = tileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(-1, 0, 0);
-        Vector3Int tileRight = tileManager.WorldCoordsToGridCoords(currentPosWorld) + new Vector3Int(+1, 0, 0);
-        List<Vector3Int> adjacentTiles = new List<Vector3Int>() {tileUp, tileDown, tileLeft, tileRight};
-        foreach (Vector3Int tile in adjacentTiles)
-        {
-            Vector3Int tempTile = tile;
-            for (int i = interactableMap.cellBounds.zMin; i <= interactableMap.cellBounds.zMax; i++)
-            {
-                tempTile.z = i;
-                if (interactableMap.HasTile(tempTile))
-                {
-                    string taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
-                    // TaskManager.startTask(taskName);
-                }
-            }
-        }
+
     }
 
-    private IEnumerator MovePlayer(Vector3 distance)
+    private IEnumerator MovePlayer(Vector3 distance, string direction)
     {
         if (!canMove) yield break;
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
+        if (direction == "Left") playerSprite.sprite = sprites[LEFT];
+        else if (direction == "Right") playerSprite.sprite = sprites[RIGHT];
+        else if (direction == "Up") playerSprite.sprite = sprites[UP];
+        else if (direction == "Down") playerSprite.sprite = sprites[DOWN];
+
         prevPosPoint = transform.position;
-        prevPosWorld = transform.position + new Vector3(0, -2 * tileManager.distY, 0); // Player is rendered as being on (1, 1)
-        currentPosPoint = prevPosPoint + distance;
-        currentPosWorld = prevPosWorld + distance;
+        prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // Player is rendered as being on (1, 1)
+        Vector3 tempPosPoint = prevPosPoint + distance;
+        Vector3 tempPosWorld = prevPosWorld + distance;
 
         // Get Tilemap coords of next position
-        Vector3Int currentPosGrid = tileManager.WorldCoordsToGridCoords(currentPosWorld);  // https://clintbellanger.net/articles/isometric_math/
+        Vector3Int tempPosGrid = TileManager.WorldCoordsToGridCoords(tempPosWorld);  // https://clintbellanger.net/articles/isometric_math/
         // Check for wall or interactable in front
         for (int i = wallMap.cellBounds.zMin; i <= wallMap.cellBounds.zMax; i++)
         {
-            currentPosGrid.z = i;
-            if (wallMap.HasTile(currentPosGrid)) yield break;
-            if (interactableMap.HasTile(currentPosGrid)) yield break;
+            tempPosGrid.z = i;
+            if (wallMap.HasTile(tempPosGrid)) yield break;
+            if (interactableMap.HasTile(tempPosGrid)) yield break;
         }
         // Check for floor in front (floor is always z = 1)
-        currentPosGrid.z = 1;
-        if (!floorMap.HasTile(currentPosGrid) && !transitionMap.HasTile(currentPosGrid)) yield break;
+        tempPosGrid.z = 1;
+        if (!floorMap.HasTile(tempPosGrid) && !transitionMap.HasTile(tempPosGrid)) yield break;
 
+        // All checks cleared --> handle movement
+        currentPosPoint = tempPosPoint;
+        currentPosWorld = tempPosWorld;
+        currentPosGrid = tempPosGrid;
         isMoving = true;
         float elapsedTime = 0f;
         while(elapsedTime < timeToMove)
@@ -124,20 +130,38 @@ public class PlayerMovementController : MonoBehaviour
             yield return null;
         }
         transform.position = currentPosPoint;
+        HandleTeleport(true);
         isMoving = false;
-        if (elapsedTime > timeToMove)
+    }
+
+    public void HandleTeleport(bool fade)
+    {
+        TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
+        
+        if (data)
         {
-            TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
-            if(data)
-                transform.position = data.newPos;
+            StartCoroutine (TeleportFadeInOut(data));
         }
     }
+
+    IEnumerator TeleportFadeInOut(TileData data)
+    {
+        DisableMovement();
+        FadeController fadeController = FindObjectOfType<FadeController>();
+        fadeController.FadeIn();
+        while (fadeController.isFading) yield return null;
+        Vector3 newCoords = TileManager.GridCoordsToWorldCoords(data.newPos);
+        transform.position += newCoords;
+        yield return new WaitForSeconds(2f);
+        EnableMovement();
+        fadeController.FadeOut();
+    }
     
-    public void disableMovement()
+    public void DisableMovement()
     {
         canMove = false;
     }
-    public void enableMovement()
+    public void EnableMovement()
     {
         canMove = true;
     }
