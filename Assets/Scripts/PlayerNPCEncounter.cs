@@ -8,6 +8,7 @@ public class PlayerNPCEncounter : MonoBehaviour
 {
     private List<NonPC> nonPCs;
     private PlayerMovementController mvmtControl;
+    private UIController uiController;
     private DialogueRunner dialogueRunner;
     private bool canInteract;
     private NonPC nearestNPC;
@@ -18,10 +19,11 @@ public class PlayerNPCEncounter : MonoBehaviour
     {
         nonPCs = new List<NonPC>(FindObjectsOfType<NonPC>());
         mvmtControl = GetComponent<PlayerMovementController>();
+        uiController = FindObjectOfType<UIController>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
 
         if (dialogueRunner == null) {}
-        else dialogueRunner.onDialogueComplete.AddListener(MovementAfterDialogue);
+        else dialogueRunner.onDialogueComplete.AddListener(AfterDialogue);
         canInteract = false;
     }
 
@@ -60,12 +62,14 @@ public class PlayerNPCEncounter : MonoBehaviour
         {
             canInteract = false;
             mvmtControl.DisableMovement();
+            uiController.TranslateHUD(false, 0.5f);
             dialogueRunner.StartDialogue(nearestNPC.introTitle);
         }
     }
 
-    void MovementAfterDialogue()
+    void AfterDialogue()
     {
         mvmtControl.EnableMovement();
+        uiController.TranslateHUD(true, 0.5f);
     }
 }
