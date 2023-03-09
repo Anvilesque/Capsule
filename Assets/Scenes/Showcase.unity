@@ -565,6 +565,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Diary
       objectReference: {fileID: 0}
+    - target: {fileID: 7002433336973772957, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
+      propertyPath: m_text
+      value: Dear diary...
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0d9acaabb9b2204a85b26f0ea0271f8, type: 3}
 --- !u!1 &284613610
@@ -5166,7 +5170,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.8867924, g: 0.65576464, b: 0.49693838, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

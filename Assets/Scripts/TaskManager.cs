@@ -178,7 +178,7 @@ public class TaskManager : MonoBehaviour
         mvmtControl.EnableMovement();
         Sequence seqBookshelfStop = DOTween.Sequence();
         seqBookshelfStop.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
-        seqBookshelfStop.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(1f, 0, (1-isoViewRatio), 1f), 1));
+        seqBookshelfStop.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
         seqBookshelfStop.onComplete = ()=> isTasking = false;
     }
     void StartDiary()
@@ -193,7 +193,7 @@ public class TaskManager : MonoBehaviour
         mvmtControl.EnableMovement();
         Sequence seqDiaryStop = DOTween.Sequence();
         seqDiaryStop.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
-        seqDiaryStop.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(1f, 0, (1-isoViewRatio), 1f), 1));
+        seqDiaryStop.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
         seqDiaryStop.onComplete = ()=> isTasking = false;
     }
 }
