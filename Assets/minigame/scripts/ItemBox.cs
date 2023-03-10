@@ -43,7 +43,7 @@ public class ItemBox : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             float lampChance = 1f;
             if (Random.Range(0f, 100f) < lampChance)
             {
-                newItem = (GameObject)Instantiate(items[Random.Range(0, items.Count - 1)], mousePos, Quaternion.identity, transform.root.Find("Items"));
+                newItem = (GameObject)Instantiate(items[items.Count - 1], mousePos, Quaternion.identity, transform.root.Find("Items"));
             }
             else
             {

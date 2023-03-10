@@ -22,9 +22,12 @@ public class UIController : MonoBehaviour
     private Button buttonMood;
     private Button buttonSettings;
     public UIDocument tasklist;
+    private VisualElement taskRoot;
     void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
+        taskRoot = tasklist.rootVisualElement;
+        taskRoot.style.display = DisplayStyle.None;
 
         timeController = FindObjectOfType<TimeController>();
         timeTime = root.Q<Label>("timeTime");
@@ -57,7 +60,8 @@ public class UIController : MonoBehaviour
     }
 
     void buttonTaskPressed() {
-        
+        if (taskRoot.style.display == DisplayStyle.Flex) taskRoot.style.display = DisplayStyle.None;
+        else taskRoot.style.display = DisplayStyle.Flex;
     }
 
     void buttonInventoryPressed() {

@@ -206,7 +206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &61107718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6901,7 +6901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e740840def8cf04899b12630130a319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tasklist: {fileID: 0}
+  tasklist: {fileID: 61107718}
 --- !u!114 &1433125028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7356,6 +7356,16 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 1
       m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 1
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -34, y: -7, z: 3}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 1
       m_TileObjectToInstantiateIndex: 65535
@@ -8651,6 +8661,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: bb5350ee9f6374b8796f83035f479c4a, type: 2}
   - m_RefCount: 19
     m_Data: {fileID: 11400000, guid: 1de80b30273a2e3418cfc27135e5f482, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 3f9dc59dc36d9c04eb6a149eba8259e8, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 9
     m_Data: {fileID: 21300000, guid: 1f962df8639f05d44829741207debe46, type: 3}
@@ -8660,8 +8672,10 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: eb29522874de04c6b8f04674d6dbf8b5, type: 3}
   - m_RefCount: 19
     m_Data: {fileID: 21300000, guid: e75d7ed234e64bf43ac76625d557c5c3, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 302513d7d0792f54181271b7342f2d52, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 144
+  - m_RefCount: 145
     m_Data:
       e00: 1
       e01: 0
@@ -8682,7 +8696,7 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 3.5147e-41, g: 3.5147e-41, b: 3.5147e-41, a: 3.5147e-41}
-  - m_RefCount: 144
+  - m_RefCount: 145
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -9447,18 +9461,6 @@ PrefabInstance:
     - target: {fileID: 8389408299536495300, guid: d174f1a575295bc46afb0d8121b335c2, type: 3}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8389408299536495300, guid: d174f1a575295bc46afb0d8121b335c2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8389408299536495300, guid: d174f1a575295bc46afb0d8121b335c2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8389408299536495300, guid: d174f1a575295bc46afb0d8121b335c2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8389408299536495300, guid: d174f1a575295bc46afb0d8121b335c2, type: 3}
       propertyPath: m_LocalPosition.x

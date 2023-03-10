@@ -7,3 +7,8 @@
     -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Notebook.otf?fileID=12800000&guid=eba2a83507f6548b4877227620badc8e&type=3#Notebook');
     -unity-font-style: bold;
 }
+
+.text-task-general {
+    color: rgb(106, 83, 83);
+    font-size: 50px;
+}
