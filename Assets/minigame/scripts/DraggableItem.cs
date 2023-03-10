@@ -105,4 +105,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
         }
     }
+
+    public void DestroyAllItems()
+    {
+        foreach (Transform item in itemParent.GetComponentInChildren<Transform>())
+        Destroy(item.gameObject);
+    }
 }

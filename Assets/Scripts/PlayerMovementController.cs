@@ -93,10 +93,26 @@ public class PlayerMovementController : MonoBehaviour
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
-        if (direction == "Left") playerSprite.sprite = sprites[LEFT];
-        else if (direction == "Right") playerSprite.sprite = sprites[RIGHT];
-        else if (direction == "Up") playerSprite.sprite = sprites[UP];
-        else if (direction == "Down") playerSprite.sprite = sprites[DOWN];
+        if (direction == "Left")
+        {
+            playerSprite.sprite = sprites[LEFT];
+            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
+        else if (direction == "Right")
+        {
+            playerSprite.sprite = sprites[RIGHT];
+            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
+        else if (direction == "Up")
+        {
+            playerSprite.sprite = sprites[UP];
+            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
+        else if (direction == "Down")
+        {
+            playerSprite.sprite = sprites[DOWN];
+            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
 
         prevPosPoint = transform.position;
         prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // Player is rendered as being on (1, 1)

@@ -39,7 +39,16 @@ public class ItemBox : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         mousePos.z = 150f;
         for (int i = 0; i < numItems; i++)
         {
-            GameObject newItem = (GameObject)Instantiate(items[Random.Range(0, items.Count - 1)], mousePos, Quaternion.identity, transform.root.Find("Items"));
+            GameObject newItem;
+            float lampChance = 1f;
+            if (Random.Range(0f, 100f) < lampChance)
+            {
+                newItem = (GameObject)Instantiate(items[Random.Range(0, items.Count - 1)], mousePos, Quaternion.identity, transform.root.Find("Items"));
+            }
+            else
+            {
+                newItem = (GameObject)Instantiate(items[Random.Range(0, items.Count - 1)], mousePos, Quaternion.identity, transform.root.Find("Items"));
+            }
             newItem.transform.eulerAngles = new Vector3(0, 0, Random.Range(0f, 360f));
             newItem.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
         }
