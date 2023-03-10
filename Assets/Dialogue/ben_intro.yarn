@@ -1,0 +1,106 @@
+﻿title: ben_intro
+tags:
+position: 0,0
+---
+Ben the Nature Kid: Hey, bucko! Be one with nature, young grasshopper. You wanna hear something I came up with while I was walking today?
+-> Sure!
+    <<declare $asdf to 0>>
+    <<set $asdf to GetRandomDialogue(11)>>
+    <<if $asdf is 0>>
+        Ben the Nature Kid: You know, humans like to show off a lot.
+        Ben the Nature Kid: We have bigger brains than other animals, and we are proud of that.
+        Ben the Nature Kid: But it's like a kid showing his older brother a toy.
+        Ben the Nature Kid: "That's cute, kid. When you get bigger, I'll show you how to drive a *real* car."
+        Ben the Nature Kid: I just thought that since we don't really know what's good for us, it'll be good for us to take some time to listen to the trees and the other animals.
+        Ben the Nature Kid: After all, we're all siblings in evolution.
+    <<endif>>
+    <<if $asdf is 1>>
+        Ben the Nature Kid: Have you ever thought about what would happen if animals could photosynthesize just as well as plants?
+        Ben the Nature Kid: Like, what if there was no need to compete for food? We all just make it ourselves.
+        Ben the Nature Kid: Maybe animals wouldn't have mouths anymore, and we'd start talking out of our butts! Haha!
+        Ben the Nature Kid: Wait, if I could photosynthesize, would I start tasting like plants?
+        Ben the Nature Kid: Blegh, broccoli.
+        Ben the Nature Kid: (I actually like broccoli though.)
+    <<endif>>
+    <<if $asdf is 2>>
+        Ben the Nature Kid: There are SOOOOOOO many streets here!
+        Ben the Nature Kid: Sometimes I just wish that I could walk outside and see a giant lake right in front of me.
+        Ben the Nature Kid: Can you imagine how cool that would be?! You could study in front of a giant lake!
+        Ben the Nature Kid: Maybe see Loch Ness too, by golly!
+        Ben the Nature Kid: Wait, tone it down, Ben. You're just a kid.
+    <<endif>>
+    <<if $asdf is 3>>
+        Ben the Nature Kid: My science teacher told me today that we breathe in carbon dioxide and breathe out oxygen.
+        Ben the Nature Kid: That's wrong, of course! Or is it?
+        Ben the Nature Kid: I mean, what part of science do we know for sure? I told my brother today that molecools are round circles, and he said some heebish-gibbish about how they have to do with probability.
+        Ben the Nature Kid: AGH! MATH!
+        Ben the Nature Kid: So like, what is real?! I don't know.
+        Ben the Nature Kid: I do like swimming though.
+    <<endif>>
+    <<if $asdf is 4>>
+        Ben the Nature Kid: Bakayarou! Kono yarou!
+        Ben the Nature Kid: My brother taught me that. He said not to say it in front of Mom though.
+        Ben the Nature Kid: But I like how it rolls off my tongue. Bakayarou! Kono yarou!
+        Ben the Nature Kid: Should I stop saying it? I'll stop saying it if you say it out loud with me. Ready?
+        Ben the Nature Kid: Bakayarou! Kono yarou!
+    <<endif>>
+    <<if $asdf is 5>>
+        Ben the Nature Kid: Do you ever wish you had superpowers?
+        Ben the Nature Kid: Like the ability to fly, or to pick up cars, or to make things out of thin air?
+        Ben the Nature Kid: That's cool and all, but I think growing up is the coolest thing ever.
+        Ben the Nature Kid: Like, a little baby animal grows up so fast to become just like their mama, without almost any hiccups!
+        Ben the Nature Kid: Could you ever program something like that? I know I can't.
+        Ben the Nature Kid: (The SRS struggle is real.)
+    <<endif>>
+    <<if $asdf is 6>>
+        Ben the Nature Kid: A lot of people say they hate bugs.
+        Ben the Nature Kid: I think bugs look awesome! They're like little spaceships made from nature, and they do all kinds of cool things that we can't do.
+        Ben the Nature Kid: Did you know that cockroaches are some of the fastest animals for their size?
+        Ben the Nature Kid: I don't know. Sometimes we take for granted what we're able to do because we're giant and can crush things and make tools and stuff. But imagine if we were in the bug world. We wouldn't stand a chance.
+        Ben the Nature Kid: Businesspeople? Ants got 'em beat. Chefs? Bees > C's. And then runners have to go against a literal tank of a cockroach!
+        Ben the Nature Kid: To each their own, I guess.
+    <<endif>>
+    <<if $asdf is 7>>
+        Ben the Nature Kid: People are so quiet. Is it a good thing to be quiet?
+        Ben the Nature Kid: I love yelling when I go on walks, but my brother tells me it'll scare the other people.
+        Ben the Nature Kid: But what is there to be afraid of? Why do we hate loud noises so much? I don't think animals do.
+        Ben the Nature Kid: Okay, some loud noises are a no-no. Like my brother's alarm. It's tooooooo louuuud.
+        Ben the Nature Kid: But, I don't know. Everyone has a voice, everyone can sing or talk and stuff, but so many people don't do it.
+        Ben the Nature Kid: They say it's out of respect, but I don't think keeping it in is respectful to nature.
+    <<endif>>
+    <<if $asdf is 8>>
+        Ben the Nature Kid: I'm not really a cat person. I'm more of a dog person.
+        Ben the Nature Kid: That being said, I really like cats.
+        Ben the Nature Kid: I think cats are like those mentors in movies who are always 17 billion steps ahead.
+        Ben the Nature Kid: Like Jackie Chan in Karate Kid.
+        Ben the Nature Kid: There was a black and white cat in my brother's school who always walked around, and people would go up to him and pet him.
+        Ben the Nature Kid: I never got to pet him myself, but I saw my brother pet him for the first time, and it was an amazing moment.
+        Ben the Nature Kid: The cat also grabbed his arm, like a mentor who was saying, "You are blessed, young grasshopper. Live your life to the fullest."
+        Ben the Nature Kid: "And I will be watching you from above."
+        Ben the Nature Kid: Thank you, Powell Cat. 
+    <<endif>>
+    <<if $asdf is 9>>
+        Ben the Nature Kid: I don't really like school.
+        Ben the Nature Kid: School tells me really cool things, but that's all they do. Tell me.
+        Ben the Nature Kid: I want to see things for myself!
+        Ben the Nature Kid: At school, they even told me to show, not tell.
+        Ben the Nature Kid: They told me. Stop telling me! Show me!
+        Ben the Nature Kid: But then when they show people, they only let a few people see.
+        Ben the Nature Kid: School is poopoo.
+        Ben the Nature Kid: Well, at least I get to see all that I want to see when I'm out in nature. Not poopoo!
+        Ben the Nature Kid: I like when life is not poopoo.
+    <<endif>>
+    <<if $asdf is 10>>
+        Ben the Nature Kid: What do you think makes a genius?
+        Ben the Nature Kid: It's easy to decide that for humans: if you came up with something no one else could have even dreamt of thinking, then you're genius.
+        Ben the Nature Kid: What about animals? What makes an animal a genius?
+        Ben the Nature Kid: Maybe it's how many tricks they can do. But is that even surprising anymore? Everyone knows dogs can learn tricks.
+        Ben the Nature Kid: To me, I think everyone's a genius.
+        Ben the Nature Kid: I mean, you've never heard someone say "colorless green ideas sleep furiously" before (unless you have).
+        Ben the Nature Kid: I just think everyone's capable of doing something that no one's done before.
+        Ben the Nature Kid: And even if someone has done it before, that's okay! Because there is no one else like you in the world, and your life is just as interesting.
+    <<endif>>
+-> Sorry, Bennett. Gotta go feed Timmie's pigeons again.
+    Ben the Nature Kid: Alrighty, no worries!
+    Ben the Nature Kid: Wait, who's Bennett? Who's Timmie?
+===
