@@ -11,7 +11,7 @@ Ben the Nature Kid: Hey, bucko! Be one with nature, young grasshopper. You wanna
         Ben the Nature Kid: We have bigger brains than other animals, and we are proud of that.
         Ben the Nature Kid: But it's like a kid showing his older brother a toy.
         Ben the Nature Kid: "That's cute, kid. When you get bigger, I'll show you how to drive a *real* car."
-        Ben the Nature Kid: I just thought that since we don't really know what's good for us, it'll be good for us to take some time to listen to the trees and the other animals.
+        Ben the Nature Kid: I just thought that since we don't really know what's good for us, we might as well take some time to listen to the trees and the other animals.
         Ben the Nature Kid: After all, we're all siblings in evolution.
     <<endif>>
     <<if $asdf is 1>>
@@ -40,7 +40,7 @@ Ben the Nature Kid: Hey, bucko! Be one with nature, young grasshopper. You wanna
     <<if $asdf is 4>>
         Ben the Nature Kid: Bakayarou! Kono yarou!
         Ben the Nature Kid: My brother taught me that. He said not to say it in front of Mom though.
-        Ben the Nature Kid: But I like how it rolls off my tongue. Bakayarou! Kono yarou!
+        Ben the Nature Kid: But I like how it rolls off the tongue. Bakayarou! Kono yarou!
         Ben the Nature Kid: Should I stop saying it? I'll stop saying it if you say it out loud with me. Ready?
         Ben the Nature Kid: Bakayarou! Kono yarou!
     <<endif>>
@@ -66,7 +66,7 @@ Ben the Nature Kid: Hey, bucko! Be one with nature, young grasshopper. You wanna
         Ben the Nature Kid: But what is there to be afraid of? Why do we hate loud noises so much? I don't think animals do.
         Ben the Nature Kid: Okay, some loud noises are a no-no. Like my brother's alarm. It's tooooooo louuuud.
         Ben the Nature Kid: But, I don't know. Everyone has a voice, everyone can sing or talk and stuff, but so many people don't do it.
-        Ben the Nature Kid: They say it's out of respect, but I don't think keeping it in is respectful to nature.
+        Ben the Nature Kid: They say it's out of respect, but I don't think keeping it in is respectful to the nature that gave us our voice.
     <<endif>>
     <<if $asdf is 8>>
         Ben the Nature Kid: I'm not really a cat person. I'm more of a dog person.
@@ -96,7 +96,7 @@ Ben the Nature Kid: Hey, bucko! Be one with nature, young grasshopper. You wanna
         Ben the Nature Kid: What about animals? What makes an animal a genius?
         Ben the Nature Kid: Maybe it's how many tricks they can do. But is that even surprising anymore? Everyone knows dogs can learn tricks.
         Ben the Nature Kid: To me, I think everyone's a genius.
-        Ben the Nature Kid: I mean, you've never heard someone say "colorless green ideas sleep furiously" before (unless you have).
+        Ben the Nature Kid: I mean, you've never heard someone say "colorless green ideas sleep furiously" before... right?
         Ben the Nature Kid: I just think everyone's capable of doing something that no one's done before.
         Ben the Nature Kid: And even if someone has done it before, that's okay! Because there is no one else like you in the world, and your life is just as interesting.
     <<endif>>
