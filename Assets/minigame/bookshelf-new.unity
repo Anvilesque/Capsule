@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 159122478}
   - component: {fileID: 159122476}
   m_Layer: 5
-  m_Name: Rack (1)
+  m_Name: Rack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,7 +444,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 242229433}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -460,7 +460,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 159122474}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0559c7fee23560248ba4bc7f860ca66a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -596,8 +596,8 @@ RectTransform:
   - {fileID: 966294658}
   - {fileID: 78745912}
   - {fileID: 476995538}
-  - {fileID: 1862789321}
   - {fileID: 159122475}
+  - {fileID: 1862789321}
   - {fileID: 444042999}
   - {fileID: 3885914873133487868}
   - {fileID: 1254256679}
@@ -1159,7 +1159,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 444042998}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0559c7fee23560248ba4bc7f860ca66a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1239,7 +1239,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 476995537}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0559c7fee23560248ba4bc7f860ca66a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3056,7 +3056,7 @@ GameObject:
   - component: {fileID: 1862789324}
   - component: {fileID: 1862789322}
   m_Layer: 5
-  m_Name: Rack
+  m_Name: Rack (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3075,7 +3075,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 242229433}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3091,7 +3091,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1862789320}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0559c7fee23560248ba4bc7f860ca66a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

@@ -21,9 +21,10 @@ public class TaskManager : MonoBehaviour
     private string currentMinigame;
     private bool taskAvailable;
     private bool isTasking;
+    private bool isProcessing;
     private string taskName;
     private float isoViewRatio;
-    public Canvas canvasBookshelf;
+    // public Canvas canvasBookshelf;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +54,7 @@ public class TaskManager : MonoBehaviour
 
         isoViewRatio = 0.2f;
         isTasking = false;
+        isProcessing = false;
         // canvasBookshelf.gameObject.SetActive(false);
         DOTween.Init();
     }
@@ -63,9 +65,9 @@ public class TaskManager : MonoBehaviour
         CheckInteractables();
         IndicateInteract();
         if (Input.GetButtonDown("Interact"))
-        {
-            
+        {         
             if (!taskAvailable) {}
+            else if (isProcessing) {}
             else if (isTasking)
             {
                 StopTask();
@@ -135,6 +137,7 @@ public class TaskManager : MonoBehaviour
 
     void StartTask(string taskName)
     {
+        isProcessing = true;
         isTasking = true;
         if (taskName == "Bookshelf")
         {
@@ -150,6 +153,7 @@ public class TaskManager : MonoBehaviour
 
     public void StopTask()
     {
+        isProcessing = true;
         switch (currentMinigame)
         {
             case "Bookshelf":
@@ -163,7 +167,6 @@ public class TaskManager : MonoBehaviour
                 break;
             }
         }
-        currentMinigame = null;
     }
 
     void StartBookshelf()
@@ -173,7 +176,8 @@ public class TaskManager : MonoBehaviour
         seqBookshelfStart.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
         seqBookshelfStart.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
         seqBookshelfStart.AppendCallback(()=> uiController.TranslateHUD(false, 1f));
-        // seqBookshelfStart.onComplete = (()=> canvasBookshelf.gameObject.SetActive(true));
+        seqBookshelfStart.AppendInterval(1f);
+        seqBookshelfStart.AppendCallback(()=> isProcessing = false);
     }
 
     void StopBookshelf()
@@ -185,6 +189,7 @@ public class TaskManager : MonoBehaviour
         seqBookshelfStop.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
         seqBookshelfStop.InsertCallback(1f, ()=> mvmtControl.EnableMovement());
         seqBookshelfStop.onComplete = ()=> isTasking = false;
+        seqBookshelfStop.AppendCallback(()=> isProcessing = false);
     }
     void StartDiary()
     {
@@ -193,9 +198,12 @@ public class TaskManager : MonoBehaviour
         seqDiaryStart.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
         seqDiaryStart.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
         seqDiaryStart.AppendCallback(()=> uiController.TranslateHUD(false, 1f));
+        seqDiaryStart.AppendInterval(1f);
+        seqDiaryStart.AppendCallback(()=> isProcessing = false);
     }
     void StopDiary()
     {
+        if (InputFieldManager.isInputFocused) return;
         uiController.TranslateHUD(true, 0.5f);
         Sequence seqDiaryStop = DOTween.Sequence();
         seqDiaryStop.SetDelay(0.5f);
@@ -203,5 +211,6 @@ public class TaskManager : MonoBehaviour
         seqDiaryStop.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
         seqDiaryStop.InsertCallback(1f, ()=> mvmtControl.EnableMovement());
         seqDiaryStop.onComplete = ()=> isTasking = false;
+        seqDiaryStop.AppendCallback(()=> isProcessing = false);
     }
 }

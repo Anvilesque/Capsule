@@ -9,7 +9,7 @@ public class Slot : MonoBehaviour, IDropHandler
     {
         GameObject dropped = eventData.pointerDrag;
         if (transform.childCount >= 4){
-            Debug.Log("More than 4 items in this slot.");
+            // Debug.Log("More than 4 items in this slot.");
             return;
         }
         DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();

@@ -74,7 +74,7 @@ public class UIController : MonoBehaviour
 
     public void TranslateHUD(bool translateIn, float duration)
     {
-        if (runningCoroutine != null) StopCoroutine(runningCoroutine);
+        // if (runningCoroutine != null) StopCoroutine(runningCoroutine);
         runningCoroutine = StartCoroutine(TranslateRoot(translateIn, duration));
     }
 
