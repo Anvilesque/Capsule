@@ -13,10 +13,10 @@ TagManager:
   - Water
   - UI
   - Walls
-  - 
-  - 
-  - 
-  - 
+  - Shelf_Item
+  - Shelf_ItemSlotted
+  - Shelf_ContainSlotted
+  - Shelf_ContainAll
   - 
   - 
   - 

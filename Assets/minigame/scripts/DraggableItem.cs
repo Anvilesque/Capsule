@@ -12,7 +12,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector] public Transform parentAfterDrag;
     private Camera gameCam;
     private Canvas canvasBookshelf;
-    
+    private Transform itemParent;
     private Rigidbody2D rigidBody;
     private BoxCollider2D boxCollider;
 
@@ -20,17 +20,19 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Start()
     {
-        canvasBookshelf = new List<Canvas>(FindObjectsOfType<Canvas>()).Find(x=> x.name.Contains("Bookshelf"));
         gameCam = new List<Camera>(FindObjectsOfType<Camera>()).Find(x=> x.name.Contains("Bookshelf"));
+        canvasBookshelf = new List<Canvas>(FindObjectsOfType<Canvas>()).Find(x=> x.name.Contains("Bookshelf"));
+        itemParent = transform.root.Find("Items");
         rigidBody = GetComponent<Rigidbody2D>();
         origWidth = GetComponent<RectTransform>().rect.width;
         origHeight = GetComponent<RectTransform>().rect.height;
+        gameObject.layer = LayerMask.NameToLayer("Shelf_Item");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         // Debug.Log("Begin drag.");
-        parentAfterDrag = transform.root;
+        parentAfterDrag = itemParent;
         transform.SetParent(parentAfterDrag);
         transform.SetAsLastSibling();
         transform.GetComponent<RectTransform>().sizeDelta = new Vector2(origWidth, origHeight);
@@ -38,6 +40,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = false;
         rigidBody.constraints = RigidbodyConstraints2D.FreezePositionX;
         rigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;
+        gameObject.layer = LayerMask.NameToLayer("Shelf_Item");
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData)
@@ -54,7 +57,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         ChangePos();
         rigidBody.constraints = RigidbodyConstraints2D.None;
         transform.SetParent(parentAfterDrag);
-        if (transform.parent != transform.root)
+        if (transform.parent != itemParent)
         {
             GridLayoutGroup grid = transform.parent.gameObject.GetComponent<GridLayoutGroup>();
             if (transform.parent.childCount >= 2)
@@ -77,7 +80,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 if (grid != null) Destroy(grid);
                 transform.position = transform.parent.position;
             }
-            
+            gameObject.layer = LayerMask.NameToLayer("Shelf_ItemSlotted");
         }
         image.raycastTarget = true;
     }
