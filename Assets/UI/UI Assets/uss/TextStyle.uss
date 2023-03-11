@@ -12,3 +12,12 @@
     color: rgb(106, 83, 83);
     font-size: 50px;
 }
+
+.text-diary-general {
+    width: 100%;
+    height: auto;
+    -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
+    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
+    font-size: 60px;
+    color: rgb(89, 78, 78);
+}

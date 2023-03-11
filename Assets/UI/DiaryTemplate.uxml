@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UI%20Assets/uss/TextStyle.uss?fileID=7433441132597879392&amp;guid=f473a6b0e58e27d428d8b85d1b61c50a&amp;type=3#TextStyle" />
+    <ui:VisualElement name="root" style="width: 50%; height: 70%; left: 21%; top: 5%;">
+        <ui:VisualElement name="background" style="background-color: rgb(221, 187, 153); width: 100%; height: 100%; position: absolute;" />
+        <ui:VisualElement name="entries" style="width: 100%; height: 100%; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;" />
+    </ui:VisualElement>
+</ui:UXML>

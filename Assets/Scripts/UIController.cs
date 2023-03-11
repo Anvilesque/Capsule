@@ -15,35 +15,42 @@ public class UIController : MonoBehaviour
     private Label timeTime;
     private Label timeDay;
     private TimeController timeController;
+    private SaveDiary saveDiary;
 
     private Button buttonMenu;
     private Button buttonTask;
-    private Button buttonInventory;
+    private Button buttonDiary;
     private Button buttonMood;
     private Button buttonSettings;
     public UIDocument tasklist;
+    public UIDocument diaryEntries;
     private VisualElement taskRoot;
+    private VisualElement diaryRoot;
     void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
         taskRoot = tasklist.rootVisualElement;
         taskRoot.style.display = DisplayStyle.None;
-
+        diaryRoot = diaryEntries.rootVisualElement;
+        diaryRoot.style.display = DisplayStyle.None;
+        
         timeController = FindObjectOfType<TimeController>();
         timeTime = root.Q<Label>("timeTime");
         timeDay = root.Q<Label>("timeDay");
         timeTime.text = timeController.timeTextTime;
         timeDay.text = timeController.timeTextDay;
+        
+        saveDiary = FindObjectOfType<SaveDiary>();
 
         buttonMenu = root.Q<Button>("buttonMenu");
         buttonTask = root.Q<Button>("buttonTask");
-        buttonInventory = root.Q<Button>("buttonInventory");
+        buttonDiary = root.Q<Button>("buttonDiary");
         buttonMood = root.Q<Button>("buttonMood");
         buttonSettings = root.Q<Button>("buttonSettings");
 
         buttonMenu.clicked += buttonMenuPressed;
         buttonTask.clicked += buttonTaskPressed;
-        buttonInventory.clicked += buttonInventoryPressed;
+        buttonDiary.clicked += buttonDiaryPressed;
         buttonMood.clicked += buttonMoodPressed;
         buttonSettings.clicked += buttonSettingsPressed;
     }
@@ -64,8 +71,21 @@ public class UIController : MonoBehaviour
         else taskRoot.style.display = DisplayStyle.Flex;
     }
 
-    void buttonInventoryPressed() {
-
+    void buttonDiaryPressed() {
+        VisualElement entries = diaryRoot.Q<VisualElement>("entries");
+        if (diaryRoot.style.display == DisplayStyle.Flex) diaryRoot.style.display = DisplayStyle.None;
+        else diaryRoot.style.display = DisplayStyle.Flex;
+        if (entries.childCount == 0) {}
+        else foreach (Label label in entries.Children())
+        {
+            entries.Remove(label);
+        }
+        foreach (string entry in saveDiary.previousDiaryEntries)
+        {
+            Label label = new Label(entry);
+            label.AddToClassList("text-diary-general");
+            entries.Add(label);
+        }
     }
 
     void buttonMoodPressed() {
@@ -85,6 +105,8 @@ public class UIController : MonoBehaviour
     private IEnumerator TranslateRoot(bool translateIn, float duration)
     {
         float timer = 0;
+        taskRoot.style.display = DisplayStyle.None;
+        diaryRoot.style.display = DisplayStyle.None;
         if (translateIn)
         {
             while (timer < duration)

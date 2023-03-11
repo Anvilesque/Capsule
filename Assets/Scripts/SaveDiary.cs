@@ -10,7 +10,7 @@ public class SaveDiary : MonoBehaviour
     public Button saveDiaryButton;
     public GameObject inputField;
     public TaskManager taskManager;
-    List<string> previousDiaryEntries = new List<string>();
+    public List<string> previousDiaryEntries = new List<string>();
            
     void Start()
     {
@@ -23,10 +23,12 @@ public class SaveDiary : MonoBehaviour
         string text = inputField.GetComponent<TMP_InputField>().text;
         inputField.GetComponent<TMP_InputField>().text = "";
         taskManager.StopTask();
+
+        text = System.DateTime.Now.Month + "/" + System.DateTime.Now.Day + ": " + text;
         previousDiaryEntries.Add(text);
-        foreach(var entry in previousDiaryEntries)
-        {
-            Debug.Log(entry);
-        }
+        // foreach(var entry in previousDiaryEntries)
+        // {
+        //     Debug.Log(entry);
+        // }
     }
 }
