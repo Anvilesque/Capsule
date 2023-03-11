@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Showcase.unity
+    guid: d90d4eebaa7e00f489c1caf1bf45858b
   m_configObjects: {}

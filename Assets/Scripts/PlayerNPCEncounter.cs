@@ -8,6 +8,7 @@ public class PlayerNPCEncounter : MonoBehaviour
 {
     private List<NonPC> nonPCs;
     private PlayerMovementController mvmtControl;
+    public GameObject interactIndicator;
     private UIController uiController;
     private DialogueRunner dialogueRunner;
     private bool canInteract;
@@ -39,6 +40,7 @@ public class PlayerNPCEncounter : MonoBehaviour
             int playerDistY = Mathf.Abs(playerCell.y - nonPCCell.y);
             CheckInteractNPC(playerDistX, playerDistY, nonPC);
         }
+        IndicateInteract();
         InteractNPC();
     }
 
@@ -53,6 +55,36 @@ public class PlayerNPCEncounter : MonoBehaviour
         else
         {
             canInteract = false;
+        }
+    }
+
+    void IndicateInteract()
+    {
+        if (isInteracting)
+        {
+            DestroyIndicator();
+        }
+        else if (canInteract)
+        {
+            if (interactIndicator != null) {}
+            else
+            {
+                interactIndicator = Instantiate((GameObject)Resources.Load("Prefabs/InteractIndicator"), mvmtControl.transform.position, Quaternion.identity, mvmtControl.transform);
+                interactIndicator.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                interactIndicator.transform.localPosition = new Vector3(-0.5f, 1f, 100f);
+            }
+        }
+        else
+        {
+            DestroyIndicator();
+        }
+    }
+
+    void DestroyIndicator()
+    {
+        if (interactIndicator != null)
+        {
+            Destroy(interactIndicator);
         }
     }
 

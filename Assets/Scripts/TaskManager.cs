@@ -130,9 +130,9 @@ public class TaskManager : MonoBehaviour
     void DestroyIndicator()
     {
         if (interactIndicator != null)
-            {
-                Destroy(interactIndicator);
-            }
+        {
+            Destroy(interactIndicator);
+        }
     }
 
     void StartTask(string taskName)

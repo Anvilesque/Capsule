@@ -22,6 +22,7 @@ public class UIController : MonoBehaviour
     private Button buttonDiary;
     private Button buttonMood;
     private Button buttonSettings;
+    private Button buttonQuit;
     public UIDocument tasklist;
     public UIDocument diaryEntries;
     private VisualElement taskRoot;
@@ -47,12 +48,14 @@ public class UIController : MonoBehaviour
         buttonDiary = root.Q<Button>("buttonDiary");
         buttonMood = root.Q<Button>("buttonMood");
         buttonSettings = root.Q<Button>("buttonSettings");
+        buttonQuit = root.Q<Button>("buttonQuit");
 
         buttonMenu.clicked += buttonMenuPressed;
         buttonTask.clicked += buttonTaskPressed;
         buttonDiary.clicked += buttonDiaryPressed;
         buttonMood.clicked += buttonMoodPressed;
         buttonSettings.clicked += buttonSettingsPressed;
+        buttonQuit.clicked += buttonQuitPressed;
     }
 
     private void Update()
@@ -94,6 +97,11 @@ public class UIController : MonoBehaviour
 
     void buttonSettingsPressed() {
 
+    }
+
+    void buttonQuitPressed() 
+    {
+        Application.Quit();
     }
 
     public void TranslateHUD(bool translateIn, float duration)
