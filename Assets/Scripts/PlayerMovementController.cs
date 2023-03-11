@@ -96,22 +96,22 @@ public class PlayerMovementController : MonoBehaviour
         if (direction == "Left")
         {
             playerSprite.sprite = sprites[LEFT];
-            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            // transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
         else if (direction == "Right")
         {
             playerSprite.sprite = sprites[RIGHT];
-            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            // transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
         else if (direction == "Up")
         {
             playerSprite.sprite = sprites[UP];
-            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            // transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
         else if (direction == "Down")
         {
             playerSprite.sprite = sprites[DOWN];
-            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            // transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
 
         prevPosPoint = transform.position;
