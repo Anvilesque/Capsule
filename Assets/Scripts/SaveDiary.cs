@@ -10,7 +10,9 @@ public class SaveDiary : MonoBehaviour
     public Button saveDiaryButton;
     public GameObject inputField;
     public TaskManager taskManager;
+    public TimeController time;
     public List<string> previousDiaryEntries = new List<string>();
+    public List<string> previousDiaryEntriesAlt = new List<string>();
            
     void Start()
     {
@@ -24,11 +26,11 @@ public class SaveDiary : MonoBehaviour
         inputField.GetComponent<TMP_InputField>().text = "";
         taskManager.StopTask();
 
-        text = System.DateTime.Now.Month + "/" + System.DateTime.Now.Day + ": " + text;
+        text = $"({System.DateTime.Now.Month}/{System.DateTime.Now.Day}/{System.DateTime.Now.Year})Day 1- {time.hours.ToString("00")}:{time.mins.ToString("00")}: {text}"; 
         previousDiaryEntries.Add(text);
-        // foreach(var entry in previousDiaryEntries)
-        // {
-        //     Debug.Log(entry);
-        // }
+        foreach(var entry in previousDiaryEntries)
+        {
+            Debug.Log(entry);
+        }
     }
 }

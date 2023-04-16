@@ -67,7 +67,5 @@ public class NonPC : MonoBehaviour
         destination.z = 2;
         transform.position = TileManager.GridCoordsToWorldCoords(destination) + new Vector3(0, 2 * TileManager.distY, 0); // set to teleport for now
         isMoving = false;
-        
-        // TODO: Implement A* pathfinding algorithm
     }
 }

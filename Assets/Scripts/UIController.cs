@@ -87,6 +87,7 @@ public class UIController : MonoBehaviour
         {
             Label label = new Label(entry);
             label.AddToClassList("text-diary-general");
+            label.style.whiteSpace = WhiteSpace.Normal;
             entries.Add(label);
         }
     }
