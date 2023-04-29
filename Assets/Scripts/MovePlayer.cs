@@ -26,11 +26,11 @@ public class MovePlayer : MonoBehaviour
         rb.velocity = playerVelocity;
         
     }
-    private void OnTriggerEnter2D(Collider2D collission)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collission.gameObject.tag == "Package")
+        if(collision.gameObject.tag == "Package")
         {
-            Destroy(collission.gameObject);
+            Destroy(collision.gameObject);
             boxesCaught += 1;
             Debug.Log(boxesCaught);
         }
