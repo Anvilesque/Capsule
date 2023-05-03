@@ -17,7 +17,7 @@ public class TimeController : MonoBehaviour
     public int hours;
     public int days = 1;
     private GameObject player;
-    public PlayerMovementController movementController;
+    public PlayerMovement movementController;
     public float newX;
     public float newY;
  
@@ -25,7 +25,7 @@ public class TimeController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        movementController = player.GetComponent<PlayerMovementController>();
+        movementController = player.GetComponent<PlayerMovement>();
         displayInterval = 10;
     }
  

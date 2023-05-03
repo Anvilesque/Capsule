@@ -8,7 +8,7 @@ public class TaskManager : MonoBehaviour
 {
     private Camera mainCam;
     private List<Camera> taskCams;
-    private PlayerMovementController mvmtControl;
+    private PlayerMovement mvmtControl;
     private Sprite playerSprite;
     private TileManager tileManager;
     private Tilemap interactableMap;
@@ -40,7 +40,7 @@ public class TaskManager : MonoBehaviour
                 cam.transparencySortMode = TransparencySortMode.Default;
             }
         }
-        mvmtControl = FindObjectOfType<PlayerMovementController>();
+        mvmtControl = FindObjectOfType<PlayerMovement>();
         playerSprite = GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().sprite;
         tileManager = FindObjectOfType<TileManager>();
         interactableMap = tileManager.interactableMap;
@@ -91,17 +91,13 @@ public class TaskManager : MonoBehaviour
         {
             Vector3Int tempTile = tile;
             taskAvailable = false;
-            for (int i = interactableMap.cellBounds.zMin; i <= interactableMap.cellBounds.zMax; i++)
+            if (tileManager.ScanForTile(interactableMap, tempTile))
             {
-                tempTile.z = i;
-                if (interactableMap.HasTile(tempTile))
-                {
-                    taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
-                    taskAvailable = true;
-                    break;
-                }
+                tempTile = tileManager.ScanForTileValue(interactableMap, tempTile);
+                taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
+                taskAvailable = true;
+                break;
             }
-            if (taskAvailable) break;
         }
     }
 

@@ -8,7 +8,7 @@ using Yarn.Unity;
 public class PlayerNPCEncounter : MonoBehaviour
 {
     private List<NonPC> nonPCs;
-    private PlayerMovementController mvmtControl;
+    private PlayerMovement mvmtControl;
     private TileManager tileManager;
     private Tilemap floorMap;
     public GameObject interactIndicator;
@@ -22,7 +22,7 @@ public class PlayerNPCEncounter : MonoBehaviour
     void Start()
     {
         nonPCs = new List<NonPC>(FindObjectsOfType<NonPC>());
-        mvmtControl = GetComponent<PlayerMovementController>();
+        mvmtControl = GetComponent<PlayerMovement>();
         uiController = FindObjectOfType<UIController>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
         tileManager = FindObjectOfType<TileManager>();

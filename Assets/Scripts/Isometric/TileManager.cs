@@ -25,11 +25,6 @@ public class TileManager : MonoBehaviour
             else if (tilemap.gameObject.name.Contains("Transition")) transitionMap = tilemap;
             else if (tilemap.gameObject.name.Contains("Interactable")) interactableMap = tilemap;
         }
-        
-        // z = 2 in the Editor for visibility; setting to 0 in code for proper behavior
-        floorMap.transform.position = Vector3.zero; 
-        transitionMap.transform.position = Vector3.zero; 
-
         CreateTileDictionary();
         CreateStandableList();
     }
@@ -50,25 +45,18 @@ public class TileManager : MonoBehaviour
     {
         tilesStandable = new List<Vector3Int>();
         List<Tilemap> groundMaps = new List<Tilemap>() {floorMap, transitionMap};
-        List<Tilemap> collisionMaps = new List<Tilemap>() {wallMap, interactableMap};
         // Do for both floorMap and transitionMap
         foreach (Tilemap groundMap in groundMaps)
         {
             foreach (Vector3Int tilePos in groundMap.cellBounds.allPositionsWithin)
             {
                 if (!groundMap.HasTile(tilePos)) continue;
-                bool standable = true;
-                foreach (Tilemap collisionMap in collisionMaps)
-                {
-                    Vector3Int legLevel = new Vector3Int(tilePos.x - 1, tilePos.y - 1, tilePos.z + 4);
-                    Vector3Int headLevel = new Vector3Int(tilePos.x - 1, tilePos.y - 1, tilePos.z + 6);
-                    if (collisionMap.HasTile(legLevel) || collisionMap.HasTile(headLevel))
-                    {
-                        standable = false;
-                        break;
-                    }
-                }
-                if (standable) tilesStandable.Add(new Vector3Int(tilePos.x - 1, tilePos.y - 1, tilePos.z + 4));
+                Vector3Int legLevel = new Vector3Int(tilePos.x, tilePos.y, tilePos.z + 2);
+                Vector3Int headLevel = new Vector3Int(tilePos.x, tilePos.y, tilePos.z + 4);
+                if (wallMap.HasTile(legLevel) || wallMap.HasTile(headLevel)) continue;
+                if (interactableMap.HasTile(legLevel) || interactableMap.HasTile(headLevel)) continue;
+                if (floorMap.HasTile(headLevel)) continue;
+                tilesStandable.Add(new Vector3Int(tilePos.x, tilePos.y, tilePos.z + 2));
             }
         }
     }
@@ -83,7 +71,32 @@ public class TileManager : MonoBehaviour
 
     public TileData GetTransitionData(Tilemap map, Vector3Int tilePosition)
     {
-        return GetTileData(map, new Vector3Int(tilePosition.x + 1, tilePosition.y + 1, tilePosition.z - 4));
-        // Subtract 4 because Player is on z = 2, Floor/Transition is on z = -2
+        return GetTileData(map, new Vector3Int(tilePosition.x, tilePosition.y, tilePosition.z - 2));
+    }
+
+    public bool ScanForTile(Tilemap map, Vector3Int tilePosition)
+    {
+        for (int z = map.cellBounds.zMin; z <= map.cellBounds.zMax; z++)
+        {
+            tilePosition.z = z;
+            if (map.HasTile(tilePosition))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Vector3Int ScanForTileValue(Tilemap map, Vector3Int tilePosition)
+    {
+        for (int z = map.cellBounds.zMin; z <= map.cellBounds.zMax; z++)
+        {
+            tilePosition.z = z;
+            if (map.HasTile(tilePosition))
+            {
+                return tilePosition;
+            }
+        }
+        return Vector3Int.zero;
     }
 }

@@ -5,11 +5,12 @@ using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     private Tilemap floorMap, wallMap, transitionMap, interactableMap;
     private TileManager tileManager;
     private TaskManager taskManager;
+    private PlayerTransition playerTransition;
     private SpriteRenderer playerSprite;
     [SerializeField] private List<Sprite> sprites;
     private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
@@ -18,7 +19,7 @@ public class PlayerMovementController : MonoBehaviour
     public Vector3Int currentPos {get; private set;}
     public float timeToMove;
     public float movementSpeed;
-    public bool allowMovement;
+    public bool canMove;
 
     private List<string> lastDirection;
 
@@ -27,6 +28,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         tileManager = FindObjectOfType<TileManager>();
         taskManager = FindObjectOfType<TaskManager>();
+        playerTransition = GetComponent<PlayerTransition>();
         floorMap = tileManager.floorMap;
         wallMap = tileManager.wallMap;
         transitionMap = tileManager.transitionMap;
@@ -37,7 +39,7 @@ public class PlayerMovementController : MonoBehaviour
         // angle = Mathf.Atan(1/2f);
         lastDirection = new List<string>();
         currentPos = floorMap.WorldToCell(transform.position);
-        allowMovement = true;
+        canMove = true;
     }
 
     // Update is called once per frame
@@ -75,14 +77,9 @@ public class PlayerMovementController : MonoBehaviour
             StartCoroutine(MovePlayer(new Vector3Int(-1, 0, 0), "Down"));
     }
 
-    private void UpdateTilemaps()
-    {
-
-    }
-
     private IEnumerator MovePlayer(Vector3Int distance, string direction)
     {
-        if (!allowMovement) yield break;
+        if (!canMove) yield break;
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
@@ -98,7 +95,16 @@ public class PlayerMovementController : MonoBehaviour
         Vector3Int tempPos = prevPos + distance;
 
         // Check if next position is standable
-        if (!tileManager.tilesStandable.Contains(tempPos)) yield break;
+            if (tileManager.tilesStandable.Contains(tempPos)) {}
+            else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z - 2)))
+            {
+                tempPos.z -= 2;
+            }
+            else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z + 2)))
+            {
+                tempPos.z += 2;
+            }
+            else yield break;
 
         // All checks cleared --> handle movement
         currentPos = tempPos;
@@ -111,42 +117,28 @@ public class PlayerMovementController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        // transform.position = floorMap.CellToWorld(currentPos);
-        HandleTeleport(true);
+        transform.position = floorMap.CellToWorld(currentPos);
+        playerTransition.HandleTeleport();
         isMoving = false;
     }
 
-    public void HandleTeleport(bool fade)
-    {
-        TileData data = tileManager.GetTransitionData(transitionMap, currentPos);
-        
-        if (data)
-        {
-            StartCoroutine (TeleportFadeInOut(data));
-        }
-    }
-
-    IEnumerator TeleportFadeInOut(TileData data)
-    {
-        Debug.Log("Teleport called");
-        DisableMovement();
-        FadeController fadeController = FindObjectOfType<FadeController>();
-        fadeController.FadeIn();
-        while (fadeController.isFading) yield return null;
-        Vector3 newCoords = floorMap.CellToWorld(data.newPos);
-        transform.position += newCoords;
-        currentPos = floorMap.WorldToCell(transform.position);
-        yield return new WaitForSeconds(2f);
-        EnableMovement();
-        fadeController.FadeOut();
-    }
-    
     public void DisableMovement()
     {
-        allowMovement = false;
+        canMove = false;
     }
+
     public void EnableMovement()
     {
-        allowMovement = true;
+        canMove = true;
+    }
+
+    public void UpdateCurrentPosition()
+    {
+        currentPos = floorMap.WorldToCell(transform.position);
+    }
+
+    public void UpdateCurrentPosition(Vector3Int newPos)
+    {
+        currentPos = newPos;
     }
 }
