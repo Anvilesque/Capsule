@@ -82,10 +82,10 @@ public class TaskManager : MonoBehaviour
     {
         if (mvmtControl.isMoving) return;
         if (isTasking) return;
-        Vector3Int tileUp = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(0, -1, 0);
-        Vector3Int tileDown = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(0, +1, 0);
-        Vector3Int tileLeft = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(-1, 0, 0);
-        Vector3Int tileRight = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(+1, 0, 0);
+        Vector3Int tileUp = mvmtControl.currentPos + new Vector3Int(0, -1, 0);
+        Vector3Int tileDown = mvmtControl.currentPos + new Vector3Int(0, +1, 0);
+        Vector3Int tileLeft = mvmtControl.currentPos + new Vector3Int(-1, 0, 0);
+        Vector3Int tileRight = mvmtControl.currentPos + new Vector3Int(+1, 0, 0);
         List<Vector3Int> adjacentTiles = new List<Vector3Int>() {tileUp, tileDown, tileLeft, tileRight};
         foreach (Vector3Int tile in adjacentTiles)
         {

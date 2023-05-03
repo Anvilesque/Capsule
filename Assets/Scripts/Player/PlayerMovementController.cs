@@ -15,7 +15,7 @@ public class PlayerMovementController : MonoBehaviour
     private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
 
     public bool isMoving {get; private set;}
-    public Vector3 currentPos {get; private set;}
+    public Vector3Int currentPos {get; private set;}
     public float timeToMove;
     public float movementSpeed;
     public bool allowMovement;
@@ -36,7 +36,7 @@ public class PlayerMovementController : MonoBehaviour
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
         lastDirection = new List<string>();
-        currentPos = transform.position;
+        currentPos = floorMap.WorldToCell(transform.position);
         allowMovement = true;
     }
 
@@ -66,13 +66,13 @@ public class PlayerMovementController : MonoBehaviour
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
         if (Input.GetButton("Left") && lastDirection[lastDirection.Count - 1] == "Left")
-            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, TileManager.distY, 0), "Left"));
+            StartCoroutine(MovePlayer(new Vector3Int(0, 1, 0), "Left"));
         else if (Input.GetButton("Right") && lastDirection[lastDirection.Count - 1] == "Right")
-            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, -TileManager.distY, 0), "Right"));
+            StartCoroutine(MovePlayer(new Vector3Int(0, -1, 0), "Right"));
         else if (Input.GetButton("Up") && lastDirection[lastDirection.Count - 1] == "Up")
-            StartCoroutine(MovePlayer(new Vector3(TileManager.distX, TileManager.distY, 0), "Up"));
+            StartCoroutine(MovePlayer(new Vector3Int(1, 0, 0), "Up"));
         else if (Input.GetButton("Down") && lastDirection[lastDirection.Count - 1] == "Down")
-            StartCoroutine(MovePlayer(new Vector3(-TileManager.distX, -TileManager.distY, 0), "Down"));
+            StartCoroutine(MovePlayer(new Vector3Int(-1, 0, 0), "Down"));
     }
 
     private void UpdateTilemaps()
@@ -80,7 +80,7 @@ public class PlayerMovementController : MonoBehaviour
 
     }
 
-    private IEnumerator MovePlayer(Vector3 distance, string direction)
+    private IEnumerator MovePlayer(Vector3Int distance, string direction)
     {
         if (!allowMovement) yield break;
         timeToMove = 1 / movementSpeed;
@@ -94,14 +94,11 @@ public class PlayerMovementController : MonoBehaviour
             case "Down": { playerSprite.sprite = sprites[DOWN]; break; }
         }
 
-        Vector3 prevPos = transform.position;
-        Vector3 tempPos = prevPos + distance;
-
-        // Get Tilemap coords of next position
-        Vector3Int tempPosGrid = floorMap.WorldToCell(tempPos);
+        Vector3Int prevPos = currentPos;
+        Vector3Int tempPos = prevPos + distance;
 
         // Check if next position is standable
-        if (!tileManager.tilesStandable.Contains(tempPosGrid)) yield break;
+        if (!tileManager.tilesStandable.Contains(tempPos)) yield break;
 
         // All checks cleared --> handle movement
         currentPos = tempPos;
@@ -110,18 +107,18 @@ public class PlayerMovementController : MonoBehaviour
         while(elapsedTime < timeToMove)
         {
             // Lerp moves from one position to the other in some amount of time.
-            transform.position = Vector3.Lerp(prevPos, currentPos, (elapsedTime / timeToMove));
+            transform.position = Vector3.Lerp(floorMap.CellToWorld(prevPos), floorMap.CellToWorld(tempPos), (elapsedTime / timeToMove));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        transform.position = currentPos;
+        // transform.position = floorMap.CellToWorld(currentPos);
         HandleTeleport(true);
         isMoving = false;
     }
 
     public void HandleTeleport(bool fade)
     {
-        TileData data = tileManager.GetTileData(transitionMap, transitionMap.WorldToCell(currentPos));
+        TileData data = tileManager.GetTransitionData(transitionMap, currentPos);
         
         if (data)
         {
@@ -131,12 +128,14 @@ public class PlayerMovementController : MonoBehaviour
 
     IEnumerator TeleportFadeInOut(TileData data)
     {
+        Debug.Log("Teleport called");
         DisableMovement();
         FadeController fadeController = FindObjectOfType<FadeController>();
         fadeController.FadeIn();
         while (fadeController.isFading) yield return null;
         Vector3 newCoords = floorMap.CellToWorld(data.newPos);
         transform.position += newCoords;
+        currentPos = floorMap.WorldToCell(transform.position);
         yield return new WaitForSeconds(2f);
         EnableMovement();
         fadeController.FadeOut();

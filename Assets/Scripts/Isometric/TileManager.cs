@@ -76,9 +76,13 @@ public class TileManager : MonoBehaviour
     {
         TileBase tile = map.GetTile(tilePosition);
 
-        if (tile == null)
-            return null;
-        else
-            return dataFromTiles[tile];
+        if (tile == null) return null;
+        else return dataFromTiles[tile];
+    }
+
+    public TileData GetTransitionData(Tilemap map, Vector3Int tilePosition)
+    {
+        return GetTileData(map, new Vector3Int(tilePosition.x + 1, tilePosition.y + 1, tilePosition.z - 4));
+        // Subtract 4 because Player is on z = 2, Floor/Transition is on z = -2
     }
 }
