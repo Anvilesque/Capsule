@@ -32,7 +32,6 @@ public class MovePlayer : MonoBehaviour
         {
             Destroy(collision.gameObject);
             boxesCaught += 1;
-            Debug.Log(boxesCaught);
         }
     }
 }
