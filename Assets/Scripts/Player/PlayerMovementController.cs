@@ -7,10 +7,7 @@ using DG.Tweening;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    private Tilemap floorMap;
-    private Tilemap wallMap;
-    private Tilemap transitionMap;
-    private Tilemap interactableMap;
+    private Tilemap floorMap, wallMap, transitionMap, interactableMap;
     private TileManager tileManager;
     private TaskManager taskManager;
     private SpriteRenderer playerSprite;
@@ -18,12 +15,10 @@ public class PlayerMovementController : MonoBehaviour
     private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
 
     public bool isMoving {get; private set;}
-    private Vector3 prevPosPoint, prevPosWorld, currentPosPoint, moveDirection;
-    public Vector3 currentPosWorld {get; private set;}
-    public Vector3Int currentPosGrid;
+    public Vector3 currentPos {get; private set;}
     public float timeToMove;
     public float movementSpeed;
-    public bool canMove {get; private set;}
+    public bool allowMovement;
 
     private List<string> lastDirection;
 
@@ -41,10 +36,8 @@ public class PlayerMovementController : MonoBehaviour
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
         lastDirection = new List<string>();
-        prevPosPoint = transform.position;
-        prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // // Player is rendered as being on (1, 1)
-        currentPosWorld = prevPosWorld;
-        canMove = true;
+        currentPos = transform.position;
+        allowMovement = true;
     }
 
     // Update is called once per frame
@@ -89,70 +82,46 @@ public class PlayerMovementController : MonoBehaviour
 
     private IEnumerator MovePlayer(Vector3 distance, string direction)
     {
-        if (!canMove) yield break;
+        if (!allowMovement) yield break;
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
-        if (direction == "Left")
+        switch (direction)
         {
-            playerSprite.sprite = sprites[LEFT];
-            // transform.eulerAngles = new Vector3(0f, 0f, 0f);
-        }
-        else if (direction == "Right")
-        {
-            playerSprite.sprite = sprites[RIGHT];
-            // transform.eulerAngles = new Vector3(0f, 0f, 0f);
-        }
-        else if (direction == "Up")
-        {
-            playerSprite.sprite = sprites[UP];
-            // transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        }
-        else if (direction == "Down")
-        {
-            playerSprite.sprite = sprites[DOWN];
-            // transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            case "Left": { playerSprite.sprite = sprites[LEFT]; break; }
+            case "Right": { playerSprite.sprite = sprites[RIGHT]; break; }
+            case "Up": { playerSprite.sprite = sprites[UP]; break; }
+            case "Down": { playerSprite.sprite = sprites[DOWN]; break; }
         }
 
-        prevPosPoint = transform.position;
-        prevPosWorld = transform.position + new Vector3(0, -2 * TileManager.distY, 0); // Player is rendered as being on (1, 1)
-        Vector3 tempPosPoint = prevPosPoint + distance;
-        Vector3 tempPosWorld = prevPosWorld + distance;
+        Vector3 prevPos = transform.position;
+        Vector3 tempPos = prevPos + distance;
 
         // Get Tilemap coords of next position
-        Vector3Int tempPosGrid = TileManager.WorldCoordsToGridCoords(tempPosWorld);  // https://clintbellanger.net/articles/isometric_math/
-        // Check for wall or interactable in front
-        for (int i = wallMap.cellBounds.zMin; i <= wallMap.cellBounds.zMax; i++)
-        {
-            tempPosGrid.z = i;
-            if (wallMap.HasTile(tempPosGrid)) yield break;
-            if (interactableMap.HasTile(tempPosGrid)) yield break;
-        }
-        // Check for floor in front (floor is always z = 1)
-        tempPosGrid.z = 1;
-        if (!floorMap.HasTile(tempPosGrid) && !transitionMap.HasTile(tempPosGrid)) yield break;
+        Vector3Int tempPosGrid = floorMap.WorldToCell(tempPos);
+
+        // Check if next position is standable
+        if (!tileManager.tilesStandable.Contains(tempPosGrid)) yield break;
 
         // All checks cleared --> handle movement
-        currentPosPoint = tempPosPoint;
-        currentPosWorld = tempPosWorld;
-        currentPosGrid = tempPosGrid;
+        currentPos = tempPos;
         isMoving = true;
         float elapsedTime = 0f;
         while(elapsedTime < timeToMove)
         {
             // Lerp moves from one position to the other in some amount of time.
-            transform.position = Vector3.Lerp(prevPosPoint, currentPosPoint, (elapsedTime / timeToMove));
+            transform.position = Vector3.Lerp(prevPos, currentPos, (elapsedTime / timeToMove));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        transform.position = currentPosPoint;
+        transform.position = currentPos;
         HandleTeleport(true);
         isMoving = false;
     }
 
     public void HandleTeleport(bool fade)
     {
-        TileData data = tileManager.GetTileData(transitionMap, currentPosGrid);
+        TileData data = tileManager.GetTileData(transitionMap, transitionMap.WorldToCell(currentPos));
         
         if (data)
         {
@@ -166,7 +135,7 @@ public class PlayerMovementController : MonoBehaviour
         FadeController fadeController = FindObjectOfType<FadeController>();
         fadeController.FadeIn();
         while (fadeController.isFading) yield return null;
-        Vector3 newCoords = TileManager.GridCoordsToWorldCoords(data.newPos);
+        Vector3 newCoords = floorMap.CellToWorld(data.newPos);
         transform.position += newCoords;
         yield return new WaitForSeconds(2f);
         EnableMovement();
@@ -175,10 +144,10 @@ public class PlayerMovementController : MonoBehaviour
     
     public void DisableMovement()
     {
-        canMove = false;
+        allowMovement = false;
     }
     public void EnableMovement()
     {
-        canMove = true;
+        allowMovement = true;
     }
 }

@@ -26,10 +26,14 @@ public class TileManager : MonoBehaviour
         {
             tilemap.CompressBounds();
             if (tilemap.gameObject.name.Contains("Floor")) floorMap = tilemap;
-            if (tilemap.gameObject.name.Contains("Wall")) wallMap = tilemap;
-            if (tilemap.gameObject.name.Contains("Transition")) transitionMap = tilemap;
-            if (tilemap.gameObject.name.Contains("Interactable")) interactableMap = tilemap;
+            else if (tilemap.gameObject.name.Contains("Wall")) wallMap = tilemap;
+            else if (tilemap.gameObject.name.Contains("Transition")) transitionMap = tilemap;
+            else if (tilemap.gameObject.name.Contains("Interactable")) interactableMap = tilemap;
         }
+        floorMap.CompressBounds();
+        wallMap.CompressBounds();
+        transitionMap.CompressBounds();
+        interactableMap.CompressBounds();
         CreateTileDictionary();
         CreateStandableList();
     }
@@ -48,36 +52,39 @@ public class TileManager : MonoBehaviour
 
     private void CreateStandableList()
     {
+        tilesStandable = new List<Vector3Int>();
         for (int x = floorMap.cellBounds.xMin; x <= floorMap.cellBounds.xMax; x++)
         {
             for (int y = floorMap.cellBounds.yMin; y <= floorMap.cellBounds.yMax; y++)
             {
-                Vector3Int floorTilePos = new Vector3Int(x, y, 1); // Floor is assumed to have z = 1
-                if (!floorMap.HasTile(floorTilePos)) continue;
-
-                bool standable = true;
-                Vector3Int tilePos = new Vector3Int(floorTilePos.x, floorTilePos.y);
-                for (int z = wallMap.cellBounds.zMin; z <= wallMap.cellBounds.zMax; z++)
-                {
-                    tilePos.z = z;
-                    if (wallMap.HasTile(tilePos))
+                Vector3Int tilePos = new Vector3Int(x, y, 0);
+                bool standable = false;
+                Dictionary<Tilemap, bool> isStandableIfHasTile = new Dictionary<Tilemap, bool>()
                     {
-                        standable = false;
-                        break;
+                        {floorMap, true},
+                        {transitionMap, true},
+                        {wallMap, false},
+                        {interactableMap, false}
+                    };
+                foreach (KeyValuePair<Tilemap, bool> map in isStandableIfHasTile)
+                {
+                    for (int z = map.Key.cellBounds.zMin; z <= map.Key.cellBounds.zMax; z++)
+                    {
+                        tilePos.z = z;
+                        if (map.Key.HasTile(tilePos))
+                        {
+                            standable = map.Value;
+                            break;
+                        }
                     }
                 }
-                for (int z = interactableMap.cellBounds.zMin; z <= interactableMap.cellBounds.zMax; z++)
+                if (standable)
                 {
-                    tilePos.z = z;
-                    if (interactableMap.HasTile(tilePos))
-                    {
-                        standable = false;
-                        break;
-                    }
+                    tilePos.z = 2; // set to 2 b/c Player is always on z = 2
+                    tilesStandable.Add(tilePos);
                 }
-                if (standable) tilesStandable.Add(new Vector3Int(floorTilePos.x, floorTilePos.y, floorTilePos.z));
             }
-        } 
+        }
     }
 
     public TileData GetTileData(Tilemap map, Vector3Int tilePosition)
