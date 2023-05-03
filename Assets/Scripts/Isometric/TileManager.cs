@@ -53,36 +53,26 @@ public class TileManager : MonoBehaviour
     private void CreateStandableList()
     {
         tilesStandable = new List<Vector3Int>();
-        for (int x = floorMap.cellBounds.xMin; x <= floorMap.cellBounds.xMax; x++)
+        List<Tilemap> groundMaps = new List<Tilemap>() {floorMap, transitionMap};
+        List<Tilemap> collisionMaps = new List<Tilemap>() {wallMap, interactableMap};
+        // Do for both floorMap and transitionMap
+        foreach (Tilemap groundMap in groundMaps)
         {
-            for (int y = floorMap.cellBounds.yMin; y <= floorMap.cellBounds.yMax; y++)
+            foreach (Vector3Int tilePos in groundMap.cellBounds.allPositionsWithin)
             {
-                Vector3Int tilePos = new Vector3Int(x, y, 0);
-                bool standable = false;
-                Dictionary<Tilemap, bool> isStandableIfHasTile = new Dictionary<Tilemap, bool>()
-                    {
-                        {floorMap, true},
-                        {transitionMap, true},
-                        {wallMap, false},
-                        {interactableMap, false}
-                    };
-                foreach (KeyValuePair<Tilemap, bool> map in isStandableIfHasTile)
+                if (!groundMap.HasTile(tilePos)) continue;
+                bool standable = true;
+                foreach (Tilemap collisionMap in collisionMaps)
                 {
-                    for (int z = map.Key.cellBounds.zMin; z <= map.Key.cellBounds.zMax; z++)
+                    Vector3Int legLevel = new Vector3Int(tilePos.x - 1, tilePos.y - 1, tilePos.z + 4);
+                    Vector3Int headLevel = new Vector3Int(tilePos.x - 1, tilePos.y - 1, tilePos.z + 6);
+                    if (collisionMap.HasTile(legLevel) || collisionMap.HasTile(headLevel))
                     {
-                        tilePos.z = z;
-                        if (map.Key.HasTile(tilePos))
-                        {
-                            standable = map.Value;
-                            break;
-                        }
+                        standable = false;
+                        break;
                     }
                 }
-                if (standable)
-                {
-                    tilePos.z = 2; // set to 2 b/c Player is always on z = 2
-                    tilesStandable.Add(tilePos);
-                }
+                if (standable) tilesStandable.Add(new Vector3Int(tilePos.x - 1, tilePos.y - 1, tilePos.z + 4));
             }
         }
     }
