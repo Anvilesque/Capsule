@@ -15,7 +15,7 @@ public class ItemBox : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         gameCam = new List<Camera>(FindObjectsOfType<Camera>()).Find(x=> x.name.Contains("Bookshelf"));
         items = new List<Object>();
-        foreach (GameObject item in Resources.LoadAll("Prefabs/Items"))
+        foreach (GameObject item in Resources.LoadAll("Prefabs/Minigames/_OLD_Bookshelf_v2/Items"))
         {
             items.Add(item);
         }
