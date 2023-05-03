@@ -6,9 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
-    public static float distX {get; private set;}
-    public static float distY {get; private set;}
-
     [SerializeField] private List<TileData> tileDatas;
     public Dictionary<TileBase, TileData> dataFromTiles;
     public List<Vector3Int> tilesStandable;
@@ -20,8 +17,6 @@ public class TileManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        distX = FindObjectOfType<Grid>().cellSize.x / 2; // X-dist to next cell = half of cell width
-        distY = FindObjectOfType<Grid>().cellSize.y / 2; // Y-dist to next cell = half of cell height
         foreach (Tilemap tilemap in FindObjectsOfType<Tilemap>())
         {
             tilemap.CompressBounds();
