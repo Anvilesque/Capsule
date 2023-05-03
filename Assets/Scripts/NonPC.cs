@@ -65,7 +65,7 @@ public class NonPC : MonoBehaviour
         isMoving = true;
         Vector3Int destination = tileManager.tilesStandable[Random.Range(0, tileManager.tilesStandable.Count)];
         destination.z = 2;
-        transform.position = TileManager.GridCoordsToWorldCoords(destination) + new Vector3(0, 2 * TileManager.distY, 0); // set to teleport for now
+        transform.position = floorMap.CellToWorld(destination) + new Vector3(0, 2 * TileManager.distY, 0); // set to teleport for now
         isMoving = false;
     }
 }

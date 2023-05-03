@@ -34,24 +34,6 @@ public class TileManager : MonoBehaviour
         CreateStandableList();
     }
 
-    public static Vector3Int WorldCoordsToGridCoords(Vector3 localCoords)
-    {
-        Vector3Int gridCoordsInt = new Vector3Int();
-        gridCoordsInt.x = (int)(localCoords.x / distX + localCoords.y / distY) / 2;
-        gridCoordsInt.y = (int)(localCoords.y / distY - localCoords.x / distX) / 2;
-        gridCoordsInt.z = (int)localCoords.z;
-        return gridCoordsInt;
-    }
-
-    public static Vector3 GridCoordsToWorldCoords(Vector3Int gridCoords)
-    {
-        Vector3 worldCoords = new Vector3();
-        worldCoords.x = (gridCoords.x - gridCoords.y) * distX;
-        worldCoords.y = (gridCoords.x + gridCoords.y) * distY;
-        worldCoords.z = gridCoords.z;
-        return worldCoords;
-    }
-
     private void CreateTileDictionary()
     {
         dataFromTiles = new Dictionary<TileBase, TileData>();

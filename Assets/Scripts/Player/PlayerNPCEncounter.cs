@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 using Yarn.Unity;
 
@@ -8,6 +9,8 @@ public class PlayerNPCEncounter : MonoBehaviour
 {
     private List<NonPC> nonPCs;
     private PlayerMovementController mvmtControl;
+    private TileManager tileManager;
+    private Tilemap floorMap;
     public GameObject interactIndicator;
     private UIController uiController;
     private DialogueRunner dialogueRunner;
@@ -22,6 +25,8 @@ public class PlayerNPCEncounter : MonoBehaviour
         mvmtControl = GetComponent<PlayerMovementController>();
         uiController = FindObjectOfType<UIController>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
+        tileManager = FindObjectOfType<TileManager>();
+        floorMap = tileManager.floorMap;
 
         if (dialogueRunner == null) {}
         else dialogueRunner.onDialogueComplete.AddListener(AfterDialogue);
@@ -34,8 +39,8 @@ public class PlayerNPCEncounter : MonoBehaviour
         if (nonPCs == null) {}
         else foreach (NonPC nonPC in nonPCs)
         {
-            Vector3Int nonPCCell = TileManager.WorldCoordsToGridCoords(nonPC.position);
-            Vector3Int playerCell = TileManager.WorldCoordsToGridCoords(transform.position);
+            Vector3Int nonPCCell = floorMap.WorldToCell(nonPC.position);
+            Vector3Int playerCell = floorMap.WorldToCell(transform.position);
             int playerDistX = Mathf.Abs(playerCell.x - nonPCCell.x);
             int playerDistY = Mathf.Abs(playerCell.y - nonPCCell.y);
             CheckInteractNPC(playerDistX, playerDistY, nonPC);

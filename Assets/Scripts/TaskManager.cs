@@ -7,7 +7,7 @@ using DG.Tweening;
 public class TaskManager : MonoBehaviour
 {
     private Camera mainCam;
-    private List<Camera> gameCams;
+    private List<Camera> taskCams;
     private PlayerMovementController mvmtControl;
     private Sprite playerSprite;
     private TileManager tileManager;
@@ -30,13 +30,13 @@ public class TaskManager : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        gameCams = new List<Camera>();
+        taskCams = new List<Camera>();
         foreach (Camera cam in FindObjectsOfType<Camera>())
         {
             if (cam == Camera.main) continue;
             else
             {
-                gameCams.Add(cam);
+                taskCams.Add(cam);
                 cam.transparencySortMode = TransparencySortMode.Default;
             }
         }
@@ -46,10 +46,10 @@ public class TaskManager : MonoBehaviour
         interactableMap = tileManager.interactableMap;
         uiController = FindObjectOfType<UIController>();
         
-        bookshelfCam = gameCams.Find(x=> x.name.Contains("Bookshelf"));
+        bookshelfCam = taskCams.Find(x=> x.name.Contains("Bookshelf"));
         bookshelfCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
 
-        diaryCam = gameCams.Find(x=> x.name.Contains("Diary"));
+        diaryCam = taskCams.Find(x=> x.name.Contains("Diary"));
         diaryCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
 
         isoViewRatio = 0.2f;
@@ -82,10 +82,10 @@ public class TaskManager : MonoBehaviour
     {
         if (mvmtControl.isMoving) return;
         if (isTasking) return;
-        Vector3Int tileUp = TileManager.WorldCoordsToGridCoords(mvmtControl.currentPosWorld) + new Vector3Int(0, -1, 0);
-        Vector3Int tileDown = TileManager.WorldCoordsToGridCoords(mvmtControl.currentPosWorld) + new Vector3Int(0, +1, 0);
-        Vector3Int tileLeft = TileManager.WorldCoordsToGridCoords(mvmtControl.currentPosWorld) + new Vector3Int(-1, 0, 0);
-        Vector3Int tileRight = TileManager.WorldCoordsToGridCoords(mvmtControl.currentPosWorld) + new Vector3Int(+1, 0, 0);
+        Vector3Int tileUp = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(0, -1, 0);
+        Vector3Int tileDown = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(0, +1, 0);
+        Vector3Int tileLeft = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(-1, 0, 0);
+        Vector3Int tileRight = interactableMap.WorldToCell(mvmtControl.currentPos) + new Vector3Int(+1, 0, 0);
         List<Vector3Int> adjacentTiles = new List<Vector3Int>() {tileUp, tileDown, tileLeft, tileRight};
         foreach (Vector3Int tile in adjacentTiles)
         {
