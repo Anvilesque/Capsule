@@ -25,10 +25,11 @@ public class TileManager : MonoBehaviour
             else if (tilemap.gameObject.name.Contains("Transition")) transitionMap = tilemap;
             else if (tilemap.gameObject.name.Contains("Interactable")) interactableMap = tilemap;
         }
-        floorMap.CompressBounds();
-        wallMap.CompressBounds();
-        transitionMap.CompressBounds();
-        interactableMap.CompressBounds();
+        
+        // z = 2 in the Editor for visibility; setting to 0 in code for proper behavior
+        floorMap.transform.position = Vector3.zero; 
+        transitionMap.transform.position = Vector3.zero; 
+
         CreateTileDictionary();
         CreateStandableList();
     }
