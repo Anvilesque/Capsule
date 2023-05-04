@@ -19,9 +19,8 @@ public class TaskManager : MonoBehaviour
     private Camera diaryCam;
 
     private string currentMinigame;
-    private bool taskAvailable;
+    private bool isPlayerNextToTask;
     private bool isTasking;
-    private bool isProcessing;
     private string taskName;
     private float isoViewRatio;
     // public Canvas canvasBookshelf;
@@ -53,8 +52,6 @@ public class TaskManager : MonoBehaviour
         diaryCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
 
         isoViewRatio = 0.2f;
-        isTasking = false;
-        isProcessing = false;
         // canvasBookshelf.gameObject.SetActive(false);
         DOTween.Init();
     }
@@ -66,8 +63,7 @@ public class TaskManager : MonoBehaviour
         IndicateInteract();
         if (Input.GetButtonDown("Interact"))
         {         
-            if (!taskAvailable) {}
-            else if (isProcessing) {}
+            if (!isPlayerNextToTask) {}
             else if (isTasking)
             {
                 StopTask();
@@ -90,12 +86,12 @@ public class TaskManager : MonoBehaviour
         foreach (Vector3Int tile in adjacentTiles)
         {
             Vector3Int tempTile = tile;
-            taskAvailable = false;
+            isPlayerNextToTask = false;
             if (tileManager.ScanForTile(interactableMap, tempTile))
             {
                 tempTile = tileManager.ScanForTileValue(interactableMap, tempTile);
                 taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
-                taskAvailable = true;
+                isPlayerNextToTask = true;
                 break;
             }
         }
@@ -107,7 +103,7 @@ public class TaskManager : MonoBehaviour
         {
             DestroyIndicator();
         }
-        else if (taskAvailable)
+        else if (isPlayerNextToTask)
         {
             if (interactIndicator != null) {}
             else
@@ -133,80 +129,55 @@ public class TaskManager : MonoBehaviour
 
     void StartTask(string taskName)
     {
-        isProcessing = true;
         isTasking = true;
-        if (taskName == "Bookshelf")
-        {
-            currentMinigame = taskName;
-            StartBookshelf();
-        }
-        else if(taskName == "Diary")
-        {
-            currentMinigame = taskName;
-            StartDiary();
-        }
-    }
-
-    public void StopTask()
-    {
-        isProcessing = true;
-        switch (currentMinigame)
+        Camera taskCam = null;
+        switch (taskName)
         {
             case "Bookshelf":
             {
-                StopBookshelf();
+                currentMinigame = taskName;
+                taskCam = bookshelfCam;
                 break;
             }
             case "Diary":
             {
-                StopDiary();
+                currentMinigame = taskName;
+                taskCam = diaryCam;
                 break;
             }
+            default:
+            {
+                return;
+            }
         }
+        mvmtControl.DisableMovement();
+        mainCam.rect = new Rect(0, 0, isoViewRatio, 1f);
+        taskCam.rect = new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f);
     }
 
-    void StartBookshelf()
+    public void StopTask()
     {
-        mvmtControl.DisableMovement();
-        Sequence seqBookshelfStart = DOTween.Sequence();
-        seqBookshelfStart.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
-        seqBookshelfStart.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
-        seqBookshelfStart.AppendCallback(()=> uiController.TranslateHUD(false, 1f));
-        seqBookshelfStart.AppendInterval(1f);
-        seqBookshelfStart.AppendCallback(()=> isProcessing = false);
-    }
-
-    void StopBookshelf()
-    {
-        uiController.TranslateHUD(true, 0.5f);
-        Sequence seqBookshelfStop = DOTween.Sequence();
-        seqBookshelfStop.SetDelay(0.5f);
-        seqBookshelfStop.Append(DOTween.To(()=> mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
-        seqBookshelfStop.Join(DOTween.To(()=> bookshelfCam.rect, x=> bookshelfCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
-        seqBookshelfStop.InsertCallback(1f, ()=> mvmtControl.EnableMovement());
-        seqBookshelfStop.onComplete = ()=> isTasking = false;
-        seqBookshelfStop.AppendCallback(()=> isProcessing = false);
-    }
-    void StartDiary()
-    {
-        mvmtControl.DisableMovement();
-        Sequence seqDiaryStart = DOTween.Sequence();
-        seqDiaryStart.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, isoViewRatio, 1f), 1));
-        seqDiaryStart.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f), 1));
-        seqDiaryStart.AppendCallback(()=> uiController.TranslateHUD(false, 1f));
-        seqDiaryStart.AppendInterval(1f);
-        seqDiaryStart.AppendCallback(()=> isProcessing = false);
-    }
-    void StopDiary()
-    {
-        if (InputFieldManager.isInputFocused) return;
-        uiController.TranslateHUD(true, 0.5f);
-        Sequence seqDiaryStop = DOTween.Sequence();
-        seqDiaryStop.SetDelay(0.5f);
-        seqDiaryStop.Append(DOTween.To(()=>mainCam.rect, x=> mainCam.rect = x, new Rect(0, 0, 1f, 1f), 1));
-        seqDiaryStop.Join(DOTween.To(()=> diaryCam.rect, x=> diaryCam.rect = x, new Rect(1f, 0, (1 - isoViewRatio), 1f), 1));
-        seqDiaryStop.InsertCallback(1f, ()=> mvmtControl.EnableMovement());
-        seqDiaryStop.onComplete = ()=> isTasking = false;
-        seqDiaryStop.AppendCallback(()=> isProcessing = false);
+        Camera taskCam = null;
+        switch (currentMinigame)
+        {
+            case "Bookshelf":
+            {
+                taskCam = bookshelfCam;
+                break;
+            }
+            case "Diary":
+            {
+                taskCam = diaryCam;
+                break;
+            }
+            default:
+            {
+                return;
+            }
+        }
+        mainCam.rect = new Rect(0, 0, 1f, 1f);
+        taskCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
+        isTasking = false;
+        mvmtControl.EnableMovement();
     }
 }

@@ -99,7 +99,6 @@ public class PlayerNPCEncounter : MonoBehaviour
         {
             canInteract = false;
             mvmtControl.DisableMovement();
-            uiController.TranslateHUD(false, 0.5f);
             dialogueRunner.StartDialogue(nearestNPC.introTitle);
         }
     }
@@ -107,6 +106,5 @@ public class PlayerNPCEncounter : MonoBehaviour
     void AfterDialogue()
     {
         mvmtControl.EnableMovement();
-        uiController.TranslateHUD(true, 0.5f);
     }
 }

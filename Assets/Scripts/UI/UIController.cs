@@ -56,6 +56,8 @@ public class UIController : MonoBehaviour
         buttonMood.clicked += buttonMoodPressed;
         buttonSettings.clicked += buttonSettingsPressed;
         buttonQuit.clicked += buttonQuitPressed;
+
+        root.style.display = DisplayStyle.None;
     }
 
     private void Update()
@@ -63,6 +65,11 @@ public class UIController : MonoBehaviour
         rootWidth = (ROOT_WIDTH_PERCENTAGE * 1080f) * ((float)Screen.width / (float)Screen.height);
         timeTime.text = timeController.timeTextTime;
         timeDay.text = timeController.timeTextDay;
+        if (Input.GetButtonDown("Open Menu"))
+        {
+            if (root.style.display == DisplayStyle.Flex) root.style.display = DisplayStyle.None;
+            else root.style.display = DisplayStyle.Flex;
+        }
     }
 
     void buttonMenuPressed() {
@@ -106,40 +113,5 @@ public class UIController : MonoBehaviour
     void buttonQuitPressed() 
     {
         Application.Quit();
-    }
-
-    public void TranslateHUD(bool translateIn, float duration)
-    {
-        // if (runningCoroutine != null) StopCoroutine(runningCoroutine);
-        runningCoroutine = StartCoroutine(TranslateRoot(translateIn, duration));
-    }
-
-    private IEnumerator TranslateRoot(bool translateIn, float duration)
-    {
-        float timer = 0;
-        taskRoot.style.display = DisplayStyle.None;
-        diaryRoot.style.display = DisplayStyle.None;
-        if (translateIn)
-        {
-            while (timer < duration)
-            {
-                float newValue = Mathf.Lerp(-rootWidth, 0, (timer / duration));
-                root.style.translate = new Translate(newValue, root.style.translate.value.y);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-            root.style.translate = new Translate(0, root.style.translate.value.y);
-        }
-        else
-        {
-            while (timer < duration)
-            {          
-                float newValue = Mathf.Lerp(0, -rootWidth, (timer / duration));
-                root.style.translate = new Translate(newValue, root.style.translate.value.y);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-            root.style.translate = new Translate(-rootWidth, root.style.translate.value.y);
-        }
     }
 }
