@@ -77,18 +77,21 @@ public class UIController : MonoBehaviour
     void buttonDiaryPressed() {
         VisualElement entries = diaryRoot.Q<VisualElement>("entries");
         if (diaryRoot.style.display == DisplayStyle.Flex) diaryRoot.style.display = DisplayStyle.None;
-        else diaryRoot.style.display = DisplayStyle.Flex;
-        if (entries.childCount == 0) {}
-        else foreach (Label label in entries.Children())
+        else
         {
-            entries.Remove(label);
-        }
-        foreach (string entry in saveDiary.previousDiaryEntries)
-        {
-            Label label = new Label(entry);
-            label.AddToClassList("text-diary-general");
-            label.style.whiteSpace = WhiteSpace.Normal;
-            entries.Add(label);
+            diaryRoot.style.display = DisplayStyle.Flex;
+            if (entries.childCount == 0) {}
+            else while (entries.childCount > 0)
+            {
+                entries.RemoveAt(0);
+            }
+            foreach (string entry in saveDiary.previousDiaryEntries)
+            {
+                Label label = new Label(entry);
+                label.AddToClassList("text-diary-general");
+                label.style.whiteSpace = WhiteSpace.Normal;
+                entries.Add(label);
+            }
         }
     }
 
