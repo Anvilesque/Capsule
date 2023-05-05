@@ -22,7 +22,6 @@ public class BSItemMovementManager : MonoBehaviour
         itemInfo = GetComponent<BSItemInfo>();
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfCam = bookshelfGrid.bookshelfCam;
-        bookshelfCam.transparencySortMode = TransparencySortMode.Default;
 
         mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
 

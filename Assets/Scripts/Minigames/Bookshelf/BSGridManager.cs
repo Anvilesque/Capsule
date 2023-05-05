@@ -17,6 +17,7 @@ public class BSGridManager : MonoBehaviour
     void Start()
     {
         mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
+        bookshelfCam.transparencySortMode = TransparencySortMode.Default;
         bookshelfMap = GetComponent<Tilemap>();
         bookshelfMap.CompressBounds();
         cellSize = bookshelfMap.cellSize;
