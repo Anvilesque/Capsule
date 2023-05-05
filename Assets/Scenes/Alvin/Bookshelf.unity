@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 214892531}
   - component: {fileID: 214892533}
   - component: {fileID: 214892532}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 968537391}
   - component: {fileID: 968537395}
   - component: {fileID: 968537396}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2832,6 +2832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bookshelfCam: {fileID: 1276162068}
+  occupiedCells: []
 --- !u!1 &1261171471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,7 +2916,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1261171474
 Transform:
   m_ObjectHideFlags: 0

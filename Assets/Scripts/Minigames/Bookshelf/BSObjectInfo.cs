@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BSObjectInfo : MonoBehaviour
 {
-    [SerializeField] private Vector2Int size;
+    public Vector2Int size;
     [SerializeField] private bool isEntireSizeFilled;
     public List<Vector2Int> cellsFilled {get; private set;}
     public List<Vector2Int> cellsFilledSpecial;
