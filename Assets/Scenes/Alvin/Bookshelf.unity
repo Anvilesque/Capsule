@@ -301,16 +301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ba8690e32bee64087f1c512112d142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInfo: {fileID: 0}
-  bookshelfCam: {fileID: 0}
-  bookshelfGrid: {fileID: 0}
-  mousePos: {x: 0, y: 0}
-  itemPosBL: {x: 0, y: 0, z: 0}
-  itemPosCenter: {x: 0, y: 0, z: 0}
-  offsetMouseFromTransform: {x: 0, y: 0}
-  offsetSize: {x: 0, y: 0}
-  offsetHeldUp: {x: 0, y: 0}
-  snapTolerance: 0
 --- !u!114 &710929200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710929197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.319, y: -0.179, z: 0}
+  m_LocalPosition: {x: -1.86, y: -1.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3019,16 +3009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ba8690e32bee64087f1c512112d142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInfo: {fileID: 0}
-  bookshelfCam: {fileID: 0}
-  bookshelfGrid: {fileID: 0}
-  mousePos: {x: 0, y: 0}
-  itemPosBL: {x: 0, y: 0, z: 0}
-  itemPosCenter: {x: 0, y: 0, z: 0}
-  offsetMouseFromTransform: {x: 0, y: 0}
-  offsetSize: {x: 0, y: 0}
-  offsetHeldUp: {x: 0, y: 0}
-  snapTolerance: 0
 --- !u!212 &1261171473
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3369,13 +3349,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ba8690e32bee64087f1c512112d142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInfo: {fileID: 0}
-  bookshelfCam: {fileID: 0}
-  bookshelfGrid: {fileID: 0}
-  mousePos: {x: 0, y: 0}
-  itemPosBL: {x: 0, y: 0, z: 0}
-  itemPosCenter: {x: 0, y: 0, z: 0}
-  offsetMouseFromTransform: {x: 0, y: 0}
-  offsetSize: {x: 0, y: 0}
-  offsetHeldUp: {x: 0, y: 0}
-  snapTolerance: 0

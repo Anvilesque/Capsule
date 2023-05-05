@@ -48,6 +48,15 @@ public class BSGridManager : MonoBehaviour
         return true;
     }
 
+    public bool CheckOccupied(Vector2 itemPosBL, List<Vector2Int> cellsFilled)
+    {
+        foreach (Vector2Int cellRelative in cellsFilled)
+        {
+            if (occupiedCells.Contains((Vector2Int)bookshelfMap.WorldToCell(itemPosBL) + cellRelative)) return true;
+        }
+        return false;
+    }
+
     public Vector2Int GetCellFromWorldPos(Vector2 pos)
     {
         return (Vector2Int)bookshelfMap.WorldToCell(pos);

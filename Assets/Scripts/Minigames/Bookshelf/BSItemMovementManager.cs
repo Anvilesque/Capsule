@@ -56,7 +56,9 @@ public class BSItemMovementManager : MonoBehaviour
         UpdateItemPosBLFromCenter();        
         if (bookshelfGrid.ItemOnGrid(itemPosBL, itemInfo.size))
         {
-            if (bookshelfGrid.CheckFit(itemPosBL, itemInfo.cellsFilled))
+            if (!bookshelfGrid.CheckFit(itemPosBL, itemInfo.cellsFilled)) {}
+            else if (bookshelfGrid.CheckOccupied(itemPosBL, itemInfo.cellsFilled)) {}
+            else
             {
                 itemPosBL = bookshelfGrid.GetWorldCellFromWorldPos(itemPosBL);
                 UpdateItemPosCenterFromBL();
@@ -70,7 +72,9 @@ public class BSItemMovementManager : MonoBehaviour
             if (canSnap)
             {
                 Vector2 closestCellPos = bookshelfGrid.GetWorldFromCellPos(closestCell);
-                if (bookshelfGrid.CheckFit(closestCellPos, itemInfo.cellsFilled))
+                if (!bookshelfGrid.CheckFit(closestCellPos, itemInfo.cellsFilled)) {}
+                else if (bookshelfGrid.CheckOccupied(closestCellPos, itemInfo.cellsFilled)) {}
+                else
                 {
                     itemPosBL = closestCellPos;
                     UpdateItemPosCenterFromBL();
