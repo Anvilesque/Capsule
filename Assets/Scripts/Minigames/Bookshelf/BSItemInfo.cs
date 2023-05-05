@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BSObjectInfo : MonoBehaviour
+public class BSItemInfo : MonoBehaviour
 {
     public Vector2Int size;
     [SerializeField] private bool isEntireSizeFilled;
@@ -25,11 +25,5 @@ public class BSObjectInfo : MonoBehaviour
             }
         }
         else cellsFilled = cellsFilledSpecial;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

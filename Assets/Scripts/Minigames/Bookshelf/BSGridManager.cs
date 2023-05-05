@@ -33,6 +33,20 @@ public class BSGridManager : MonoBehaviour
         return bookshelfMap.cellBounds.Contains(bookshelfMap.WorldToCell(mousePos));
     }
 
+    public bool ItemOnGrid(Vector2 itemPosBL, Vector2 size)
+    {
+        return bookshelfMap.cellBounds.Contains(bookshelfMap.WorldToCell(itemPosBL));
+    }
+
+    public bool CheckFit(Vector2 itemPosBL, List<Vector2Int> cellsFilled)
+    {
+        foreach (Vector2Int cellRelative in cellsFilled)
+        {
+            if (!bookshelfMap.cellBounds.Contains((bookshelfMap.WorldToCell(itemPosBL) + (Vector3Int)cellRelative))) return false;
+        }
+        return true;
+    }
+
     public Vector2Int GetCellFromWorldPos(Vector2 pos)
     {
         return (Vector2Int)bookshelfMap.WorldToCell(pos);
@@ -43,21 +57,20 @@ public class BSGridManager : MonoBehaviour
         return bookshelfMap.CellToWorld(bookshelfMap.WorldToCell(pos));
     }
 
-    public void OccupyCells(Vector2Int startingCell, List<Vector2Int> cellsFilled)
+    public void OccupyCells(Vector2Int startingPoint, List<Vector2Int> cellsFilled)
     {
         foreach (Vector2Int cellRelative in cellsFilled)
         {
-            Vector2Int tempCell = startingCell + cellRelative;
-            occupiedCells.Add(tempCell);
+            occupiedCells.Add(startingPoint + cellRelative);
         }
     }
 
-    public void UnoccupyCells(Vector2Int startingCell, List<Vector2Int> cellsFilled)
+    public void UnoccupyCells(Vector2Int startingPoint, List<Vector2Int> cellsFilled)
     {
         foreach (Vector2Int cellRelative in cellsFilled)
         {
-            Vector2Int tempCell = startingCell + cellRelative;
-            occupiedCells.Remove(tempCell);
+            
+            occupiedCells.Remove(startingPoint + cellRelative);
         }
     }
 }
