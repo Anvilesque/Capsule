@@ -52,6 +52,11 @@ public class BSGridManager : MonoBehaviour
         return (Vector2Int)bookshelfMap.WorldToCell(pos);
     }
 
+    public Vector2 GetWorldFromCellPos(Vector2Int pos)
+    {
+        return bookshelfMap.CellToWorld((Vector3Int)pos);
+    }
+
     public Vector2 GetWorldCellFromWorldPos(Vector2 pos)
     {
         return bookshelfMap.CellToWorld(bookshelfMap.WorldToCell(pos));
@@ -72,5 +77,12 @@ public class BSGridManager : MonoBehaviour
             
             occupiedCells.Remove(startingPoint + cellRelative);
         }
+    }
+
+    public Vector2Int GetClosestCell(Vector2 itemPosBL)
+    {
+        int x = Mathf.Clamp(GetCellFromWorldPos(itemPosBL).x, bookshelfMap.cellBounds.xMin, bookshelfMap.cellBounds.xMax);
+        int y = Mathf.Clamp(GetCellFromWorldPos(itemPosBL).y, bookshelfMap.cellBounds.yMin, bookshelfMap.cellBounds.yMax);
+        return new Vector2Int(x, y);
     }
 }

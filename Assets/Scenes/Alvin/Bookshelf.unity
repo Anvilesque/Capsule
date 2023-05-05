@@ -2847,7 +2847,7 @@ GameObject:
   - component: {fileID: 1261171472}
   - component: {fileID: 1261171475}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Item_Test (2x3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2862,7 +2862,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1261171471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7730aefcf7314314bb95bb3b79f4df8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 84ba8690e32bee64087f1c512112d142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &1261171473
@@ -2967,7 +2967,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1261171471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff02096e32f5be49adb6e8e482e6c57, type: 3}
+  m_Script: {fileID: 11500000, guid: e0b72982d8c4b4c49bf58a5e712ec699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 2, y: 3}
