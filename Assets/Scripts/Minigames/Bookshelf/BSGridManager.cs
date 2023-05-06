@@ -10,7 +10,7 @@ public class BSGridManager : MonoBehaviour
     public Vector2 cellSize {get; private set;}
     public Camera bookshelfCam;
     private Tilemap bookshelfMap;
-    public List<Vector2Int> occupiedCells;
+    [SerializeField] public Dictionary<Vector2Int, BSItemInfo> occupiedCells;
     private Vector2 mousePos;
 
     // Start is called before the first frame update
@@ -21,6 +21,7 @@ public class BSGridManager : MonoBehaviour
         bookshelfMap = GetComponent<Tilemap>();
         bookshelfMap.CompressBounds();
         cellSize = bookshelfMap.cellSize;
+        occupiedCells = new Dictionary<Vector2Int, BSItemInfo>();
     }
 
     // Update is called once per frame
@@ -52,7 +53,7 @@ public class BSGridManager : MonoBehaviour
     {
         foreach (Vector2Int cellRelative in cellsFilled)
         {
-            if (occupiedCells.Contains((Vector2Int)bookshelfMap.WorldToCell(itemPosBL) + cellRelative)) return true;
+            if (occupiedCells.ContainsKey((Vector2Int)bookshelfMap.WorldToCell(itemPosBL) + cellRelative)) return true;
         }
         return false;
     }
@@ -72,11 +73,11 @@ public class BSGridManager : MonoBehaviour
         return bookshelfMap.CellToWorld(bookshelfMap.WorldToCell(pos));
     }
 
-    public void OccupyCells(Vector2Int startingPoint, List<Vector2Int> cellsFilled)
+    public void OccupyCells(Vector2Int startingPoint, BSItemInfo itemInfo)
     {
-        foreach (Vector2Int cellRelative in cellsFilled)
+        foreach (Vector2Int cellRelative in itemInfo.cellsFilled)
         {
-            occupiedCells.Add(startingPoint + cellRelative);
+            occupiedCells.Add(startingPoint + cellRelative, itemInfo);
         }
     }
 
