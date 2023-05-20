@@ -121,6 +121,11 @@ public class BSItemMovementManager : MonoBehaviour
 
     void AttemptPlacement(Vector2 itemWorldPos)
     {
+        if (!bookshelfGrid.CheckSupport(itemWorldPos, itemInfo.cellsFilled))
+        {
+            PreventPlacement();
+            return;
+        }
         if (!bookshelfGrid.CheckFit(itemWorldPos, itemInfo.cellsFilled))
         {
             PreventPlacement();

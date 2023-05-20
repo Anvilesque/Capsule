@@ -13,6 +13,8 @@ public class BSGridManager : MonoBehaviour
     public Camera bookshelfCam;
     private Tilemap bookshelfMap;
     [SerializeField] public Dictionary<Vector2Int, BSItemInfo> occupiedCells;
+    private List<int> shelfPositions;
+    public int shelfInterval {get; private set;}
     private Vector2 mousePos;
     public bool snapPreviewEnabled {get; private set;}
 
@@ -26,12 +28,30 @@ public class BSGridManager : MonoBehaviour
         cellSize = bookshelfMap.cellSize;
         occupiedCells = new Dictionary<Vector2Int, BSItemInfo>();
         snapPreviewEnabled = false;
+        shelfPositions = new List<int>();
+        shelfInterval = 4;
+        UpdateShelfPositions();
     }
 
     // Update is called once per frame
     void Update()
     {
         mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    public void ToggleSnapPreview()
+    {
+        snapPreviewEnabled = !snapPreviewEnabled;
+    }
+
+    public void UpdateShelfPositions()
+    {
+        int tempShelfPosition = bookshelfMap.cellBounds.yMin;
+        while (tempShelfPosition <= bookshelfMap.cellBounds.yMax)
+        {
+            shelfPositions.Add(tempShelfPosition);
+            tempShelfPosition += shelfInterval;
+        }
     }
 
     public bool MouseOnGrid()
@@ -42,6 +62,20 @@ public class BSGridManager : MonoBehaviour
     public bool ItemOnGrid(Vector2 itemPosBottomLeft, Vector2 size)
     {
         return bookshelfMap.cellBounds.Contains(bookshelfMap.WorldToCell(itemPosBottomLeft));
+    }
+
+    public bool CheckSupport(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilled)
+    {
+        foreach (Vector2Int cellRelative in cellsFilled)
+        {
+            Vector2Int currentCell = GetCellFromWorldPos(itemPosBottomLeft);
+            if (cellRelative.y != 0) continue;
+            if (shelfPositions.Contains(currentCell.y)) return true;
+            Vector2Int cellBelow = currentCell + cellRelative + Vector2Int.down;
+            if (!occupiedCells.ContainsKey(cellBelow)) return false;
+            if (!occupiedCells[cellBelow].canSupport) return false;
+        }
+        return true;
     }
 
     public bool CheckFit(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilled)

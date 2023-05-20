@@ -19,7 +19,8 @@ public class BSItemInfo : MonoBehaviour
     public Stack<BSItemInfo> stackedItems;
     public bool isStackable;
     public int stackCount;
-    
+    public bool canSupport;
+
     // Start is called before the first frame update
     void Start()
     {
