@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class BSItemInfo : MonoBehaviour
 {
-    public Vector2Int size;
+    public Vector2Int itemSize;
     [SerializeField] private bool isEntireSizeFilled;
     public List<Vector2Int> cellsFilled {get; private set;}
     public List<Vector2Int> cellsFilledSpecial;
-    [SerializeField] private string type;
-    [SerializeField] private string color;
-    [HideInInspector] public bool isDisplayed;
+    [SerializeField] private string itemName;
+    [SerializeField] private string itemSubsize;
+    [SerializeField] private string itemType;
+    [SerializeField] private string itemColor;
+    [HideInInspector] public bool isBookshelfed;
     [HideInInspector] public bool isStacked;
     // Start is called before the first frame update
     void Start()
     {
         cellsFilled = new List<Vector2Int>();
+        UpdateCellsFilled();
+        if (itemName == "") itemName = $"{itemColor} {itemType}";
+        isBookshelfed = false;
+        isStacked = false;
+    }
+
+    void UpdateCellsFilled()
+    {
+        cellsFilled.Clear();
         if (isEntireSizeFilled)
         {
-            for (int x = 0; x < size.x; x++)
+            for (int x = 0; x < itemSize.x; x++)
             {
-                for (int y = 0; y < size.y; y++)
+                for (int y = 0; y < itemSize.y; y++)
                 cellsFilled.Add(new Vector2Int(x, y));
             }
         }

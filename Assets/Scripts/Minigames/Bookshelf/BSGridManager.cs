@@ -35,25 +35,25 @@ public class BSGridManager : MonoBehaviour
         return bookshelfMap.cellBounds.Contains(bookshelfMap.WorldToCell(mousePos));
     }
 
-    public bool ItemOnGrid(Vector2 itemPosBL, Vector2 size)
+    public bool ItemOnGrid(Vector2 itemPosBottomLeft, Vector2 size)
     {
-        return bookshelfMap.cellBounds.Contains(bookshelfMap.WorldToCell(itemPosBL));
+        return bookshelfMap.cellBounds.Contains(bookshelfMap.WorldToCell(itemPosBottomLeft));
     }
 
-    public bool CheckFit(Vector2 itemPosBL, List<Vector2Int> cellsFilled)
+    public bool CheckFit(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilled)
     {
         foreach (Vector2Int cellRelative in cellsFilled)
         {
-            if (!bookshelfMap.cellBounds.Contains((bookshelfMap.WorldToCell(itemPosBL) + (Vector3Int)cellRelative))) return false;
+            if (!bookshelfMap.cellBounds.Contains((bookshelfMap.WorldToCell(itemPosBottomLeft) + (Vector3Int)cellRelative))) return false;
         }
         return true;
     }
 
-    public bool CheckOccupied(Vector2 itemPosBL, List<Vector2Int> cellsFilled)
+    public bool CheckOccupied(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilled)
     {
         foreach (Vector2Int cellRelative in cellsFilled)
         {
-            if (occupiedCells.ContainsKey((Vector2Int)bookshelfMap.WorldToCell(itemPosBL) + cellRelative)) return true;
+            if (occupiedCells.ContainsKey((Vector2Int)bookshelfMap.WorldToCell(itemPosBottomLeft) + cellRelative)) return true;
         }
         return false;
     }
@@ -90,10 +90,11 @@ public class BSGridManager : MonoBehaviour
         }
     }
 
-    public Vector2Int GetClosestCell(Vector2 itemPosBL)
+    public Vector2Int GetClosestCell(Vector2 itemPosBottomLeft)
     {
-        int x = Mathf.Clamp(GetCellFromWorldPos(itemPosBL).x, bookshelfMap.cellBounds.xMin, bookshelfMap.cellBounds.xMax);
-        int y = Mathf.Clamp(GetCellFromWorldPos(itemPosBL).y, bookshelfMap.cellBounds.yMin, bookshelfMap.cellBounds.yMax);
+        Vector2 itemPosBottomLeftRounded = itemPosBottomLeft + 0.5f * cellSize;
+        int x = Mathf.Clamp(GetCellFromWorldPos(itemPosBottomLeftRounded).x, bookshelfMap.cellBounds.xMin, bookshelfMap.cellBounds.xMax);
+        int y = Mathf.Clamp(GetCellFromWorldPos(itemPosBottomLeftRounded).y, bookshelfMap.cellBounds.yMin, bookshelfMap.cellBounds.yMax);
         return new Vector2Int(x, y);
     }
 }
