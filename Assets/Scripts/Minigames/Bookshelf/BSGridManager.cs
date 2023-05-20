@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class BSGridManager : MonoBehaviour
 {
+    private const int DEFAULT_LAYER = 0;
+    private const int IGNORE_RAYCAST_LAYER = 2;
     private const int GRID_WIDTH = 20;
     private const int GRID_HEIGHT = 12;
     public Vector2 cellSize {get; private set;}
@@ -12,6 +14,7 @@ public class BSGridManager : MonoBehaviour
     private Tilemap bookshelfMap;
     [SerializeField] public Dictionary<Vector2Int, BSItemInfo> occupiedCells;
     private Vector2 mousePos;
+    public bool snapPreviewEnabled {get; private set;}
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,7 @@ public class BSGridManager : MonoBehaviour
         bookshelfMap.CompressBounds();
         cellSize = bookshelfMap.cellSize;
         occupiedCells = new Dictionary<Vector2Int, BSItemInfo>();
+        snapPreviewEnabled = false;
     }
 
     // Update is called once per frame
@@ -115,13 +119,38 @@ public class BSGridManager : MonoBehaviour
         }
     }
 
-    public void UnoccupyCells(Vector2Int startingPoint, List<Vector2Int> cellsFilled)
+    public void UnoccupyCells(Vector2Int startingPoint, BSItemInfo itemInfo)
     {
-        foreach (Vector2Int cellRelative in cellsFilled)
+        foreach (Vector2Int cellRelative in itemInfo.cellsFilled)
         {
             
             occupiedCells.Remove(startingPoint + cellRelative);
         }
+    }
+
+    public void StackItem(Vector2 itemWorldPos, BSItemInfo itemInfo)
+    {
+        BSItemInfo itemInGrid = occupiedCells[GetCellFromWorldPos(itemWorldPos)];
+        itemInGrid.stackedItems.Peek().gameObject.layer = IGNORE_RAYCAST_LAYER;
+        itemInGrid.stackedItems.Push(itemInfo);
+        itemInGrid.stackCount += 1;
+        itemInfo.gameObject.layer = DEFAULT_LAYER;
+        foreach (BSItemInfo item in itemInGrid.stackedItems) item.stackCount = itemInGrid.stackCount;
+        itemInGrid.isStacked = true;
+        itemInfo.isStacked = true;
+        itemInfo.sprite.sortingOrder = -itemInGrid.stackCount;
+    }
+
+    public void UnStackItem(Vector2 itemWorldPos, BSItemInfo itemInfo)
+    {
+        BSItemInfo itemInGrid = occupiedCells[GetCellFromWorldPos(itemWorldPos)];
+        itemInGrid.stackedItems.Pop();
+        itemInGrid.stackCount -= 1;
+        foreach (BSItemInfo item in itemInGrid.stackedItems) item.stackCount = itemInGrid.stackCount;
+        itemInfo.stackCount = 1;
+        itemInGrid.stackedItems.Peek().gameObject.layer = DEFAULT_LAYER;
+        if (itemInGrid.stackCount == 1) itemInGrid.isStacked = false;
+        itemInfo.isStacked = false;
     }
 
     public Vector2Int GetClosestCell(Vector2 itemPosBottomLeft)

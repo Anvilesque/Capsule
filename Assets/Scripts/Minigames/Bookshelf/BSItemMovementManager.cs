@@ -7,7 +7,6 @@ public class BSItemMovementManager : MonoBehaviour
     private BSItemInfo itemInfo;
     private Camera bookshelfCam;
     private BSGridManager bookshelfGrid;
-    private SpriteRenderer sprite;
     private Vector2 mousePos;
     private Vector3 prevPosBottomLeft;
     private Vector3 itemPosBottomLeft;
@@ -15,10 +14,10 @@ public class BSItemMovementManager : MonoBehaviour
     private Vector2 offsetMouseFromTransform;
     private Vector2 offsetSize;
     private Vector2 offsetHeldUp;
+    private Vector2 offsetStacked;
     private float snapTolerance;
     private float preventTransparency = 0.5f;
-    private bool canPlace;
-    
+    private bool canPlace;    
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +25,6 @@ public class BSItemMovementManager : MonoBehaviour
         itemInfo = GetComponent<BSItemInfo>();
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfCam = bookshelfGrid.bookshelfCam;
-        sprite = GetComponent<SpriteRenderer>();
 
         mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -34,6 +32,7 @@ public class BSItemMovementManager : MonoBehaviour
         offsetHeldUp = new Vector2(0f, 0.2f);
         // Size offset: Add half of size * cell size to current position
         offsetSize = new Vector2((itemInfo.itemSize.x / 2.0f) * bookshelfGrid.cellSize.x, (itemInfo.itemSize.y / 2.0f) * bookshelfGrid.cellSize.y);
+        offsetStacked = new Vector2(0, 0.2f);
         snapTolerance = 0.7f * bookshelfGrid.cellSize.x;
 
         // z-value should always be 0, since we're only working with Vector2
@@ -53,10 +52,16 @@ public class BSItemMovementManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        sprite.sortingOrder = 1;
+        itemInfo.sprite.sortingOrder = 10;
         prevPosBottomLeft = itemPosBottomLeft;
         offsetMouseFromTransform = transform.position - (Vector3)mousePos;
-        bookshelfGrid.UnoccupyCells(bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft), itemInfo.cellsFilled);
+        Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
+        if (!bookshelfGrid.occupiedCells.ContainsKey(targetCell)) return;
+        if (bookshelfGrid.occupiedCells[targetCell].isStacked)
+        {
+            bookshelfGrid.UnStackItem(itemPosBottomLeft, itemInfo);
+        }
+        else bookshelfGrid.UnoccupyCells(targetCell, itemInfo);
     }
 
     private void OnMouseDrag()
@@ -64,11 +69,12 @@ public class BSItemMovementManager : MonoBehaviour
         UnPreventPlacement();
 
         itemPosCenter = mousePos + offsetMouseFromTransform;
+        if (!bookshelfGrid.snapPreviewEnabled) transform.position = itemPosCenter;
         UpdateItemPosBLFromCenter();
 
         CalculateItemCenter();
+        if (bookshelfGrid.snapPreviewEnabled) transform.position = itemPosCenter;
         
-        transform.position = itemPosCenter;
     }
 
     // private void OnDrawGizmos() {
@@ -78,14 +84,21 @@ public class BSItemMovementManager : MonoBehaviour
 
     private void OnMouseUp()
     {
-        sprite.sortingOrder = 0;
+        itemInfo.sprite.sortingOrder = 0;
         if (!canPlace)
         {
             ReturnItemToPreviousPosition();
         }
-        else if (bookshelfGrid.ItemOnGrid(itemPosBottomLeft, itemInfo.itemSize))
+        else
         {
-            bookshelfGrid.OccupyCells(bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft), itemInfo);
+            transform.position = itemPosCenter;
+            Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
+            if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilled))
+            {
+                bookshelfGrid.StackItem(itemPosBottomLeft, itemInfo);
+                transform.position += (itemInfo.stackCount - 1) * (Vector3)offsetStacked;
+            }
+            else bookshelfGrid.OccupyCells(targetCell, itemInfo);
         }
         // else
         // {
@@ -168,22 +181,29 @@ public class BSItemMovementManager : MonoBehaviour
     
     private void PreventPlacement()
     {
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, preventTransparency);
+        itemInfo.sprite.color = new Color(itemInfo.sprite.color.r, itemInfo.sprite.color.g, itemInfo.sprite.color.b, preventTransparency);
         canPlace = false;
     }
 
     private void UnPreventPlacement()
     {
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1f);
+        itemInfo.sprite.color = new Color(itemInfo.sprite.color.r, itemInfo.sprite.color.g, itemInfo.sprite.color.b, 1f);
         canPlace = true;
     }
 
     private void ReturnItemToPreviousPosition()
     {
         itemPosBottomLeft = prevPosBottomLeft;
-        bookshelfGrid.OccupyCells(bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft), itemInfo);
         UpdateItemPosCenterFromBL();
         transform.position = itemPosCenter;
+        Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
+        if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilled))
+        {
+            bookshelfGrid.StackItem(itemPosBottomLeft, itemInfo);
+            transform.position += (itemInfo.stackCount - 1) * (Vector3)offsetStacked;
+        }
+        else bookshelfGrid.OccupyCells(targetCell, itemInfo);
         UnPreventPlacement();
+        
     }
 }
