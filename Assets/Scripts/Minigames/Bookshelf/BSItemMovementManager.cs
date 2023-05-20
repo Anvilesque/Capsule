@@ -38,10 +38,9 @@ public class BSItemMovementManager : MonoBehaviour
         // z-value should always be 0, since we're only working with Vector2
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         itemPosCenter = transform.position;
-        itemPosCenter.z = 0f;
         UpdateItemPosBLFromCenter();
         prevPosBottomLeft = itemPosBottomLeft;
-        canPlace = true;
+        UnPreventPlacement();
     }
 
     // Update is called once per frame
@@ -85,26 +84,22 @@ public class BSItemMovementManager : MonoBehaviour
     private void OnMouseUp()
     {
         itemInfo.sprite.sortingOrder = 0;
+
         if (!canPlace)
         {
             ReturnItemToPreviousPosition();
+            return;
         }
-        else
+
+        itemInfo.isBookshelfed = true;
+        transform.position = itemPosCenter;
+        Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
+        if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilled))
         {
-            transform.position = itemPosCenter;
-            Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
-            if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilled))
-            {
-                bookshelfGrid.StackItem(itemPosBottomLeft, itemInfo);
-                transform.position += (itemInfo.stackCount - 1) * (Vector3)offsetStacked;
-            }
-            else bookshelfGrid.OccupyCells(targetCell, itemInfo);
+            bookshelfGrid.StackItem(itemPosBottomLeft, itemInfo);
+            transform.position += (itemInfo.stackCount - 1) * (Vector3)offsetStacked;
         }
-        // else
-        // {
-        //     // itemPosCenter -= (Vector3)offsetHeldUp;
-        //     transform.position = itemPosCenter;
-        // }
+        else bookshelfGrid.OccupyCells(targetCell, itemInfo);
     }
 
     private void CalculateItemCenter()
