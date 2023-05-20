@@ -62,9 +62,10 @@ public class TaskManager : MonoBehaviour
         CheckInteractables();
         IndicateInteract();
         if (Input.GetButtonDown("Interact"))
-        {         
-            if (!isPlayerNextToTask) {}
-            else if (isTasking)
+        {
+            if (!isPlayerNextToTask) return;
+            if (InputFieldManager.isInputFocused) return;
+            if (isTasking)
             {
                 StopTask();
             }
