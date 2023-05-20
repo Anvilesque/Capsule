@@ -9,7 +9,7 @@ public class BSItemMovementManager : MonoBehaviour
     private BSGridManager bookshelfGrid;
     private SpriteRenderer sprite;
     private Vector2 mousePos;
-    private Vector3 prevPosBL;
+    private Vector3 prevPosBottomLeft;
     private Vector3 itemPosBottomLeft;
     private Vector3 itemPosCenter;
     private Vector2 offsetMouseFromTransform;
@@ -41,7 +41,7 @@ public class BSItemMovementManager : MonoBehaviour
         itemPosCenter = transform.position;
         itemPosCenter.z = 0f;
         UpdateItemPosBLFromCenter();
-        prevPosBL = itemPosBottomLeft;
+        prevPosBottomLeft = itemPosBottomLeft;
         canPlace = true;
     }
 
@@ -54,7 +54,7 @@ public class BSItemMovementManager : MonoBehaviour
     private void OnMouseDown()
     {
         sprite.sortingOrder = 1;
-        prevPosBL = itemPosBottomLeft;
+        prevPosBottomLeft = itemPosBottomLeft;
         offsetMouseFromTransform = transform.position - (Vector3)mousePos;
         bookshelfGrid.UnoccupyCells(bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft), itemInfo.cellsFilled);
     }
@@ -66,39 +66,8 @@ public class BSItemMovementManager : MonoBehaviour
         itemPosCenter = mousePos + offsetMouseFromTransform;
         UpdateItemPosBLFromCenter();
 
-        if (bookshelfGrid.ItemOnGrid(itemPosBottomLeft, itemInfo.itemSize))
-        {
-            if (!bookshelfGrid.CheckFit(itemPosBottomLeft, itemInfo.cellsFilled) || bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilled))
-            {
-                PreventPlacement();
-            }
-            else
-            {
-                itemPosBottomLeft = bookshelfGrid.GetWorldCellFromWorldPos(itemPosBottomLeft);
-                UpdateItemPosCenterFromBL();
-            }
-        }
-        else
-        {
-            // Check snap tolerance
-            Vector2Int closestCell = bookshelfGrid.GetClosestCell(itemPosBottomLeft);
-            bool canSnap = Vector2.Distance(itemPosBottomLeft, bookshelfGrid.GetWorldFromCellPos(closestCell)) <= snapTolerance;
-            if (canSnap)
-            {
-                Vector2 closestCellPos = bookshelfGrid.GetWorldFromCellPos(closestCell);
-                if (!bookshelfGrid.CheckFit(closestCellPos, itemInfo.cellsFilled) || bookshelfGrid.CheckOccupied(closestCellPos, itemInfo.cellsFilled))
-                {
-                    PreventPlacement();
-                }
-                else
-                {
-                    itemPosBottomLeft = closestCellPos;
-                    UpdateItemPosCenterFromBL();
-                }
-            }
-            else PreventPlacement();
-            // itemPosCenter += (Vector3)offsetHeldUp;
-        }
+        CalculateItemCenter();
+        
         transform.position = itemPosCenter;
     }
 
@@ -125,6 +94,68 @@ public class BSItemMovementManager : MonoBehaviour
         // }
     }
 
+    private void CalculateItemCenter()
+    {
+        if (bookshelfGrid.ItemOnGrid(itemPosBottomLeft, itemInfo.itemSize)) 
+        {
+            AttemptPlacement(bookshelfGrid.GetWorldCellFromWorldPos(itemPosBottomLeft));
+        }
+        else
+        {
+            AttemptSnap();
+        }
+    }
+
+    void AttemptPlacement(Vector2 itemWorldPos)
+    {
+        if (!bookshelfGrid.CheckFit(itemWorldPos, itemInfo.cellsFilled))
+        {
+            PreventPlacement();
+            return;
+        }
+        if (bookshelfGrid.CheckOccupied(itemWorldPos, itemInfo.cellsFilled))
+        {
+            if (!itemInfo.isStackable)
+            {
+                PreventPlacement();
+                return;
+            }
+
+            bool stackSuccess = false;
+            foreach (Vector2Int cellRelative in itemInfo.cellsFilled)
+            {
+                Vector2 tempWorldPos = itemWorldPos + bookshelfGrid.cellSize * cellRelative;
+                if (bookshelfGrid.CheckStackable(tempWorldPos, itemInfo))
+                {
+                    itemWorldPos = bookshelfGrid.GetStackPos(tempWorldPos);
+                    stackSuccess = true;
+                    break;
+                }
+            }
+            if (!stackSuccess)
+            {
+                PreventPlacement();
+                return;
+            }
+        }
+        itemPosBottomLeft = itemWorldPos;
+        UpdateItemPosCenterFromBL();
+    }
+
+    void AttemptSnap()
+    {
+        Vector2Int closestCell = bookshelfGrid.GetClosestCell(itemPosBottomLeft);
+        bool canSnap = Vector2.Distance(itemPosBottomLeft, bookshelfGrid.GetWorldFromCellPos(closestCell)) <= snapTolerance;
+        if (!canSnap)
+        {
+            PreventPlacement();
+            return;
+        }
+
+        Vector2 closestCellPos = bookshelfGrid.GetWorldFromCellPos(closestCell);
+        AttemptPlacement(closestCellPos);
+    }
+
     private void UpdateItemPosCenterFromBL()
     {
         itemPosCenter = itemPosBottomLeft + (Vector3)offsetSize;   
@@ -149,7 +180,7 @@ public class BSItemMovementManager : MonoBehaviour
 
     private void ReturnItemToPreviousPosition()
     {
-        itemPosBottomLeft = prevPosBL;
+        itemPosBottomLeft = prevPosBottomLeft;
         bookshelfGrid.OccupyCells(bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft), itemInfo);
         UpdateItemPosCenterFromBL();
         transform.position = itemPosCenter;

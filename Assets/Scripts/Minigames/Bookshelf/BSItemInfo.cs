@@ -8,15 +8,19 @@ public class BSItemInfo : MonoBehaviour
     [SerializeField] private bool isEntireSizeFilled;
     public List<Vector2Int> cellsFilled {get; private set;}
     public List<Vector2Int> cellsFilledSpecial;
-    [SerializeField] private string itemName;
-    [SerializeField] private string itemSubsize;
-    [SerializeField] private string itemType;
-    [SerializeField] private string itemColor;
+    public string itemName;
+    public string itemSubsize;
+    public string itemType;
+    public string itemColor;
+    [HideInInspector] public int itemID;
     [HideInInspector] public bool isBookshelfed;
     [HideInInspector] public bool isStacked;
+    public bool isStackable;
+    public int stackCount;
     // Start is called before the first frame update
     void Start()
     {
+        itemID = Random.Range(0, int.MaxValue);
         cellsFilled = new List<Vector2Int>();
         UpdateCellsFilled();
         if (itemName == "") itemName = $"{itemColor} {itemType}";

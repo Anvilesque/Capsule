@@ -254,6 +254,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_Test (2x3) (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
+      propertyPath: isStackable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2929173912855076540, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2984,6 +2988,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_Test (2x3) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
+      propertyPath: isStackable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2929173912855076540, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3040,6 +3048,10 @@ PrefabInstance:
     - target: {fileID: 2929173912855076513, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_Name
       value: Item_Test (2x3) (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
+      propertyPath: isStackable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2929173912855076540, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_RootOrder

@@ -53,9 +53,43 @@ public class BSGridManager : MonoBehaviour
     {
         foreach (Vector2Int cellRelative in cellsFilled)
         {
-            if (occupiedCells.ContainsKey((Vector2Int)bookshelfMap.WorldToCell(itemPosBottomLeft) + cellRelative)) return true;
+            if (occupiedCells.ContainsKey(GetCellFromWorldPos(itemPosBottomLeft) + cellRelative)) return true;
         }
         return false;
+    }
+
+    public bool CheckStackable(Vector2 itemWorldPos, BSItemInfo heldItemInfo)
+    {
+        if (!occupiedCells.ContainsKey(GetCellFromWorldPos(itemWorldPos))) return false;
+        if (occupiedCells[GetCellFromWorldPos(itemWorldPos)].itemType == heldItemInfo.itemType) return true;
+        else return false;
+    }
+
+    public Vector2 GetStackPos(Vector2 itemWorldPos)
+    {
+        int tempID = occupiedCells[GetCellFromWorldPos(itemWorldPos)].itemID;
+        bool repeatLoop = true;
+        while (repeatLoop)
+        {
+            repeatLoop = false;
+            if (occupiedCells.ContainsKey(GetCellFromWorldPos(itemWorldPos) + Vector2Int.left))
+            {
+                if (occupiedCells[(GetCellFromWorldPos(itemWorldPos) + Vector2Int.left)].itemID == tempID)
+                {
+                    itemWorldPos += cellSize * Vector2Int.left;
+                    repeatLoop = true;
+                }
+            }
+            if (occupiedCells.ContainsKey(GetCellFromWorldPos(itemWorldPos) + Vector2Int.down))
+            {
+                if (occupiedCells[(GetCellFromWorldPos(itemWorldPos) + Vector2Int.down)].itemID == tempID)
+                {
+                    itemWorldPos += cellSize * Vector2Int.down;
+                    repeatLoop = true;
+                }
+            }
+        }
+        return itemWorldPos;
     }
 
     public Vector2Int GetCellFromWorldPos(Vector2 pos)
