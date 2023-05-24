@@ -8,7 +8,7 @@ public class Package : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector2 spawnVelocity = new Vector2(-GetRandomNumber(1f,13f, 0.6f), GetRandomNumber(1f,6f));
+        Vector2 spawnVelocity = new Vector2(GetRandomNumber(1f,13f, 0.6f), GetRandomNumber(1f,6f));
         GetComponent<Rigidbody2D>().velocity = spawnVelocity;
     }
 
