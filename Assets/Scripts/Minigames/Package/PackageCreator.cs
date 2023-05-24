@@ -16,7 +16,7 @@ public class PackageCreator : MonoBehaviour
     {
         while (true) // a boolean - could just be "true" or could be controlled elsewhere
         {
-            spawnLocation = new Vector3(12,Random.Range(4,6),0);
+            spawnLocation = new Vector3(-12,Random.Range(4,6),0);
             GameObject SpawnLocation = (GameObject)Instantiate(Resources.Load("Prefabs/Minigames/Packaging Minigame/Package"), 
             spawnLocation, Quaternion.identity);
             float delay = Random.Range(1f, 5f); // adjust this to set frequency of obstacles
