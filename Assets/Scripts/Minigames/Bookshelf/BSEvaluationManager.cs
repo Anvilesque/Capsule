@@ -7,8 +7,9 @@ public class BSEvaluationManager : MonoBehaviour
 {
     BSGridManager bookshelfGrid;
     Tilemap bookshelfMap;
-    List<TileBase> tiles;
-    int countNumberOfItems;
+    List<BSItemInfo> items;
+    private int countNumberOfItems;
+    private int countTotalItems;
 
     // Start is called before the first frame update
     void Start()
@@ -16,19 +17,50 @@ public class BSEvaluationManager : MonoBehaviour
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfMap = bookshelfGrid.GetComponent<Tilemap>();
         bookshelfMap.CompressBounds();
-        tiles = new List<TileBase>(bookshelfMap.GetTilesBlock(bookshelfMap.cellBounds));
+        items = new List<BSItemInfo>(FindObjectsOfType<BSItemInfo>());
     }
 
     public void EvaluateNumberOfItems()
     {
         countNumberOfItems = 0;
-        foreach (Vector3Int tile in bookshelfMap.cellBounds.allPositionsWithin)
+        countTotalItems = 0;
+        foreach (BSItemInfo item in items)
         {
-            if (bookshelfGrid.occupiedCells.ContainsKey((Vector2Int)tile))
+            countTotalItems++;
+            if (item.isBookshelfed)
             {
                 countNumberOfItems++;
             }
         }
-        Debug.Log(countNumberOfItems);
+    }
+
+    public void EvaluateNumberOfTypes()
+    {
+
+    }
+
+    public void EvaluateType()
+    {
+
+    }
+
+    public void EvaluateColor()
+    {
+
+    }
+
+    public void EvaluateSubsize()
+    {
+
+    }
+
+    public void EvaluateSymmetry()
+    {
+
+    }
+
+    public void EvaluateStacked()
+    {
+
     }
 }
