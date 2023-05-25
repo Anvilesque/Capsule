@@ -16,7 +16,6 @@ public class PlayerNPCEncounter : MonoBehaviour
     private DialogueRunner dialogueRunner;
     private bool canInteract;
     private NonPC nearestNPC;
-    public bool isInteracting {get; private set;}
 
     // Start is called before the first frame update
     void Start()
@@ -65,11 +64,7 @@ public class PlayerNPCEncounter : MonoBehaviour
 
     void IndicateInteract()
     {
-        if (isInteracting)
-        {
-            DestroyIndicator();
-        }
-        else if (canInteract)
+        if (canInteract)
         {
             if (interactIndicator != null) {}
             else
