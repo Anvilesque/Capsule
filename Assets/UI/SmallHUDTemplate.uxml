@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UI%20Assets/uss/HudButton.uss?fileID=7433441132597879392&amp;guid=4252a843611dd4f33bf6bb285b295e70&amp;type=3#HudButton" />
+    <ui:VisualElement name="top-border" style="height: 10px;" />
+    <ui:VisualElement name="header" style="height: 100px; background-color: rgba(200, 195, 174, 0); flex-direction: row-reverse; justify-content: flex-start; -unity-font: url(&apos;project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&amp;guid=c632cdf9515d84874812b408108183ef&amp;type=3#Caramel Chestnut DEMO&apos;); -unity-font-definition: url(&apos;project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&amp;guid=55dfdcc6c40174a89a2cff09cfccd46e&amp;type=2#Caramel Chestnut DEMO SDF&apos;);">
+        <ui:Button display-tooltip-when-elided="true" name="settings-button" enable-rich-text="true" class="hud-button" style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/icons/settings%20icon.png?fileID=2800000&amp;guid=b43cae7ea56814e0abcfb3d5382d8119&amp;type=3#settings icon&apos;); width: 75px;" />
+        <ui:Button display-tooltip-when-elided="true" name="menu-button" class="hud-button" style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/icons/map%20icon.png?fileID=2800000&amp;guid=88c95fd81a2564a6c84ae3dee55421c6&amp;type=3#map icon&apos;);" />
+        <ui:Button display-tooltip-when-elided="true" name="currency-button" class="hud-button" style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/icons/coin%20icon.png?fileID=2800000&amp;guid=9cb129fa11fde49208f87a658d53e9b1&amp;type=3#coin icon&apos;);" />
+    </ui:VisualElement>
+    <ui:VisualElement name="center" style="flex-grow: 1;" />
+    <ui:VisualElement name="footer" style="height: 75px; flex-direction: row-reverse;">
+        <ui:Button text="Q" display-tooltip-when-elided="true" name="keybind-1" class="keybind-icon" />
+        <ui:Button text="R" display-tooltip-when-elided="true" name="keybind-2" class="keybind-icon" />
+    </ui:VisualElement>
+    <ui:VisualElement name="bottom-border" style="height: 10px;" />
+</ui:UXML>
