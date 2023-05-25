@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class TaskManager : MonoBehaviour
 {
@@ -62,9 +63,10 @@ public class TaskManager : MonoBehaviour
         CheckInteractables();
         IndicateInteract();
         if (Input.GetButtonDown("Interact"))
-        {         
-            if (!isPlayerNextToTask) {}
-            else if (isTasking)
+        {
+            if (!isPlayerNextToTask) return;
+            if (InputFieldManager.isInputFocused) return;
+            if (isTasking)
             {
                 StopTask();
             }
@@ -143,6 +145,11 @@ public class TaskManager : MonoBehaviour
             {
                 currentMinigame = taskName;
                 taskCam = diaryCam;
+                break;
+            }
+            case "Packaging":
+            {
+                SceneManager.LoadScene("Packaging Minigame");
                 break;
             }
             default:

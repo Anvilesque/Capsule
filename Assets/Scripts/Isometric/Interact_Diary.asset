@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Interact_Diary
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: 3f9dc59dc36d9c04eb6a149eba8259e8, type: 2}
+  - {fileID: 11400000, guid: 6b44f9e6c3d9a2049ae62e5fa2724e71, type: 2}
   newPos: {x: 0, y: 0, z: 0}
   taskName: Diary
