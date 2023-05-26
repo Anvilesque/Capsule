@@ -158,8 +158,12 @@ public class TaskManager : MonoBehaviour
             }
         }
         mvmtControl.DisableMovement();
-        mainCam.rect = new Rect(0, 0, isoViewRatio, 1f);
-        taskCam.rect = new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f);
+        if (taskCam != null)
+        {
+            mainCam.rect = new Rect(0, 0, isoViewRatio, 1f);
+            taskCam.rect = new Rect(isoViewRatio, 0, (1 - isoViewRatio), 1f);
+        }
+        
     }
 
     public void StopTask()
@@ -182,8 +186,11 @@ public class TaskManager : MonoBehaviour
                 return;
             }
         }
-        mainCam.rect = new Rect(0, 0, 1f, 1f);
-        taskCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
+        if (taskCam != null)
+        {
+            mainCam.rect = new Rect(0, 0, 1f, 1f);
+            taskCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
+        }
         isTasking = false;
         mvmtControl.EnableMovement();
     }

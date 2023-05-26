@@ -69,11 +69,6 @@ public class TileManager : MonoBehaviour
         else return dataFromTiles[tile];
     }
 
-    public TileData GetTransitionData(Tilemap map, Vector3Int tilePosition)
-    {
-        return GetTileData(map, new Vector3Int(tilePosition.x, tilePosition.y, tilePosition.z - 2));
-    }
-
     public bool ScanForTile(Tilemap map, Vector3Int tilePosition)
     {
         for (int z = map.cellBounds.zMin; z <= map.cellBounds.zMax; z++)

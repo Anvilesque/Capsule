@@ -8,17 +8,20 @@ public class PlayerTransition : MonoBehaviour
     private TileManager tileManager;
     private Tilemap floorMap, wallMap, transitionMap, interactableMap;
     private PlayerMovement playerMovement;
+    private List<TransitionPoint> transitionPoints;
     public bool canTeleport;
 
     // Start is called before the first frame update
     void Start()
     {
         tileManager = FindObjectOfType<TileManager>();
-        floorMap = tileManager.floorMap;
-        wallMap = tileManager.wallMap;
         transitionMap = tileManager.transitionMap;
-        interactableMap = tileManager.interactableMap;
         playerMovement = GetComponent<PlayerMovement>();
+        transitionPoints = new List<TransitionPoint>(FindObjectsOfType<TransitionPoint>());
+        foreach (TransitionPoint point in transitionPoints)
+        {
+            point.GetComponent<SpriteRenderer>().enabled = false;
+        }
         canTeleport = true;
     }
 
@@ -43,13 +46,22 @@ public class PlayerTransition : MonoBehaviour
         FadeController fadeController = FindObjectOfType<FadeController>();
         fadeController.FadeIn();
         while (fadeController.isFading) yield return null;
-        Vector3Int newCoords = TransitionPoints.TransitionStartDests[playerMovement.currentPos - new Vector3Int(0, 0, 2)];
-        newCoords.z += 2;
+        Vector3Int blockUnderPlayer = playerMovement.currentPos - new Vector3Int(0, 0, 2);
+        Vector3Int newCoords = GetTransitionPoint(blockUnderPlayer) + new Vector3Int(0, 0, 2);
         playerMovement.UpdateCurrentPosition(newCoords);
         transform.position = transitionMap.CellToWorld(newCoords);
         yield return new WaitForSeconds(2f);
         canTeleport = false;
         playerMovement.EnableMovement();
         fadeController.FadeOut();
+    }
+
+    private Vector3Int GetTransitionPoint(Vector3Int blockUnderPlayer)
+    {
+        TransitionPoint pointStart = transitionPoints.Find((TransitionPoint pointStart) => pointStart.pointType == TransitionPoint.PointTypes.Start && pointStart.positionCell == blockUnderPlayer);
+        // Debug.Log(pointStart);
+        if (pointStart == null) return blockUnderPlayer;
+        TransitionPoint pointDest = pointStart.transform.GetChild(0).GetComponent<TransitionPoint>();
+        return pointDest.positionCell;
     }
 }
