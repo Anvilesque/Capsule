@@ -13,7 +13,7 @@ public class HUDButtons : MonoBehaviour
         buttonDocument = GetComponent<UIDocument>();
         if (buttonDocument == null)
         {
-            Debug.LogError("No button document found.")
+            Debug.LogError("No button document found.");
         }
 
         settingButton = buttonDocument.rootVisualElement.Q("settings-button") as Button;

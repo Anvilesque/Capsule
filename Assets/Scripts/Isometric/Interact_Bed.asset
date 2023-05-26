@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6590a8d34ad4b9d4f8813c5a4ffeca93, type: 3}
-  m_Name: Interact_Diary
+  m_Name: Interact_Bed
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: 6b44f9e6c3d9a2049ae62e5fa2724e71, type: 2}
-  - {fileID: 11400000, guid: 3f9dc59dc36d9c04eb6a149eba8259e8, type: 2}
+  - {fileID: 11400000, guid: b9d6fc07b03fe3e408ebe03d2e8cca55, type: 2}
+  - {fileID: 11400000, guid: 997aaf10577ddf240b3808ead9a456b9, type: 2}
   newPos: {x: 0, y: 0, z: 0}
-  taskName: Diary
+  taskName: Sleep
