@@ -10,17 +10,6 @@ public class NonPC : MonoBehaviour
     public Vector3Int position {get; private set;}
     private TileManager tileManager;
     private Tilemap floorMap;
-    private Tilemap wallMap;
-    private Tilemap transitionMap;
-    private Tilemap interactableMap;
-    private DialogueRunner dialogueRunner;
-
-    private const float RAND_MVMT_MIN = 3f;
-    private const float RAND_MVMT_MAX = 10f;
-    private float randMvmtTimer;
-    private float randMvmtCooldown;
-    private bool isMoving;
-    private IEnumerator randMvmtCoroutine;
 
     // private float movementSpeed;
 
@@ -29,43 +18,12 @@ public class NonPC : MonoBehaviour
     {
         tileManager = FindObjectOfType<TileManager>();
         floorMap = tileManager.floorMap;
-        wallMap = tileManager.wallMap;
-        transitionMap = tileManager.transitionMap;
-        interactableMap = tileManager.interactableMap;
-        dialogueRunner = FindObjectOfType<DialogueRunner>();
-        // movementSpeed = 3f;
-        ResetRandMvmt();
-        
+        position = floorMap.WorldToCell(transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
         position = floorMap.WorldToCell(transform.position);
-
-        if (!isMoving && !dialogueRunner.IsDialogueRunning)
-        {
-            randMvmtTimer -= Time.deltaTime;
-        }
-        if (randMvmtTimer <= 0)
-        {
-            // Move();
-            ResetRandMvmt();
-        }
-    }
-
-    void ResetRandMvmt()
-    {
-        randMvmtCooldown = Random.Range(RAND_MVMT_MIN, RAND_MVMT_MAX);
-        randMvmtTimer = randMvmtCooldown;
-    }
-
-    void Move()
-    {
-        isMoving = true;
-        Vector3Int destination = tileManager.tilesStandable[Random.Range(0, tileManager.tilesStandable.Count)];
-        destination.z = 2;
-        // transform.position = floorMap.CellToWorld(destination) + new Vector3(0, 2 * TileManager.distY, 0); // set to teleport for now
-        isMoving = false;
     }
 }

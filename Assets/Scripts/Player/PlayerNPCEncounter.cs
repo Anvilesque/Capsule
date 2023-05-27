@@ -38,12 +38,8 @@ public class PlayerNPCEncounter : MonoBehaviour
     {
         canInteractNPC = false;
         if (nonPCs.Count == 0) {}
-        else foreach (NonPC nonPC in nonPCs)
-        {
-            Vector3Int playerCell = mvmtControl.currentPos;
-            CheckInteractNPC(playerCell, nonPC);
-            if (canInteractNPC) break;
-        }
+        else UpdateCanInteract();
+        
         if (canInteractNPC)
         {
             IndicateInteract();
@@ -55,20 +51,38 @@ public class PlayerNPCEncounter : MonoBehaviour
         }
     }
 
-    void CheckInteractNPC(Vector3Int playerPosition, NonPC nonPC)
+    void UpdateCanInteract()
     {
         if (dialogueRunner.IsDialogueRunning) return; //dialogue is running
-        List<Vector3Int> cellsAdjacentToPlayer = tileManager.GetAdjacentCellsPositions(floorMap, playerPosition);
-        if (cellsAdjacentToPlayer.Contains(nonPC.position))
+        Vector3Int playerCell = mvmtControl.currentPos;
+        if (GetNPCAtAdjacent(playerCell) != null)
         {
-            nearestNPC = nonPC;
-            nearestNPCDirection = TileManager.cardinalDirections[cellsAdjacentToPlayer.IndexOf(nonPC.position)];
+            nearestNPC = GetNPCAtAdjacent(playerCell);
+            nearestNPCDirection = GetNPCDirection(playerCell, nearestNPC);
             canInteractNPC = true;
         }
-        else
-        {
-            canInteractNPC = false;
-        }
+        else canInteractNPC = false;
+        
+    }
+
+    public NonPC GetNPCAtAdjacent(Vector3Int playerPosition)
+    {
+        NonPC nonPCDirectlyFacing = GetNPCAtPosition(playerPosition + mvmtControl.currentlyFacing);
+        if (nonPCDirectlyFacing != null) return nonPCDirectlyFacing;
+
+        List<Vector3Int> cellsAdjacentToPlayer = tileManager.GetAdjacentCellsPositions(floorMap, playerPosition);
+        return nonPCs.Find(nonPC => cellsAdjacentToPlayer.Contains(nonPC.position));
+    }
+
+    public NonPC GetNPCAtPosition(Vector3Int targetPosition)
+    {
+        return nonPCs.Find(nonPC => nonPC.position == targetPosition);
+    }
+
+    Vector3Int GetNPCDirection(Vector3Int playerPosition, NonPC nonPC)
+    {
+        List<Vector3Int> cellsAdjacentToPlayer = tileManager.GetAdjacentCellsPositions(floorMap, playerPosition);
+        return TileManager.cardinalDirections[cellsAdjacentToPlayer.IndexOf(nonPC.position)];
     }
 
     void IndicateInteract()

@@ -102,10 +102,15 @@ public class PlayerMovement : MonoBehaviour
         }
         else yield break;
 
+        // Check if NPC is in the way
+        if (GetComponent<PlayerNPCEncounter>().GetNPCAtPosition(tempPos) != null) yield break;
+
         // All checks cleared --> handle movement
-        currentPos = tempPos;
         isMoving = true;
         float elapsedTime = 0f;
+        // Note: Currently updates player's currentPos BEFORE they actually get there; I think this is preferable
+        // when it comes to NPC interactions, but it could be changed.
+        currentPos = tempPos;
         while(elapsedTime < timeToMove)
         {
             // Lerp moves from one position to the other in some amount of time.

@@ -100,7 +100,7 @@ public class TileManager : MonoBehaviour
         return false;
     }
 
-    public Vector3Int ScanForTileValue(Tilemap map, Vector3Int tilePosition)
+    public Vector3Int GetTilePosition(Tilemap map, Vector3Int tilePosition)
     {
         for (int z = map.cellBounds.zMin; z <= map.cellBounds.zMax; z++)
         {

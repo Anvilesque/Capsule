@@ -66,6 +66,7 @@ public class TaskManager : MonoBehaviour
         {
             if (!isPlayerNextToTask) return;
             if (InputFieldManager.isInputFocused) return;
+            if (GetComponent<PlayerNPCEncounter>().GetNPCAtAdjacent(mvmtControl.currentPos) != null) return;
             if (isTasking)
             {
                 StopTask();
@@ -91,7 +92,7 @@ public class TaskManager : MonoBehaviour
             isPlayerNextToTask = false;
             if (tileManager.ScanForTile(interactableMap, tempTile))
             {
-                tempTile = tileManager.ScanForTileValue(interactableMap, tempTile);
+                tempTile = tileManager.GetTilePosition(interactableMap, tempTile);
                 taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
                 isPlayerNextToTask = true;
                 break;
