@@ -66,7 +66,7 @@ public class TaskManager : MonoBehaviour
         {
             if (!isPlayerNextToTask) return;
             if (InputFieldManager.isInputFocused) return;
-            if (GetComponent<PlayerNPCEncounter>().GetNPCAtAdjacent(mvmtControl.currentPos) != null) return;
+            if (FindObjectOfType<PlayerNPCEncounter>().GetNPCAtAdjacent(mvmtControl.currentPos) != null) return;
             if (isTasking)
             {
                 StopTask();

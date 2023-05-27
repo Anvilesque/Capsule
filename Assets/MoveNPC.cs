@@ -8,10 +8,12 @@ public class MoveNPC : MonoBehaviour
     private TileManager tileManager;
     private Tilemap floorMap;
     private NonPC nonPC;
-    public List<NodeNPC> nodesReady;
-    public List<Vector3Int> positionsTried;
-    public List<Vector3Int> test;
-    private bool testbool;
+    private int stepsFromMovingForward;
+    private Vector3Int destination;
+    private Vector3Int testPosition;
+    private List<Vector3Int> directionsTried;
+    private List<Vector3Int> path;
+    private bool isMoving;
 
     // Start is called before the first frame update
     void Start()
@@ -19,103 +21,78 @@ public class MoveNPC : MonoBehaviour
         tileManager = FindObjectOfType<TileManager>();
         floorMap = tileManager.floorMap;
         nonPC = GetComponent<NonPC>();
-        nodesReady = new List<NodeNPC>();
-        positionsTried = new List<Vector3Int>();
-        testbool = true;
+        directionsTried = new List<Vector3Int>();
     }
 
     void Update()
     {
-        if (testbool)
-        StartCoroutine("yes");
-        testbool = false;
-    }
 
-    IEnumerator yes()
-    {
-        yield return new WaitForSeconds(1f);
-        test = CalculateRoute(new Vector3Int(0, 0, 2));
-        yield break;
     }
 
     public void MoveNPCToDest(Vector3Int destination)
     {
-        List<Vector3Int> directions = CalculateRoute(destination);
+        directionsTried.Clear();
+        this.destination = destination;
+        testPosition = nonPC.position;
     }
 
-    List<Vector3Int> CalculateRoute(Vector3Int destination)
+    bool CheckStandable(Vector3Int targetPosition)
     {
-        nodesReady.Clear();
-        positionsTried.Clear();
-        int totalDistance = Mathf.Abs(destination.x - nonPC.position.x) + Mathf.Abs(destination.y - nonPC.position.y);
-        if (totalDistance == 0) return null;
-        NodeNPC startNode = new NodeNPC(destination, nonPC.position, 0, totalDistance);
-        nodesReady.Add(startNode);
-        return BranchOut(startNode, destination);
+        if (tileManager.tilesStandable.Contains(targetPosition)) return true;
+        if (tileManager.tilesStandable.Contains(targetPosition + new Vector3Int(0, 0, 2))) return true;
+        if (tileManager.tilesStandable.Contains(targetPosition + new Vector3Int(0, 0, -2))) return true;
+        return false;
     }
 
-    List<Vector3Int> BranchOut(NodeNPC rootNode, Vector3Int destination)
+    // IEnumerator MoveOne(Vector3Int direction)
+    // {
+    //     float movementSpeed = 3f;
+    //     float timeToMove = 1 / movementSpeed;
+    //     if (timeToMove < 0) yield break;
+
+    //     FaceDirection(direction);
+
+    //     Vector3Int prevPosition = nonPC.position;
+    //     Vector3Int tempPosition = prevPosition + direction;
+
+    //     // Check if next position is standable
+    //     if (tileManager.tilesStandable.Contains(tempPosition)) {}
+    //     else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPosition.x, tempPosition.y, tempPosition.z - 2)))
+    //     {
+    //         tempPosition.z -= 2;
+    //     }
+    //     else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPosition.x, tempPosition.y, tempPosition.z + 2)))
+    //     {
+    //         tempPosition.z += 2;
+    //     }
+    //     else yield break;
+
+    //     // Check if NPC is in the way
+    //     if (GetComponent<PlayerNPCEncounter>().GetNPCAtPosition(tempPosition) != null) yield break;
+
+    //     // All checks cleared --> handle movement
+    //     isMoving = true;
+    //     float elapsedTime = 0f;
+    //     while(elapsedTime < timeToMove)
+    //     {
+    //         // Lerp moves from one position to the other in some amount of time.
+    //         transform.position = Vector3.Lerp(floorMap.CellToWorld(prevPosition), floorMap.CellToWorld(tempPosition), (elapsedTime / timeToMove));
+    //         elapsedTime += Time.deltaTime;
+    //         yield return null;
+    //     }
+    //     transform.position = floorMap.CellToWorld(tempPosition);
+    //     isMoving = false;
+    // }
+
+    void FaceDirection(Vector3Int direction)
     {
-        nodesReady.Remove(rootNode);
-        positionsTried.Add(rootNode.position);
-        // Destination reached
-        if (rootNode.path[rootNode.path.Count - 1] == destination) return rootNode.pathDirections;
-
-        List<Vector3Int> allAdjacentDirections = new List<Vector3Int>(TileManager.cardinalDirections);
-        foreach (Vector3Int direction in TileManager.cardinalDirections)
-        {
-            allAdjacentDirections.Add(direction + new Vector3Int(0, 0, 2));
-        }
-        foreach (Vector3Int direction in TileManager.cardinalDirections)
-        {
-            allAdjacentDirections.Add(direction + new Vector3Int(0, 0, -2));
-        }
-        foreach (Vector3Int direction in allAdjacentDirections)
-        {
-            Vector3Int newPosition = rootNode.position + direction;
-            if (positionsTried.Contains(newPosition)) continue;
-            if (tileManager.tilesStandable.Contains(newPosition))
-            {
-                NodeNPC node = new NodeNPC(rootNode, direction, destination);
-                nodesReady.Add(node);
-            }
-        }
-        if (nodesReady.Count == 0) return null;
-        nodesReady.Sort((NodeA, NodeB) => NodeA.totalCost.CompareTo(NodeB.totalCost));
-        return BranchOut(nodesReady[1], destination);
-    }
-}
-
-public class NodeNPC
-{
-    public NodeNPC prevNode;
-    public Vector3Int position;
-    public List<Vector3Int> path;
-    public List<Vector3Int> pathDirections;
-    public int currentCost;
-    public int futureCost;
-    public int totalCost;
-
-    public NodeNPC(NodeNPC prevNode, Vector3Int direction, Vector3Int destination)
-    {
-        this.prevNode = prevNode;
-        position = prevNode.position + direction;
-        path = this.prevNode.path;
-        path.Add(position);
-        pathDirections = this.prevNode.pathDirections;
-        pathDirections.Add(direction);
-        currentCost = prevNode.currentCost + 1;
-        futureCost = Mathf.Abs(destination.x - position.x) + Mathf.Abs(destination.y - position.y);
-        totalCost = currentCost + futureCost;
-        // Debug.Log("Future Cost = " + futureCost);
-    }
-
-    public NodeNPC(Vector3Int destination, Vector3Int startingNodePosition, int startingCurrentCost, int startingFutureCost)
-    {
-        position = startingNodePosition;
-        currentCost = startingCurrentCost;
-        futureCost = startingFutureCost;
-        path = new List<Vector3Int>() {position};
-        pathDirections = new List<Vector3Int>();
+        const int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
+        int directionIndex =
+            direction == Vector3Int.up ? UP :
+            direction == Vector3Int.down ? DOWN :
+            direction == Vector3Int.left ? LEFT :
+            direction == Vector3Int.right ? RIGHT : -1;
+        if (directionIndex == -1) return;
+        // nonPC.sprite = sprites[directionIndex];
     }
 }
