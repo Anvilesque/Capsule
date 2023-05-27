@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
+    public static List<Vector3Int> cardinalDirections;
     [SerializeField] private List<TileData> tileDatas;
     public Dictionary<TileBase, TileData> dataFromTiles;
     public List<Vector3Int> tilesStandable;
@@ -17,6 +18,13 @@ public class TileManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cardinalDirections = new List<Vector3Int>()
+        {
+            Vector3Int.up,
+            Vector3Int.down,
+            Vector3Int.left,
+            Vector3Int.right,
+        };
         foreach (Tilemap tilemap in FindObjectsOfType<Tilemap>())
         {
             tilemap.CompressBounds();
@@ -69,16 +77,14 @@ public class TileManager : MonoBehaviour
         else return dataFromTiles[tile];
     }
 
-    public List<Vector3Int> GetAdjacentTilesPos(Tilemap map, Vector3Int centerTilePosition)
+    public List<Vector3Int> GetAdjacentCellsPositions(Tilemap map, Vector3Int centerTilePosition)
     {
-        List<Vector3Int> cardinalDirections = new List<Vector3Int>()
+        List<Vector3Int> adjacentTiles = new List<Vector3Int>();
+        foreach (Vector3Int direction in cardinalDirections)
         {
-            Vector3Int.up,
-            Vector3Int.down,
-            Vector3Int.left,
-            Vector3Int.right,
-        };
-        return null;
+            adjacentTiles.Add(centerTilePosition + direction);
+        }
+        return adjacentTiles;
     }
 
     public bool ScanForTile(Tilemap map, Vector3Int tilePosition)

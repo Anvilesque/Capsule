@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isMoving {get; private set;}
     public Vector3Int currentPos {get; private set;}
+    public Vector3Int currentlyFacing {get; private set;}
     public float timeToMove;
     public float movementSpeed;
     public bool canMove;
@@ -67,39 +68,39 @@ public class PlayerMovement : MonoBehaviour
 
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
-        // Note: Currently, left/right and up/down movements are flipped
         if (Input.GetButton("Left") && lastDirection[lastDirection.Count - 1] == "Left")
-            StartCoroutine(MovePlayer(Vector3Int.up, "Left"));
+            StartCoroutine(MovePlayer(Vector3Int.left));
         else if (Input.GetButton("Right") && lastDirection[lastDirection.Count - 1] == "Right")
-            StartCoroutine(MovePlayer(Vector3Int.down, "Right"));
+            StartCoroutine(MovePlayer(Vector3Int.right));
         else if (Input.GetButton("Up") && lastDirection[lastDirection.Count - 1] == "Up")
-            StartCoroutine(MovePlayer(Vector3Int.right, "Up"));
+            StartCoroutine(MovePlayer(Vector3Int.up));
         else if (Input.GetButton("Down") && lastDirection[lastDirection.Count - 1] == "Down")
-            StartCoroutine(MovePlayer(Vector3Int.left, "Down"));
+            StartCoroutine(MovePlayer(Vector3Int.down));
     }
 
-    private IEnumerator MovePlayer(Vector3Int distance, string direction)
+    private IEnumerator MovePlayer(Vector3Int direction)
     {
         if (!canMove) yield break;
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
         FaceDirection(direction);
+        currentlyFacing = direction;
 
         Vector3Int prevPos = currentPos;
-        Vector3Int tempPos = prevPos + distance;
+        Vector3Int tempPos = prevPos + direction;
 
         // Check if next position is standable
-            if (tileManager.tilesStandable.Contains(tempPos)) {}
-            else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z - 2)))
-            {
-                tempPos.z -= 2;
-            }
-            else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z + 2)))
-            {
-                tempPos.z += 2;
-            }
-            else yield break;
+        if (tileManager.tilesStandable.Contains(tempPos)) {}
+        else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z - 2)))
+        {
+            tempPos.z -= 2;
+        }
+        else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z + 2)))
+        {
+            tempPos.z += 2;
+        }
+        else yield break;
 
         // All checks cleared --> handle movement
         currentPos = tempPos;
@@ -117,15 +118,15 @@ public class PlayerMovement : MonoBehaviour
         isMoving = false;
     }
 
-    public void FaceDirection(string direction)
+    public void FaceDirection(Vector3Int direction)
     {
-        switch (direction)
-        {
-            case "Left": { playerSprite.sprite = sprites[LEFT]; break; }
-            case "Right": { playerSprite.sprite = sprites[RIGHT]; break; }
-            case "Up": { playerSprite.sprite = sprites[UP]; break; }
-            case "Down": { playerSprite.sprite = sprites[DOWN]; break; }
-        }
+        int directionIndex =
+            direction == Vector3Int.up ? UP :
+            direction == Vector3Int.down ? DOWN :
+            direction == Vector3Int.left ? LEFT :
+            direction == Vector3Int.right ? RIGHT : -1;
+        if (directionIndex == -1) return;
+        playerSprite.sprite = sprites[directionIndex];
     }
 
     public void DisableMovement()

@@ -11,11 +11,12 @@ public class PlayerNPCEncounter : MonoBehaviour
     private PlayerMovement mvmtControl;
     private TileManager tileManager;
     private Tilemap floorMap;
-    public GameObject interactIndicator;
+    private GameObject interactIndicator;
     private UIController uiController;
     private DialogueRunner dialogueRunner;
-    private bool canInteract;
+    private bool canInteractNPC;
     private NonPC nearestNPC;
+    private Vector3Int nearestNPCDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -29,22 +30,21 @@ public class PlayerNPCEncounter : MonoBehaviour
 
         if (dialogueRunner == null) {}
         else dialogueRunner.onDialogueComplete.AddListener(AfterDialogue);
-        canInteract = false;
+        canInteractNPC = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (nonPCs == null) {}
+        canInteractNPC = false;
+        if (nonPCs.Count == 0) {}
         else foreach (NonPC nonPC in nonPCs)
         {
-            Vector3Int nonPCCell = floorMap.WorldToCell(nonPC.position);
-            Vector3Int playerCell = floorMap.WorldToCell(transform.position);
-            int playerDistX = Mathf.Abs(playerCell.x - nonPCCell.x);
-            int playerDistY = Mathf.Abs(playerCell.y - nonPCCell.y);
-            CheckInteractNPC(playerDistX, playerDistY, nonPC);
+            Vector3Int playerCell = mvmtControl.currentPos;
+            CheckInteractNPC(playerCell, nonPC);
+            if (canInteractNPC) break;
         }
-        if (canInteract)
+        if (canInteractNPC)
         {
             IndicateInteract();
             AttemptInteractNPC();
@@ -55,17 +55,19 @@ public class PlayerNPCEncounter : MonoBehaviour
         }
     }
 
-    void CheckInteractNPC(int playerDistX, int playerDistY, NonPC nonPC)
+    void CheckInteractNPC(Vector3Int playerPosition, NonPC nonPC)
     {
         if (dialogueRunner.IsDialogueRunning) return; //dialogue is running
-        if (playerDistX <= 1 && playerDistY <= 1)
+        List<Vector3Int> cellsAdjacentToPlayer = tileManager.GetAdjacentCellsPositions(floorMap, playerPosition);
+        if (cellsAdjacentToPlayer.Contains(nonPC.position))
         {
             nearestNPC = nonPC;
-            canInteract = true;
+            nearestNPCDirection = TileManager.cardinalDirections[cellsAdjacentToPlayer.IndexOf(nonPC.position)];
+            canInteractNPC = true;
         }
         else
         {
-            canInteract = false;
+            canInteractNPC = false;
         }
     }
 
@@ -89,8 +91,9 @@ public class PlayerNPCEncounter : MonoBehaviour
     {
         if (Input.GetButtonDown("Interact"))
         {
-            canInteract = false;
+            canInteractNPC = false;
             mvmtControl.DisableMovement();
+            mvmtControl.FaceDirection(nearestNPCDirection);
             dialogueRunner.StartDialogue(nearestNPC.introTitle);
         }
     }

@@ -49,7 +49,8 @@ public class MovePlayer : MonoBehaviour
         List<Package> packages = new List<Package>(FindObjectsOfType<Package>());
         foreach (Package package in packages)
         {
-            if (Vector2.Distance(transform.position, package.transform.position) <= distanceAboutToCatch && package.transform.position.y >= transform.position.y)
+            if (Vector2.Distance(transform.position, package.transform.position) <= distanceAboutToCatch
+                && package.transform.position.y >= transform.position.y)
                 sprite.sprite = catchSprite;
         }
     }
