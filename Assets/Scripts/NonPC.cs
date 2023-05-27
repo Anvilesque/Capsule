@@ -7,7 +7,7 @@ using Yarn.Unity;
 public class NonPC : MonoBehaviour
 {
     public string introTitle;
-    public Vector3 position {get; private set;}
+    public Vector3Int position {get; private set;}
     private TileManager tileManager;
     private Tilemap floorMap;
     private Tilemap wallMap;
@@ -41,7 +41,7 @@ public class NonPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        position = transform.position;
+        position = floorMap.WorldToCell(transform.position);
 
         if (!isMoving && !dialogueRunner.IsDialogueRunning)
         {

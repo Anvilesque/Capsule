@@ -44,14 +44,21 @@ public class PlayerNPCEncounter : MonoBehaviour
             int playerDistY = Mathf.Abs(playerCell.y - nonPCCell.y);
             CheckInteractNPC(playerDistX, playerDistY, nonPC);
         }
-        IndicateInteract();
-        InteractNPC();
+        if (canInteract)
+        {
+            IndicateInteract();
+            AttemptInteractNPC();
+        }
+        else
+        {
+            DestroyIndicator();
+        }
     }
 
     void CheckInteractNPC(int playerDistX, int playerDistY, NonPC nonPC)
     {
-        if (dialogueRunner.IsDialogueRunning) {} //dialogue is running
-        else if (playerDistX <= 1 && playerDistY <= 1)
+        if (dialogueRunner.IsDialogueRunning) return; //dialogue is running
+        if (playerDistX <= 1 && playerDistY <= 1)
         {
             nearestNPC = nonPC;
             canInteract = true;
@@ -64,20 +71,10 @@ public class PlayerNPCEncounter : MonoBehaviour
 
     void IndicateInteract()
     {
-        if (canInteract)
-        {
-            if (interactIndicator != null) {}
-            else
-            {
-                interactIndicator = Instantiate((GameObject)Resources.Load("Prefabs/InteractIndicator"), mvmtControl.transform.position, Quaternion.identity, mvmtControl.transform);
-                interactIndicator.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                interactIndicator.transform.localPosition = new Vector3(-0.5f, 1f, 100f);
-            }
-        }
-        else
-        {
-            DestroyIndicator();
-        }
+        if (interactIndicator != null) return;
+        interactIndicator = Instantiate((GameObject)Resources.Load("Prefabs/InteractIndicator"), mvmtControl.transform.position, Quaternion.identity, mvmtControl.transform);
+        interactIndicator.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        interactIndicator.transform.localPosition = new Vector3(-0.5f, 1f, 100f);
     }
 
     void DestroyIndicator()
@@ -88,9 +85,9 @@ public class PlayerNPCEncounter : MonoBehaviour
         }
     }
 
-    void InteractNPC()
+    void AttemptInteractNPC()
     {
-        if (Input.GetButtonDown("Interact") && canInteract)
+        if (Input.GetButtonDown("Interact"))
         {
             canInteract = false;
             mvmtControl.DisableMovement();

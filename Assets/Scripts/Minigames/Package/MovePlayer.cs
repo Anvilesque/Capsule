@@ -15,11 +15,12 @@ public class MovePlayer : MonoBehaviour
     public Sprite frontSprite;
     public Sprite catchSprite;
     private float caughtTime = 0f;
+    public float distanceAboutToCatch;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponent<SpriteRenderer>(); 
     }
 
     // Update is called once per frame
@@ -44,6 +45,13 @@ public class MovePlayer : MonoBehaviour
             sprite.sprite = catchSprite;
         rb.velocity = playerVelocity;
         caughtTime -= Time.deltaTime;
+
+        List<Package> packages = new List<Package>(FindObjectsOfType<Package>());
+        foreach (Package package in packages)
+        {
+            if (Vector2.Distance(transform.position, package.transform.position) <= distanceAboutToCatch && package.transform.position.y >= transform.position.y)
+                sprite.sprite = catchSprite;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

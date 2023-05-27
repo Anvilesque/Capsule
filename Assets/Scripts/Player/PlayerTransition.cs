@@ -58,7 +58,7 @@ public class PlayerTransition : MonoBehaviour
 
     private Vector3Int GetTransitionPoint(Vector3Int blockUnderPlayer)
     {
-        TransitionPoint pointStart = transitionPoints.Find((TransitionPoint pointStart) => pointStart.pointType == TransitionPoint.PointTypes.Start && pointStart.positionCell == blockUnderPlayer);
+        TransitionPoint pointStart = transitionPoints.Find(pointStart => pointStart.pointType == TransitionPoint.PointTypes.Start && pointStart.positionCell == blockUnderPlayer);
         // Debug.Log(pointStart);
         if (pointStart == null) return blockUnderPlayer;
         TransitionPoint pointDest = pointStart.transform.GetChild(0).GetComponent<TransitionPoint>();

@@ -69,6 +69,18 @@ public class TileManager : MonoBehaviour
         else return dataFromTiles[tile];
     }
 
+    public List<Vector3Int> GetAdjacentTilesPos(Tilemap map, Vector3Int centerTilePosition)
+    {
+        List<Vector3Int> cardinalDirections = new List<Vector3Int>()
+        {
+            Vector3Int.up,
+            Vector3Int.down,
+            Vector3Int.left,
+            Vector3Int.right,
+        };
+        return null;
+    }
+
     public bool ScanForTile(Tilemap map, Vector3Int tilePosition)
     {
         for (int z = map.cellBounds.zMin; z <= map.cellBounds.zMax; z++)

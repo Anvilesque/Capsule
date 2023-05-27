@@ -67,14 +67,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
+        // Note: Currently, left/right and up/down movements are flipped
         if (Input.GetButton("Left") && lastDirection[lastDirection.Count - 1] == "Left")
-            StartCoroutine(MovePlayer(new Vector3Int(0, 1, 0), "Left"));
+            StartCoroutine(MovePlayer(Vector3Int.up, "Left"));
         else if (Input.GetButton("Right") && lastDirection[lastDirection.Count - 1] == "Right")
-            StartCoroutine(MovePlayer(new Vector3Int(0, -1, 0), "Right"));
+            StartCoroutine(MovePlayer(Vector3Int.down, "Right"));
         else if (Input.GetButton("Up") && lastDirection[lastDirection.Count - 1] == "Up")
-            StartCoroutine(MovePlayer(new Vector3Int(1, 0, 0), "Up"));
+            StartCoroutine(MovePlayer(Vector3Int.right, "Up"));
         else if (Input.GetButton("Down") && lastDirection[lastDirection.Count - 1] == "Down")
-            StartCoroutine(MovePlayer(new Vector3Int(-1, 0, 0), "Down"));
+            StartCoroutine(MovePlayer(Vector3Int.left, "Down"));
     }
 
     private IEnumerator MovePlayer(Vector3Int distance, string direction)
@@ -83,13 +84,7 @@ public class PlayerMovement : MonoBehaviour
         timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
-        switch (direction)
-        {
-            case "Left": { playerSprite.sprite = sprites[LEFT]; break; }
-            case "Right": { playerSprite.sprite = sprites[RIGHT]; break; }
-            case "Up": { playerSprite.sprite = sprites[UP]; break; }
-            case "Down": { playerSprite.sprite = sprites[DOWN]; break; }
-        }
+        FaceDirection(direction);
 
         Vector3Int prevPos = currentPos;
         Vector3Int tempPos = prevPos + distance;
@@ -120,6 +115,17 @@ public class PlayerMovement : MonoBehaviour
         transform.position = floorMap.CellToWorld(currentPos);
         playerTransition.HandleTeleport();
         isMoving = false;
+    }
+
+    public void FaceDirection(string direction)
+    {
+        switch (direction)
+        {
+            case "Left": { playerSprite.sprite = sprites[LEFT]; break; }
+            case "Right": { playerSprite.sprite = sprites[RIGHT]; break; }
+            case "Up": { playerSprite.sprite = sprites[UP]; break; }
+            case "Down": { playerSprite.sprite = sprites[DOWN]; break; }
+        }
     }
 
     public void DisableMovement()
