@@ -26,6 +26,7 @@ public class TaskManager : MonoBehaviour
     private string taskName;
     private float isoViewRatio;
     private TMP_InputField diaryInput;
+    private GameObject player;
     // public Canvas canvasBookshelf;
 
     // Start is called before the first frame update
@@ -44,6 +45,7 @@ public class TaskManager : MonoBehaviour
         }
         mvmtControl = FindObjectOfType<PlayerMovement>();
         playerSprite = GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().sprite;
+        player = GameObject.FindWithTag("Player");
         tileManager = FindObjectOfType<TileManager>();
         interactableMap = tileManager.interactableMap;
         uiController = FindObjectOfType<UIController>();
@@ -155,6 +157,11 @@ public class TaskManager : MonoBehaviour
             case "Packaging":
             {
                 SceneManager.LoadScene("Packaging Minigame");
+                PlayerPrefs.SetFloat("PlayerX", player.transform.position.x);
+                PlayerPrefs.SetFloat("PlayerY", player.transform.position.y);
+                PlayerPrefs.SetFloat("PlayerZ", player.transform.position.z);
+                PlayerPrefs.SetInt("DirX", mvmtControl.currentlyFacing.x);
+                PlayerPrefs.SetInt("DirY", mvmtControl.currentlyFacing.y);
                 break;
             }
             default:

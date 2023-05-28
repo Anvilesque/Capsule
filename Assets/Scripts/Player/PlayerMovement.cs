@@ -15,9 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private List<Sprite> sprites;
     private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
 
-    public bool isMoving {get; private set;}
-    public Vector3Int currentPos {get; private set;}
-    public Vector3Int currentlyFacing {get; private set;}
+    public bool isMoving { get; private set; }
+    public Vector3Int currentPos { get; private set; }
+    public Vector3Int currentlyFacing { get; private set; }
     public float timeToMove;
     public float movementSpeed;
     public bool canMove;
@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
+        transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
+        FaceDirection(new Vector3Int(PlayerPrefs.GetInt("DirX", 0), PlayerPrefs.GetInt("DirY", 1), 0));
         lastDirection = new List<string>();
         currentPos = floorMap.WorldToCell(transform.position);
         canMove = true;
@@ -48,10 +50,10 @@ public class PlayerMovement : MonoBehaviour
     {
         UpdateMovement();
     }
-    
+
     private void UpdateMovement()
     {
-        List<string> buttonNames = new List<string>() {"Left", "Right", "Up", "Down"};
+        List<string> buttonNames = new List<string>() { "Left", "Right", "Up", "Down" };
         foreach (string button in buttonNames)
         {
             if (Input.GetButtonDown(button))
@@ -91,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3Int tempPos = prevPos + direction;
 
         // Check if next position is standable
-        if (tileManager.tilesStandable.Contains(tempPos)) {}
+        if (tileManager.tilesStandable.Contains(tempPos)) { }
         else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z - 2)))
         {
             tempPos.z -= 2;
@@ -111,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         // Note: Currently updates player's currentPos BEFORE they actually get there; I think this is preferable
         // when it comes to NPC interactions, but it could be changed.
         currentPos = tempPos;
-        while(elapsedTime < timeToMove)
+        while (elapsedTime < timeToMove)
         {
             // Lerp moves from one position to the other in some amount of time.
             transform.position = Vector3.Lerp(floorMap.CellToWorld(prevPos), floorMap.CellToWorld(tempPos), (elapsedTime / timeToMove));
