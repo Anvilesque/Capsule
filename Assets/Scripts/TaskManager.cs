@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TaskManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class TaskManager : MonoBehaviour
     private bool isTasking;
     private string taskName;
     private float isoViewRatio;
+    private TMP_InputField diaryInput;
     // public Canvas canvasBookshelf;
 
     // Start is called before the first frame update
@@ -55,6 +57,7 @@ public class TaskManager : MonoBehaviour
         isoViewRatio = 0.2f;
         // canvasBookshelf.gameObject.SetActive(false);
         DOTween.Init();
+        diaryInput = FindObjectOfType<SaveDiary>().transform.root.GetComponentInChildren<TMP_InputField>();
     }
 
     // Update is called once per frame
@@ -146,6 +149,7 @@ public class TaskManager : MonoBehaviour
             {
                 currentMinigame = taskName;
                 taskCam = diaryCam;
+                diaryInput.enabled = true;
                 break;
             }
             case "Packaging":

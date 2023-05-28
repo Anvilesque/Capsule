@@ -27,6 +27,13 @@ public class UIController : MonoBehaviour
     public UIDocument diaryEntries;
     private VisualElement taskRoot;
     private VisualElement diaryRoot;
+    #region Entry Tags
+    public const string tagIRLDate = "irldate";
+    public const string tagIRLTime = "irltime";
+    public const string tagGameDay = "gametime";
+    public const string tagGameTime = "gamedate";
+    public const string tagGameText = "gametext";
+    #endregion
     void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
@@ -82,7 +89,7 @@ public class UIController : MonoBehaviour
     }
 
     void buttonDiaryPressed() {
-        VisualElement entries = diaryRoot.Q<VisualElement>("entries");
+        VisualElement entries = diaryRoot.Q<VisualElement>("entries");   
         if (diaryRoot.style.display == DisplayStyle.Flex) diaryRoot.style.display = DisplayStyle.None;
         else
         {
@@ -92,9 +99,9 @@ public class UIController : MonoBehaviour
             {
                 entries.RemoveAt(0);
             }
-            foreach (string entry in saveDiary.previousDiaryEntries)
+            foreach (Dictionary<string, string> entry in saveDiary.previousDiaryEntries)
             {
-                Label label = new Label(entry);
+                Label label = new Label($@"Day {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n");
                 label.AddToClassList("text-diary-general");
                 label.style.whiteSpace = WhiteSpace.Normal;
                 entries.Add(label);
