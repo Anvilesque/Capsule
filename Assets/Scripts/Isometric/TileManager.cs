@@ -10,10 +10,12 @@ public class TileManager : MonoBehaviour
     [SerializeField] private List<TileData> tileDatas;
     public Dictionary<TileBase, TileData> dataFromTiles;
     public List<Vector3Int> tilesStandable;
+    public List<Vector3Int> pathsNPCNodes;
     public Tilemap floorMap {get; private set;}
     public Tilemap wallMap {get; private set;}
     public Tilemap transitionMap {get; private set;}
     public Tilemap interactableMap {get; private set;}
+    public Tilemap pathsNPCMap {get; private set;}
 
     // Start is called before the first frame update
     void Start()
@@ -28,13 +30,16 @@ public class TileManager : MonoBehaviour
         foreach (Tilemap tilemap in FindObjectsOfType<Tilemap>())
         {
             tilemap.CompressBounds();
-            if (tilemap.gameObject.name.Contains("Floor")) floorMap = tilemap;
-            else if (tilemap.gameObject.name.Contains("Wall")) wallMap = tilemap;
-            else if (tilemap.gameObject.name.Contains("Transition")) transitionMap = tilemap;
-            else if (tilemap.gameObject.name.Contains("Interactable")) interactableMap = tilemap;
+            string tilemapName = tilemap.gameObject.name;
+            if (tilemapName.Contains("Floor")) floorMap = tilemap;
+            else if (tilemapName.Contains("Wall")) wallMap = tilemap;
+            else if (tilemapName.Contains("Transition")) transitionMap = tilemap;
+            else if (tilemapName.Contains("Interactable")) interactableMap = tilemap;
+            else if (tilemapName.Contains("Paths")) pathsNPCMap = tilemap;
         }
         CreateTileDictionary();
         CreateStandableList();
+        CreatePathsNodeList();
     }
 
     private void CreateTileDictionary()
@@ -66,6 +71,19 @@ public class TileManager : MonoBehaviour
                 if (floorMap.HasTile(headLevel)) continue;
                 tilesStandable.Add(new Vector3Int(tilePos.x, tilePos.y, tilePos.z + 2));
             }
+        }
+    }
+
+    private void CreatePathsNodeList()
+    {
+        pathsNPCNodes = new List<Vector3Int>();
+        foreach (Vector3Int tilePos in pathsNPCMap.cellBounds.allPositionsWithin)
+        {
+            if (!pathsNPCMap.HasTile(tilePos)) continue;
+            if (GetTileData(pathsNPCMap, tilePos).pathType == TileData.PathType.Node)
+            {
+                pathsNPCNodes.Add(tilePos);
+            } 
         }
     }
 

@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MoveNPC : MonoBehaviour
+public class NPCMovement : MonoBehaviour
 {
     private TileManager tileManager;
     private Tilemap floorMap;
     private NonPC nonPC;
-    private int stepsFromMovingForward;
     private Vector3Int destination;
-    private Vector3Int testPosition;
-    private List<Vector3Int> directionsTried;
-    private List<Vector3Int> path;
+    private Vector3Int nearestNodeNPC;
+    private Vector3Int nearestNodeDestination;
     private bool isMoving;
 
     // Start is called before the first frame update
@@ -21,7 +19,6 @@ public class MoveNPC : MonoBehaviour
         tileManager = FindObjectOfType<TileManager>();
         floorMap = tileManager.floorMap;
         nonPC = GetComponent<NonPC>();
-        directionsTried = new List<Vector3Int>();
     }
 
     void Update()
@@ -31,9 +28,17 @@ public class MoveNPC : MonoBehaviour
 
     public void MoveNPCToDest(Vector3Int destination)
     {
-        directionsTried.Clear();
+        nearestNodeNPC = FindNearestNode(nonPC.position);
         this.destination = destination;
-        testPosition = nonPC.position;
+        nearestNodeDestination = FindNearestNode(destination);
+        // FindClosestPath(nearestNodeNPC, nearestNodeDestination);
+        /*
+        find nearest node from npc (based on distance)
+        find path with least number of nodes
+            get adjacent nodes for each node by same x or same y
+        get each Vector3Int between each node in the path
+        Add them all sequentially 
+        */
     }
 
     bool CheckStandable(Vector3Int targetPosition)
@@ -43,6 +48,27 @@ public class MoveNPC : MonoBehaviour
         if (tileManager.tilesStandable.Contains(targetPosition + new Vector3Int(0, 0, -2))) return true;
         return false;
     }
+
+    Vector3Int FindNearestNode(Vector3Int relativePosition)
+    {
+        Vector3Int nearestNode = Vector3Int.zero;
+        int minDistance = int.MaxValue;
+        foreach (Vector3Int node in tileManager.pathsNPCNodes)
+        {
+            int distance = Mathf.Abs(node.x - nonPC.position.x) + Mathf.Abs(node.x - nonPC.position.x);
+            if (distance < minDistance)
+            {
+                nearestNode = node;
+                minDistance = distance;
+            } 
+        }
+        return nearestNode;
+    }
+
+    // List<Vector3Int> FindClosestPath(Vector3Int nodeStart, Vector3Int nodeDestination)
+    // {
+        
+    // }
 
     // IEnumerator MoveOne(Vector3Int direction)
     // {

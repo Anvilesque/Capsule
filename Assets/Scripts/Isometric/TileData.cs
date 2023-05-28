@@ -11,4 +11,10 @@ public class TileData : ScriptableObject
     [Header("Interactables")]
     public string taskName;
     
+    [Header("PathsNPC")]
+    public PathType pathType = PathType.Path;
+    public enum PathType
+    {
+        Path, Node
+    }
 }
