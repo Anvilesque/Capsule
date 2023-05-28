@@ -27,7 +27,6 @@ public class SaveDiary : MonoBehaviour
     void Start()
     {
         numDiaryEntries = PlayerPrefs.GetInt("numDiaryEntries", 0);
-        Debug.Log(PlayerPrefs.GetString($"{tagIRLDate}0"));
         for (int i = 0; i < numDiaryEntries; i++)
         {
             previousDiaryEntries.Add(new Dictionary<string, string>(){
