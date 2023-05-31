@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Showcase with NPCs.unity
     guid: d90d4eebaa7e00f489c1caf1bf45858b
   - enabled: 1
-    path: Assets/Scenes/Packaging Minigame.unity
+    path: Assets/Scenes/Packaging MInigame.unity
     guid: 51d07b3355fad4c1f95cf27b8adb90ee
   m_configObjects: {}

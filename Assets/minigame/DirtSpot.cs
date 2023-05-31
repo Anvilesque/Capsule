@@ -8,6 +8,7 @@ public class DirtSpot : MonoBehaviour
     public GameObject dirt;
     
     public GameObject tool;
+    
     public SpriteRenderer dirtSprite;
     float opacity;
 
