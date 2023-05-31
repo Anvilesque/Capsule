@@ -487,6 +487,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15b63f873b6167e48b148eaaf0649b5e, type: 3}
+--- !u!4 &181302593 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2974993814451920668, guid: 15b63f873b6167e48b148eaaf0649b5e, type: 3}
+  m_PrefabInstance: {fileID: 181302592}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &209654334 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224878529606030468, guid: a069f04d21a38486aa35fe9e9a80b6ef, type: 3}
@@ -5786,17 +5791,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
---- !u!114 &523890414 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3579681405068720530, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
-  m_PrefabInstance: {fileID: 523890413}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129589906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bec29c0a230741bdac901dba8da47ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &523890417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6197,7 +6191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67aa4acfc0902f646be18067824cc2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueRunner: {fileID: 523890414}
 --- !u!4 &786574092
 Transform:
   m_ObjectHideFlags: 0
@@ -11007,10 +11000,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileDatas:
-  - {fileID: 11400000, guid: 0621be315e0bf5b469c071340460cfeb, type: 2}
-  - {fileID: 11400000, guid: 035689b9a0d8f0e4a81de45313016ac9, type: 2}
+  - {fileID: 11400000, guid: afa041994c356974887c3e153cf5bc7f, type: 2}
+  - {fileID: 11400000, guid: 2b4f8ea5268cf48989a7fbfd230b4676, type: 2}
   - {fileID: 11400000, guid: 4d7c082e2e410c247b594c9c8c4bc031, type: 2}
   - {fileID: 11400000, guid: 18470316f58f9ca439fac74c20122ff3, type: 2}
+  - {fileID: 11400000, guid: 0efeb39576860ea4291f8712b807c933, type: 2}
+  - {fileID: 11400000, guid: 8c0de92082e600e49a013740b553165b, type: 2}
   tilesStandable: []
   pathsNPCNodes: []
 --- !u!1 &1895839937
@@ -11406,7 +11401,7 @@ PrefabInstance:
     - target: {fileID: 2010362737620384965, guid: b2d36553d00486745bd6f4652ddc8058, type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 181302593}
     - target: {fileID: 2010362737620384966, guid: b2d36553d00486745bd6f4652ddc8058, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11437,7 +11432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2010362737921520316, guid: b2d36553d00486745bd6f4652ddc8058, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 2010362737921520316, guid: b2d36553d00486745bd6f4652ddc8058, type: 3}
       propertyPath: m_LocalRotation.w

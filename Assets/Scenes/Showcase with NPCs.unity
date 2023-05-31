@@ -11540,7 +11540,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1727960281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593bb9d85ecfae841b1871b24352d3f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 95e871844ce3e4b8189f9f1e5188e5d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1745559418 stripped
@@ -11765,6 +11765,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 18470316f58f9ca439fac74c20122ff3, type: 2}
   - {fileID: 11400000, guid: 2b4f8ea5268cf48989a7fbfd230b4676, type: 2}
   - {fileID: 11400000, guid: afa041994c356974887c3e153cf5bc7f, type: 2}
+  - {fileID: 11400000, guid: 0efeb39576860ea4291f8712b807c933, type: 2}
+  - {fileID: 11400000, guid: 8c0de92082e600e49a013740b553165b, type: 2}
   tilesStandable: []
   pathsNPCNodes: []
 --- !u!1001 &1882770995
@@ -13202,7 +13204,7 @@ PrefabInstance:
     - target: {fileID: 2010362737620384965, guid: b2d36553d00486745bd6f4652ddc8058, type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8389408300304205308}
     - target: {fileID: 2010362737620384966, guid: b2d36553d00486745bd6f4652ddc8058, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -13419,3 +13421,8 @@ PrefabInstance:
       objectReference: {fileID: 1853861768}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa89b13ff4f2f7d468f042fdbaaafffa, type: 3}
+--- !u!4 &8389408300304205308 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2974993814451920668, guid: 15b63f873b6167e48b148eaaf0649b5e, type: 3}
+  m_PrefabInstance: {fileID: 6711603121597749984}
+  m_PrefabAsset: {fileID: 0}
