@@ -18,8 +18,6 @@ public class TimeController : MonoBehaviour
     public int days = 1;
     private GameObject player;
     public PlayerMovement movementController;
-    public float newX;
-    public float newY;
  
     // Start is called before the first frame update
     void Start()
@@ -34,7 +32,7 @@ public class TimeController : MonoBehaviour
     {
         CalcTime();
         UpdateTimeText();
-        StartCoroutine(HandleEvents());
+        // StartCoroutine(HandleEvents());
     }
  
     public void CalcTime() // Used to calculate sec, min and hours
@@ -66,14 +64,13 @@ public class TimeController : MonoBehaviour
         timeTextDay = "Day " + days; // display day counter
     }
 
-    private IEnumerator HandleEvents() // checks the current time and performs events at a certain time
+    private IEnumerator CloseShop() // checks the current time and performs events at a certain time
     {
-        // check for shop closing and teleport player out if closed
         if (hours == 21 && mins == 0 && seconds == 0) // check for whole minute so that transform happen even if the player is moving
         {
             movementController.DisableMovement();
             yield return new WaitForSeconds(movementController.timeToMove); // wait for movement to finish to tp and reenable movement
-            player.transform.position = new Vector3(newX,newY,0); // teleport player outside of shop
+            // player.transform.position = new Vector3(newX,newY,0); // teleport player outside of shop
             movementController.EnableMovement();
         }
     }

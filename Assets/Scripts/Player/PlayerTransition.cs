@@ -37,19 +37,19 @@ public class PlayerTransition : MonoBehaviour
 
     private void DoTeleport()
     {
-        StartCoroutine(TeleportFadeInOut());
+        playerMovement.DisableMovement();
+        Vector3Int blockUnderPlayer = playerMovement.currentPos - new Vector3Int(0, 0, 2);
+        Vector3Int newCoords = GetTransitionPoint(blockUnderPlayer) + new Vector3Int(0, 0, 2);
+        StartCoroutine(TeleportFadeInOut(newCoords));
     }
 
-    IEnumerator TeleportFadeInOut()
+    public IEnumerator TeleportFadeInOut(Vector3Int destination)
     {
-        playerMovement.DisableMovement();
         FadeController fadeController = FindObjectOfType<FadeController>();
         fadeController.FadeIn();
         while (fadeController.isFading) yield return null;
-        Vector3Int blockUnderPlayer = playerMovement.currentPos - new Vector3Int(0, 0, 2);
-        Vector3Int newCoords = GetTransitionPoint(blockUnderPlayer) + new Vector3Int(0, 0, 2);
-        playerMovement.UpdateCurrentPosition(newCoords);
-        transform.position = transitionMap.CellToWorld(newCoords);
+        playerMovement.UpdateCurrentPosition(destination);
+        transform.position = transitionMap.CellToWorld(destination);
         yield return new WaitForSeconds(2f);
         canTeleport = false;
         playerMovement.EnableMovement();

@@ -20,7 +20,7 @@ public class TaskManager : MonoBehaviour
     private Camera bookshelfCam;
     private Camera diaryCam;
 
-    private string currentMinigame;
+    private string currentTask;
     private bool isPlayerNextToTask;
     private bool isTasking;
     private string taskName;
@@ -143,13 +143,13 @@ public class TaskManager : MonoBehaviour
         {
             case "Bookshelf":
             {
-                currentMinigame = taskName;
+                currentTask = taskName;
                 taskCam = bookshelfCam;
                 break;
             }
             case "Diary":
             {
-                currentMinigame = taskName;
+                currentTask = taskName;
                 taskCam = diaryCam;
                 diaryInput.enabled = true;
                 break;
@@ -164,6 +164,11 @@ public class TaskManager : MonoBehaviour
                 PlayerPrefs.SetInt("DirY", mvmtControl.currentlyFacing.y);
                 break;
             }
+            // case "Bed":
+            // {
+            //     currentTask = taskName;
+            //     FindObjectOfType<TimeController>().GoToSleep();
+            // }
             default:
             {
                 return;
@@ -181,7 +186,7 @@ public class TaskManager : MonoBehaviour
     public void StopTask()
     {
         Camera taskCam = null;
-        switch (currentMinigame)
+        switch (currentTask)
         {
             case "Bookshelf":
             {
@@ -205,5 +210,10 @@ public class TaskManager : MonoBehaviour
         }
         isTasking = false;
         mvmtControl.EnableMovement();
+    }
+
+    void GoToSleep()
+    {
+
     }
 }
