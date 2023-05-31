@@ -15,7 +15,6 @@ public class TileManager : MonoBehaviour
     public Tilemap wallMap {get; private set;}
     public Tilemap transitionMap {get; private set;}
     public Tilemap interactableMap {get; private set;}
-    public Tilemap pathsNPCMap {get; private set;}
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +34,9 @@ public class TileManager : MonoBehaviour
             else if (tilemapName.Contains("Wall")) wallMap = tilemap;
             else if (tilemapName.Contains("Transition")) transitionMap = tilemap;
             else if (tilemapName.Contains("Interactable")) interactableMap = tilemap;
-            else if (tilemapName.Contains("Paths")) pathsNPCMap = tilemap;
         }
         CreateTileDictionary();
         CreateStandableList();
-        CreatePathsNodeList();
     }
 
     private void CreateTileDictionary()
@@ -71,19 +68,6 @@ public class TileManager : MonoBehaviour
                 if (floorMap.HasTile(headLevel)) continue;
                 tilesStandable.Add(new Vector3Int(tilePos.x, tilePos.y, tilePos.z + 2));
             }
-        }
-    }
-
-    private void CreatePathsNodeList()
-    {
-        pathsNPCNodes = new List<Vector3Int>();
-        foreach (Vector3Int tilePos in pathsNPCMap.cellBounds.allPositionsWithin)
-        {
-            if (!pathsNPCMap.HasTile(tilePos)) continue;
-            if (GetTileData(pathsNPCMap, tilePos).pathType == TileData.PathType.Node)
-            {
-                pathsNPCNodes.Add(tilePos);
-            } 
         }
     }
 

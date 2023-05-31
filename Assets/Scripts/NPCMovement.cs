@@ -23,46 +23,13 @@ public class NPCMovement : MonoBehaviour
 
     void Update()
     {
-
+        
     }
 
     public void MoveNPCToDest(Vector3Int destination)
     {
-        /* nearestNodeNPC = FindNearestNode(nonPC.position);
-        nearestNodeDestination = FindNearestNode(destination); */
         this.destination = destination;
         FindClosestPath(nonPC.position, destination, tileManager.tilesStandable);
-        /*
-        find nearest node from npc (based on distance)
-        find path with least number of nodes
-            get adjacent nodes for each node by same x or same y
-        get each Vector3Int between each node in the path
-        Add them all sequentially 
-        */
-    }
-
-    bool CheckStandable(Vector3Int targetPosition)
-    {
-        if (tileManager.tilesStandable.Contains(targetPosition)) return true;
-        if (tileManager.tilesStandable.Contains(targetPosition + new Vector3Int(0, 0, 2))) return true;
-        if (tileManager.tilesStandable.Contains(targetPosition + new Vector3Int(0, 0, -2))) return true;
-        return false;
-    }
-
-    Vector3Int FindNearestNode(Vector3Int relativePosition)
-    {
-        Vector3Int nearestNode = Vector3Int.zero;
-        int minDistance = int.MaxValue;
-        foreach (Vector3Int node in tileManager.pathsNPCNodes)
-        {
-            int distance = Mathf.Abs(node.x - nonPC.position.x) + Mathf.Abs(node.x - nonPC.position.x);
-            if (distance < minDistance)
-            {
-                nearestNode = node;
-                minDistance = distance;
-            } 
-        }
-        return nearestNode;
     }
 
     List<Vector3Int> FindClosestPath(Vector3Int startposition, Vector3Int destination, List<Vector3Int> standableList)

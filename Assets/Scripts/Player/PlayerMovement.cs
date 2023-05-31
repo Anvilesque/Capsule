@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
-        transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
+        transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ", 2));
         FaceDirection(new Vector3Int(PlayerPrefs.GetInt("DirX", 0), PlayerPrefs.GetInt("DirY", 1), 0));
         lastDirection = new List<string>();
         currentPos = floorMap.WorldToCell(transform.position);
