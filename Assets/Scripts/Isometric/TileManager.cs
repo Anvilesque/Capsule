@@ -10,7 +10,6 @@ public class TileManager : MonoBehaviour
     [SerializeField] private List<TileData> tileDatas;
     public Dictionary<TileBase, TileData> dataFromTiles;
     public List<Vector3Int> tilesStandable;
-    public List<Vector3Int> pathsNPCNodes;
     public Tilemap floorMap {get; private set;}
     public Tilemap wallMap {get; private set;}
     public Tilemap transitionMap {get; private set;}
