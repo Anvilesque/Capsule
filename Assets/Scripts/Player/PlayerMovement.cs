@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float timeToMove;
     public float movementSpeed;
     public bool canMove;
+    public Vector3Int defaultHomePosition;
 
     private List<string> lastDirection;
 

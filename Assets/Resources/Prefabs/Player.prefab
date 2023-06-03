@@ -107,6 +107,7 @@ MonoBehaviour:
   timeToMove: 0
   movementSpeed: 3
   canMove: 0
+  defaultHomePosition: {x: -34, y: -9, z: 2}
 --- !u!114 &4208628763729410224
 MonoBehaviour:
   m_ObjectHideFlags: 0

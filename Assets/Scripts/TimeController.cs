@@ -16,23 +16,34 @@ public class TimeController : MonoBehaviour
     public int mins;
     public int hours;
     public int days = 1;
-    private GameObject player;
-    public PlayerMovement movementController;
+    private int shopCloseHour;
+    private PlayerMovement movementController;
+    private PlayerTransition playerTransition;
+    [SerializeField] private float closeShopWindowDuration;
+    public bool isShopClosed;
  
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        movementController = player.GetComponent<PlayerMovement>();
-        displayInterval = 10;
+        movementController = FindObjectOfType<PlayerMovement>();
+        playerTransition = FindObjectOfType<PlayerTransition>();
+        displayInterval = 30;
+        shopCloseHour = 21;
     }
  
     // Update is called once per frame
     void FixedUpdate() // we used fixed update, since update is frame dependant. 
     {
-        CalcTime();
-        UpdateTimeText();
-        // StartCoroutine(HandleEvents());
+        if (isShopClosed) return;
+        else if (hours >= shopCloseHour)
+        {
+            StartCoroutine(CloseShop());
+        }
+        else
+        {
+            CalcTime();
+            UpdateTimeText();
+        }
     }
  
     public void CalcTime() // Used to calculate sec, min and hours
@@ -66,12 +77,16 @@ public class TimeController : MonoBehaviour
 
     private IEnumerator CloseShop() // checks the current time and performs events at a certain time
     {
-        if (hours == 21 && mins == 0 && seconds == 0) // check for whole minute so that transform happen even if the player is moving
-        {
-            movementController.DisableMovement();
-            yield return new WaitForSeconds(movementController.timeToMove); // wait for movement to finish to tp and reenable movement
-            // player.transform.position = new Vector3(newX,newY,0); // teleport player outside of shop
-            movementController.EnableMovement();
-        }
+        isShopClosed = true;
+        movementController.DisableMovement();
+        Debug.Log("Shop's closed! Time to go home.");
+        yield return new WaitForSeconds(closeShopWindowDuration);
+        playerTransition.isTeleporting = true;
+        StartCoroutine(playerTransition.TeleportFadeInOut(movementController.defaultHomePosition));
+        while (playerTransition.isTeleporting) yield return null;
+        hours = 22;
+        mins = 0;
+        seconds = 0;
+        movementController.EnableMovement();
     }
 }

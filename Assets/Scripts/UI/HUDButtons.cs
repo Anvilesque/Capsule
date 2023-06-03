@@ -19,6 +19,7 @@ public class HUDButtons : MonoBehaviour
         root = GetComponent<UIDocument>().rootVisualElement;
         timeController = FindObjectOfType<TimeController>();
         timeTime = root.Q<Label>("timeTime");
+        Debug.Log(timeTime);
         timeDay = root.Q<Label>("timeDay");
         timeTime.text = timeController.timeTextTime;
         timeDay.text = timeController.timeTextDay;
@@ -33,14 +34,11 @@ public class HUDButtons : MonoBehaviour
     void OnEnable()
     {
         buttonDocument = GetComponent<UIDocument>();
-<<<<<<< Updated upstream
         if (buttonDocument == null)
         {
             Debug.LogError("No button document found.");
         }
 
-=======
->>>>>>> Stashed changes
         settingButton = buttonDocument.rootVisualElement.Q("settings-button") as Button;
         settingButton.RegisterCallback<ClickEvent>(SettingButtonClick);
     }

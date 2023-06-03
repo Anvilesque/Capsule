@@ -10,6 +10,7 @@ public class PlayerTransition : MonoBehaviour
     private PlayerMovement playerMovement;
     private List<TransitionPoint> transitionPoints;
     public bool canTeleport;
+    public bool isTeleporting;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class PlayerTransition : MonoBehaviour
             point.GetComponent<SpriteRenderer>().enabled = false;
         }
         canTeleport = true;
+        isTeleporting = false;
     }
 
     public void HandleTeleport()
@@ -37,6 +39,7 @@ public class PlayerTransition : MonoBehaviour
 
     private void DoTeleport()
     {
+        isTeleporting = true;
         playerMovement.DisableMovement();
         Vector3Int blockUnderPlayer = playerMovement.currentPos - new Vector3Int(0, 0, 2);
         Vector3Int newCoords = GetTransitionPoint(blockUnderPlayer) + new Vector3Int(0, 0, 2);
@@ -52,6 +55,7 @@ public class PlayerTransition : MonoBehaviour
         transform.position = transitionMap.CellToWorld(destination);
         yield return new WaitForSeconds(2f);
         canTeleport = false;
+        isTeleporting = false;
         playerMovement.EnableMovement();
         fadeController.FadeOut();
     }

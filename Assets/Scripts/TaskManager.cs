@@ -211,9 +211,4 @@ public class TaskManager : MonoBehaviour
         isTasking = false;
         mvmtControl.EnableMovement();
     }
-
-    void GoToSleep()
-    {
-
-    }
 }
