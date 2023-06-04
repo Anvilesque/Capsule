@@ -94,7 +94,7 @@ public class BSItemMovementManager : MonoBehaviour
         itemInfo.isBookshelfed = true;
         transform.position = itemPosCenter;
         Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
-        if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilled))
+        if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilledRelative))
         {
             bookshelfGrid.StackItem(itemPosBottomLeft, itemInfo);
             transform.position += (itemInfo.stackCount - 1) * (Vector3)offsetStacked;
@@ -116,17 +116,17 @@ public class BSItemMovementManager : MonoBehaviour
 
     void AttemptPlacement(Vector2 itemWorldPos)
     {
-        if (!bookshelfGrid.CheckSupport(itemWorldPos, itemInfo.cellsFilled))
+        if (!bookshelfGrid.CheckSupport(itemWorldPos, itemInfo.cellsFilledRelative))
         {
             PreventPlacement();
             return;
         }
-        if (!bookshelfGrid.CheckFit(itemWorldPos, itemInfo.cellsFilled))
+        if (!bookshelfGrid.CheckFit(itemWorldPos, itemInfo.cellsFilledRelative))
         {
             PreventPlacement();
             return;
         }
-        if (bookshelfGrid.CheckOccupied(itemWorldPos, itemInfo.cellsFilled))
+        if (bookshelfGrid.CheckOccupied(itemWorldPos, itemInfo.cellsFilledRelative))
         {
             if (!itemInfo.isStackable)
             {
@@ -135,7 +135,7 @@ public class BSItemMovementManager : MonoBehaviour
             }
 
             bool stackSuccess = false;
-            foreach (Vector2Int cellRelative in itemInfo.cellsFilled)
+            foreach (Vector2Int cellRelative in itemInfo.cellsFilledRelative)
             {
                 Vector2 tempWorldPos = itemWorldPos + bookshelfGrid.cellSize * cellRelative;
                 if (bookshelfGrid.CheckStackable(tempWorldPos, itemInfo))
@@ -197,7 +197,7 @@ public class BSItemMovementManager : MonoBehaviour
         UpdateItemPosCenterFromBL();
         transform.position = itemPosCenter;
         Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
-        if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilled))
+        if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilledRelative))
         {
             bookshelfGrid.StackItem(itemPosBottomLeft, itemInfo);
             transform.position += (itemInfo.stackCount - 1) * (Vector3)offsetStacked;

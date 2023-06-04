@@ -64,9 +64,9 @@ public class BSGridManager : MonoBehaviour
         return bookshelfMap.cellBounds.Contains(bookshelfMap.WorldToCell(itemPosBottomLeft));
     }
 
-    public bool CheckSupport(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilled)
+    public bool CheckSupport(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilledRelative)
     {
-        foreach (Vector2Int cellRelative in cellsFilled)
+        foreach (Vector2Int cellRelative in cellsFilledRelative)
         {
             Vector2Int currentCell = GetCellFromWorldPos(itemPosBottomLeft);
             if (cellRelative.y != 0) continue;
@@ -78,18 +78,18 @@ public class BSGridManager : MonoBehaviour
         return true;
     }
 
-    public bool CheckFit(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilled)
+    public bool CheckFit(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilledRelative)
     {
-        foreach (Vector2Int cellRelative in cellsFilled)
+        foreach (Vector2Int cellRelative in cellsFilledRelative)
         {
             if (!bookshelfMap.cellBounds.Contains((bookshelfMap.WorldToCell(itemPosBottomLeft) + (Vector3Int)cellRelative))) return false;
         }
         return true;
     }
 
-    public bool CheckOccupied(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilled)
+    public bool CheckOccupied(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilledRelative)
     {
-        foreach (Vector2Int cellRelative in cellsFilled)
+        foreach (Vector2Int cellRelative in cellsFilledRelative)
         {
             if (occupiedCells.ContainsKey(GetCellFromWorldPos(itemPosBottomLeft) + cellRelative)) return true;
         }
@@ -147,18 +147,19 @@ public class BSGridManager : MonoBehaviour
 
     public void OccupyCells(Vector2Int startingPoint, BSItemInfo itemInfo)
     {
-        foreach (Vector2Int cellRelative in itemInfo.cellsFilled)
+        foreach (Vector2Int cellRelative in itemInfo.cellsFilledRelative)
         {
             occupiedCells.Add(startingPoint + cellRelative, itemInfo);
+            itemInfo.cellsOccupied.Add(startingPoint + cellRelative);
         }
     }
 
     public void UnoccupyCells(Vector2Int startingPoint, BSItemInfo itemInfo)
     {
-        foreach (Vector2Int cellRelative in itemInfo.cellsFilled)
+        foreach (Vector2Int cellRelative in itemInfo.cellsFilledRelative)
         {
-            
             occupiedCells.Remove(startingPoint + cellRelative);
+            itemInfo.cellsOccupied.Clear();
         }
     }
 
@@ -172,6 +173,7 @@ public class BSGridManager : MonoBehaviour
         foreach (BSItemInfo item in itemInGrid.stackedItems) item.stackCount = itemInGrid.stackCount;
         itemInGrid.isStacked = true;
         itemInfo.isStacked = true;
+        itemInfo.cellsOccupied = itemInGrid.cellsOccupied;
         itemInfo.sprite.sortingOrder = -itemInGrid.stackCount;
     }
 
@@ -185,6 +187,7 @@ public class BSGridManager : MonoBehaviour
         itemInGrid.stackedItems.Peek().gameObject.layer = DEFAULT_LAYER;
         if (itemInGrid.stackCount == 1) itemInGrid.isStacked = false;
         itemInfo.isStacked = false;
+        itemInfo.cellsOccupied.Clear();
     }
 
     public Vector2Int GetClosestCell(Vector2 itemPosBottomLeft)

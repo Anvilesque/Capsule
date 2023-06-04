@@ -258,6 +258,10 @@ PrefabInstance:
       propertyPath: isStackable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
+      propertyPath: itemSubsize
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2929173912855076540, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -3329,6 +3333,10 @@ PrefabInstance:
       propertyPath: isStackable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
+      propertyPath: itemSubsize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2929173912855076540, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3461,7 +3469,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1396755342}
         m_TargetAssemblyTypeName: BSEvaluationManager, Assembly-CSharp
-        m_MethodName: EvaluateNumberOfItems
+        m_MethodName: DisplayEvaluation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3567,6 +3575,10 @@ PrefabInstance:
     - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: isStackable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
+      propertyPath: itemSubsize
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2929173912855076540, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_RootOrder
@@ -3866,6 +3878,10 @@ PrefabInstance:
     - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: isStackable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929173912855076538, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
+      propertyPath: itemSubsize
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2929173912855076540, guid: 379624b8c0b77b14fa3e720664fc360a, type: 3}
       propertyPath: m_RootOrder
