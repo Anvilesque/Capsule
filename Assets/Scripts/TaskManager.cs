@@ -164,11 +164,12 @@ public class TaskManager : MonoBehaviour
                 PlayerPrefs.SetInt("DirY", mvmtControl.currentlyFacing.y);
                 break;
             }
-            // case "Bed":
-            // {
-            //     currentTask = taskName;
-            //     FindObjectOfType<TimeController>().GoToSleep();
-            // }
+            case "Bed":
+            {
+                currentTask = null;
+                FindObjectOfType<BedManager>().OpenSleepMenu();
+                break;
+            }
             default:
             {
                 return;
@@ -210,5 +211,10 @@ public class TaskManager : MonoBehaviour
         }
         isTasking = false;
         mvmtControl.EnableMovement();
+    }
+
+    public void SetIsTasking(bool isTasking)
+    {
+        this.isTasking = isTasking;
     }
 }
