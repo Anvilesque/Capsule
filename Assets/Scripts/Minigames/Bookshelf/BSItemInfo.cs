@@ -7,10 +7,11 @@ public class BSItemInfo : MonoBehaviour
     public Vector2Int itemSize;
     public SpriteRenderer sprite;
     [SerializeField] private bool isEntireSizeFilled;
-    public List<Vector2Int> cellsFilled {get; private set;}
-    public List<Vector2Int> cellsFilledSpecial;
+    public List<Vector2Int> cellsFilledRelative {get; private set;}
+    public List<Vector2Int> cellsFilledRelativeSpecial;
+    public List<Vector2Int> cellsOccupied;
     public string itemName;
-    public string itemSubsize;
+    public int itemSubsize;
     public string itemType;
     public string itemColor;
     [HideInInspector] public int itemID;
@@ -26,8 +27,9 @@ public class BSItemInfo : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         itemID = Random.Range(0, int.MaxValue);
-        cellsFilled = new List<Vector2Int>();
+        cellsFilledRelative = new List<Vector2Int>();
         UpdateCellsFilled();
+        cellsOccupied = new List<Vector2Int>();
         if (itemName == "") itemName = $"{itemColor} {itemType}";
         stackCount = 1;
         stackedItems = new Stack<BSItemInfo>();
@@ -38,15 +40,15 @@ public class BSItemInfo : MonoBehaviour
 
     void UpdateCellsFilled()
     {
-        cellsFilled.Clear();
+        cellsFilledRelative.Clear();
         if (isEntireSizeFilled)
         {
             for (int x = 0; x < itemSize.x; x++)
             {
                 for (int y = 0; y < itemSize.y; y++)
-                cellsFilled.Add(new Vector2Int(x, y));
+                cellsFilledRelative.Add(new Vector2Int(x, y));
             }
         }
-        else cellsFilled = cellsFilledSpecial;
+        else cellsFilledRelative = cellsFilledRelativeSpecial;
     }
 }

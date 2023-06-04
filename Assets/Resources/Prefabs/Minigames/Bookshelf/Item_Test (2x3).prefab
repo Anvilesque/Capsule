@@ -100,14 +100,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSize: {x: 2, y: 3}
+  sprite: {fileID: 0}
   isEntireSizeFilled: 1
-  cellsFilledSpecial: []
+  cellsFilledRelativeSpecial: []
+  cellsOccupied: []
   itemName: 
   itemSubsize: 0
-  itemType: 
-  itemColor: 
+  itemType: test
+  itemColor: blue
+  itemID: 0
   isBookshelfed: 0
   isStacked: 0
+  isStackable: 0
+  stackCount: 0
+  canSupport: 0
 --- !u!114 &2929173912855076542
 MonoBehaviour:
   m_ObjectHideFlags: 0
