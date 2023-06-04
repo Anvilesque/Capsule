@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         transform.position = floorMap.CellToWorld(currentPos);
-        playerTransition.HandleTeleport();
+        playerTransition.HandleTeleportFromTransitionTilemap();
         isMoving = false;
     }
 

@@ -15,5 +15,5 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: b9d6fc07b03fe3e408ebe03d2e8cca55, type: 2}
   - {fileID: 11400000, guid: 997aaf10577ddf240b3808ead9a456b9, type: 2}
-  newPos: {x: 0, y: 0, z: 0}
-  taskName: Sleep
+  taskName: Bed
+  pathType: 0
