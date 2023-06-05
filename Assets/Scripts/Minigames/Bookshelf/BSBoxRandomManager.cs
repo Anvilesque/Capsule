@@ -35,11 +35,16 @@ public class BSBoxRandomManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 currentItem.sprite.enabled = true;
                 currentItem.transform.position = mousePos;
                 itemStorage.Remove(currentItem);
                 ChooseNextItem();
                 return;
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                gameObject.layer = LayerMask.NameToLayer("Default");
             }
             if (currentItem == null) ChooseNextItem();
             else
