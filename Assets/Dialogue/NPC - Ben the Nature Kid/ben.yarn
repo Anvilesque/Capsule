@@ -1,0 +1,189 @@
+﻿title: ben_intro
+tags:
+position: -19,-22
+---
+Ben the Nature Kid: Hiya, I'm Ben! Let's talk!
+<<if GetDay() is 0>> <<jump ben_newyears>> <<endif>>
+<<if GetDay() is 1>> <<jump ben_valentines>> <<endif>>
+<<if GetDay() is 2>> <<jump ben_graduation>> <<endif>>
+<<if GetDay() is 3>> <<jump ben_fourthjuly>> <<endif>>
+<<if GetDay() is 4>> <<jump ben_halloween>> <<endif>>
+<<if GetDay() is 5>> <<jump ben_thanksgiving>> <<endif>>
+<<if GetDay() is 6>> <<jump ben_christmas>> <<endif>>
+===
+title: ben_newyears
+position: -529,85
+---
+<<if GetNPCDialogueNumber("ben") is 1>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 2>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 3>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: ben_valentines
+position: -416,236
+---
+<<if GetNPCDialogueNumber("ben") is 1>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 2>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 3>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: ben_graduation
+position: -224,384
+---
+<<if GetNPCDialogueNumber("ben") is 1>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 2>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 3>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: ben_fourthjuly
+position: -14,384
+---
+<<if GetNPCDialogueNumber("ben") is 1>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 2>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 3>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: ben_halloween
+position: 198,377
+---
+<<if GetNPCDialogueNumber("ben") is 1>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 2>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 3>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: ben_thanksgiving
+position: 386,234
+---
+<<if GetNPCDialogueNumber("ben") is 1>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 2>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 3>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: ben_christmas
+position: 496,88
+---
+<<if GetNPCDialogueNumber("ben") is 1>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 2>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 3>>
+Ben the Nature Kid: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "ben">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("ben") is 4>>
+<<jump random>>
+<<endif>>
+===
+

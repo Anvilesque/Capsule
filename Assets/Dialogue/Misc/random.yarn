@@ -1,0 +1,13 @@
+﻿title: random
+tags:
+position: 0, 0
+---
+<<declare $random_value to 0>>
+<<set $random_value to GetRandomDialogue(1)>>
+<<if $random_value is 1>>
+
+<<endif>>
+
+
+<<jump tell_player_move_on>>
+===
