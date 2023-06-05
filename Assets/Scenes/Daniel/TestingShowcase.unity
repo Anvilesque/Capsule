@@ -7173,6 +7173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinations:
   - {x: -7, y: 5, z: 2}
+  - {x: 2, y: 5, z: 2}
+  - {x: -4, y: 0, z: 2}
+  - {x: -11, y: -7, z: 2}
 --- !u!1 &928903985
 GameObject:
   m_ObjectHideFlags: 0
@@ -9245,8 +9248,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinations:
-  - {x: 2, y: -3, z: 2}
-  - {x: 2, y: -3, z: 2}
+  - {x: 2, y: 3, z: 2}
+  - {x: -11, y: 0, z: 2}
+  - {x: 2, y: -11, z: 2}
+  - {x: -6, y: -6, z: 2}
 --- !u!114 &1494496856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12553,7 +12558,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinations:
-  - {x: 0, y: 0, z: 0}
+  - {x: -9, y: -8, z: 2}
+  - {x: -2, y: -7, z: 2}
+  - {x: 2, y: -1, z: 2}
+  - {x: -7, y: 3, z: 2}
 --- !u!1 &1891015629
 GameObject:
   m_ObjectHideFlags: 0
