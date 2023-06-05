@@ -27,20 +27,34 @@ public class BSEvaluationManager : MonoBehaviour
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfMap = bookshelfGrid.GetComponent<Tilemap>();
         bookshelfMap.CompressBounds();
+        ResetEvaluation();
+    }
+
+    public void ResetEvaluation()
+    {
         items = new List<BSItemInfo>(FindObjectsOfType<BSItemInfo>());
         countItems = 0;
         countItemsTotal = 0;
+        countTypes = 0;
+        percentAdjacentType = 0;
+        percentAdjacentColor = 0;
+        percentBestSubsize = 0;
+        percentSymmetry = 0;
+        percentSymmetryX = 0;
+        percentSymmetryY = 0;
+        percentStacked = 0;
     }
 
     public void DisplayEvaluation()
     {
+        ResetEvaluation();
         EvaluateNumberOfItems();
         EvaluateType();
         EvaluateColor();
         EvaluateSubsize();
         EvaluateSymmetry();
         EvaluateStacked();
-        float scoreAbundance = countItems / (float)countItemsTotal;
+        float scoreAbundance = countItems / (float)countItemsTotal * 0.8f;
         float scoreAesthetic = Mathf.Clamp01(Mathf.Max(percentAdjacentType, percentAdjacentColor) + percentBestSubsize * 0.1f);
         float scoreOrganization = Mathf.Clamp01(percentSymmetry + percentStacked * 0.05f);
         // float totalScore = scoreAbundance * 0.5f + scoreAesthetic * 0.2f + scoreOrganization * 0.5f;

@@ -39,14 +39,19 @@ public class BedManager : MonoBehaviour
     IEnumerator DoSleepTransition()
     {
         movementController.DisableMovement();
-        StartCoroutine(playerTransition.TeleportFadeInOut(movementController.currentPos));
+        StartCoroutine(playerTransition.TeleportFadeInOut(movementController.defaultBedPosition));
         while (playerTransition.isTeleporting) yield return null;
         movementController.FaceDirection(Vector3Int.down);
-        timeController.days = (timeController.days + 1 % 7) + 1;
-        timeController.hours += 8;
+        timeController.days = (timeController.days + 1) % 7;
+        if (timeController.days == 0) timeController.years++;
+        if (timeController.hours >= 8 && timeController.hours <= 20) timeController.hours = 6;
+        else if (timeController.hours >= 21) timeController.hours = 8;
+        else timeController.hours += 8;
         timeController.mins = 0;
         timeController.seconds = 0;
         timeController.isShopClosed = false;
+        timeController.isPassingOut = false;
+        timeController.canUpdateTime = true;
         taskManager.SetIsTasking(false);
         movementController.EnableMovement();
     }

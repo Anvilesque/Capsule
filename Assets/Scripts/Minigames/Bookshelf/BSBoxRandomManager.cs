@@ -9,6 +9,7 @@ public class BSBoxRandomManager : MonoBehaviour
     private Camera bookshelfCam;
     private BSGridManager bookshelfGrid;
     Vector3 mousePos;
+    bool pickedUpItem;
     public List<GameObject> itemsDay1, itemsDay2, itemsDay3, itemsDay4, itemsDay5, itemsDay6, itemsDay7;
     public List<List<GameObject>> itemsDayAll;
     [HideInInspector] public List<int> itemsDayAllCount;
@@ -17,36 +18,37 @@ public class BSBoxRandomManager : MonoBehaviour
     void Start()
     {
         itemStorage = new List<BSItemInfo>();
-        ChooseNextItem();
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfCam = bookshelfGrid.bookshelfCam;
         mousePos = bookshelfGrid.mousePos;
 
         itemsDayAll = new List<List<GameObject>>() {itemsDay1, itemsDay2, itemsDay3, itemsDay4, itemsDay5, itemsDay6, itemsDay7};
         itemsDayAllCount = new List<int>() {30, 30, 10, 15, 10, 20, 30};
+        pickedUpItem = false;
     }
 
     void Update()
     {
         mousePos = bookshelfGrid.mousePos;
         if (itemStorage.Count == 0) return;
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (pickedUpItem) ChooseNextItem();
+            pickedUpItem = false;
+        }
         if ((GetComponent<Collider2D>().bounds.min.x <= mousePos.x && mousePos.x <= GetComponent<Collider2D>().bounds.max.x
             && GetComponent<Collider2D>().bounds.min.y <= mousePos.y && mousePos.y <= GetComponent<Collider2D>().bounds.max.y))
         {
             if (Input.GetMouseButtonDown(0))
             {
-                gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 currentItem.sprite.enabled = true;
                 currentItem.transform.position = mousePos;
                 itemStorage.Remove(currentItem);
-                ChooseNextItem();
+                pickedUpItem = true;
                 return;
             }
-            if (Input.GetMouseButtonUp(0))
-            {
-                gameObject.layer = LayerMask.NameToLayer("Default");
-            }
             if (currentItem == null) ChooseNextItem();
+            else if (pickedUpItem) {}
             else
             {
                 currentItem.gameObject.layer = LayerMask.NameToLayer("Default");

@@ -11,11 +11,10 @@ public class HUDButtons : MonoBehaviour
     private VisualElement settingsRoot;
     private GameObject menu;
     private GameObject settings;
+
     public UIDocument buttonDocument;
     public Button menuButton;
     public Button settingsButton;
-
-
 
     private Label timeTime;
     private Label timeDay;
@@ -27,7 +26,6 @@ public class HUDButtons : MonoBehaviour
         root.style.display = DisplayStyle.Flex;
         timeController = FindObjectOfType<TimeController>();
         timeTime = root.Q<Label>("timeTime");
-        Debug.Log(timeTime);
         timeDay = root.Q<Label>("timeDay");
         timeTime.text = timeController.timeTextTime;
         timeDay.text = timeController.timeTextDay;
@@ -45,16 +43,16 @@ public class HUDButtons : MonoBehaviour
         // }
 
         settings = GameObject.Find("SettingsHUD");
-        if (settings != null)
-        {
-            Debug.Log("Settings found");
-        }
+        // if (settings != null)
+        // {
+        //     Debug.Log("Settings found");
+        // }
 
-        settingsRoot = settings.GetComponent<UIDocument>().rootVisualElement;
-        if (settingsRoot != null)
-        {
-            Debug.Log("Setting UI document found");
-        }
+        // settingsRoot = settings.GetComponent<UIDocument>().rootVisualElement;
+        // if (settingsRoot != null)
+        // {
+        //     Debug.Log("Setting UI document found");
+        // }
     }
 
 
@@ -105,28 +103,12 @@ public class HUDButtons : MonoBehaviour
 
     void MenuButtonClick(ClickEvent evt)
     {
-        // Debug.Log("HI");
-
-        if (menuRoot.style.display == DisplayStyle.Flex) 
-        {
-            menuRoot.style.display = DisplayStyle.None;
-        }
-        else 
-        {
-            menuRoot.style.display = DisplayStyle.Flex;
-        }
+        menuRoot.style.display = menuRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
     }
 
     void SettingsButtonClick(ClickEvent evt)
     {
-        if (settingsRoot.style.display == DisplayStyle.Flex) 
-        {
-            settingsRoot.style.display = DisplayStyle.None;
-        }
-        else 
-        {
-            settingsRoot.style.display = DisplayStyle.Flex;
-        }
+        settingsRoot.style.display = settingsRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
     }
 
     public void ToggleHUD()

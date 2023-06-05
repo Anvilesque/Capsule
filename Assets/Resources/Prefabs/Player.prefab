@@ -104,10 +104,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 097e2b7536a9c43aabc3f50472c41627, type: 3}
   - {fileID: 21300000, guid: 61aa11ddd682c5d48aa21a2f062d4bac, type: 3}
   - {fileID: 21300000, guid: 6749e10fe1cb5ac4b879869f34c88631, type: 3}
+  currentPos: {x: 0, y: 0, z: 0}
   timeToMove: 0
   movementSpeed: 3
   canMove: 0
   defaultHomePosition: {x: -34, y: -9, z: 2}
+  defaultBedPosition: {x: -37, y: -8, z: 2}
 --- !u!114 &4208628763729410224
 MonoBehaviour:
   m_ObjectHideFlags: 0

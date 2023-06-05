@@ -24,6 +24,7 @@ public class TaskManager : MonoBehaviour
     private bool isPlayerNextToTask;
     private bool isTasking;
     private string taskName;
+    private Vector3Int lastInteractDirection;
     private float isoViewRatio;
     private TMP_InputField diaryInput;
     private GameObject player;
@@ -56,6 +57,8 @@ public class TaskManager : MonoBehaviour
         diaryCam = taskCams.Find(x=> x.name.Contains("Diary"));
         diaryCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
 
+        lastInteractDirection = Vector3Int.zero;
+
         isoViewRatio = 0.2f;
         // canvasBookshelf.gameObject.SetActive(false);
         DOTween.Init();
@@ -84,21 +87,17 @@ public class TaskManager : MonoBehaviour
 
     private void CheckInteractables()
     {
-        if (mvmtControl.isMoving) return;
         if (isTasking) return;
-        Vector3Int tileUp = mvmtControl.currentPos + new Vector3Int(0, -1, 0);
-        Vector3Int tileDown = mvmtControl.currentPos + new Vector3Int(0, +1, 0);
-        Vector3Int tileLeft = mvmtControl.currentPos + new Vector3Int(-1, 0, 0);
-        Vector3Int tileRight = mvmtControl.currentPos + new Vector3Int(+1, 0, 0);
-        List<Vector3Int> adjacentTiles = new List<Vector3Int>() {tileUp, tileDown, tileLeft, tileRight};
-        foreach (Vector3Int tile in adjacentTiles)
+        List<Vector3Int> cardinalDirections = new List<Vector3Int>() {Vector3Int.left, Vector3Int.right, Vector3Int.up, Vector3Int.down};
+        foreach (Vector3Int direction in cardinalDirections)
         {
-            Vector3Int tempTile = tile;
+            Vector3Int tempTile = mvmtControl.currentPos + direction;
             isPlayerNextToTask = false;
             if (tileManager.ScanForTile(interactableMap, tempTile))
             {
                 tempTile = tileManager.GetTilePosition(interactableMap, tempTile);
                 taskName = tileManager.GetTileData(interactableMap, tempTile).taskName;
+                lastInteractDirection = direction;
                 isPlayerNextToTask = true;
                 break;
             }
@@ -178,6 +177,7 @@ public class TaskManager : MonoBehaviour
             }
         }
         mvmtControl.DisableMovement();
+        mvmtControl.FaceDirection(lastInteractDirection);
         if (taskCam != null)
         {
             mainCam.rect = new Rect(0, 0, isoViewRatio, 1f);

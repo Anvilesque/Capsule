@@ -17,12 +17,15 @@ public class TimeController : MonoBehaviour
     public float seconds; 
     public int mins;
     public int hours;
-    public int days = 1;
-    private int shopCloseHour;
+    public int days;
+    public int years;
+    private int hourShopClose;
+    private int hourPassOut;
     private DialogueRunner dialogueRunner;
     private PlayerMovement movementController;
     private PlayerTransition playerTransition;
     [SerializeField] private float closeShopWindowDuration;
+    public bool isPassingOut;
     public bool isShopClosed;
     public bool canUpdateTime;
  
@@ -33,8 +36,11 @@ public class TimeController : MonoBehaviour
         movementController = FindObjectOfType<PlayerMovement>();
         playerTransition = FindObjectOfType<PlayerTransition>();
         displayInterval = 30;
-        shopCloseHour = 21;
+        hourShopClose = 21;
+        hourPassOut = 5;
         canUpdateTime = true;
+        isShopClosed = false;
+        isPassingOut = false;
     }
  
     // Update is called once per frame
@@ -45,8 +51,14 @@ public class TimeController : MonoBehaviour
             CalcTime();
             UpdateTimeText();
         }
-        if (isShopClosed) return;
-        else if (hours >= shopCloseHour)
+        if (isPassingOut) {}
+        else if (hours == hourPassOut)
+        {
+            StartCoroutine(PassOut());
+            return;
+        }
+        if (isShopClosed) {}
+        else if (hours >= hourShopClose)
         {
             StartCoroutine(CloseShop());
         }
@@ -79,7 +91,16 @@ public class TimeController : MonoBehaviour
     public void UpdateTimeText() // Shows time and day in ui
     {
         timeTextTime = string.Format("{0:00}:{1:00}", hours, (int)(mins / displayInterval) * displayInterval); // The formatting ensures that there will always be 0's in empty spaces
-        timeTextDay = "Day " + days; // display day counter
+        switch (days)
+        {
+            case 0: { timeTextDay = "New Year's Day"; break; }
+            case 1: { timeTextDay = "Valentine's Day"; break; }
+            case 2: { timeTextDay = "Graduation Day"; break; }
+            case 3: { timeTextDay = "Fourth of July"; break; }
+            case 4: { timeTextDay = "Halloween"; break; }
+            case 5: { timeTextDay = "Thanksgiving"; break; }
+            case 6: { timeTextDay = "Christmas"; break; }
+        }
     }
 
     public IEnumerator CloseShop() // checks the current time and performs events at a certain time
@@ -100,5 +121,15 @@ public class TimeController : MonoBehaviour
         seconds = 0;
         canUpdateTime = true;
         movementController.EnableMovement();
+    }
+
+     public IEnumerator PassOut() // checks the current time and performs events at a certain time
+    {
+        canUpdateTime = false;
+        isPassingOut = true;
+        movementController.DisableMovement();
+        dialogueRunner.StartDialogue("pass_out");
+        while (dialogueRunner.IsDialogueRunning) yield return null;
+        FindObjectOfType<BedManager>().DoSleep();
     }
 }

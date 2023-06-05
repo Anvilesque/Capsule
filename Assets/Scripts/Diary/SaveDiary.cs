@@ -20,6 +20,7 @@ public class SaveDiary : MonoBehaviour
     public const string tagIRLDate = "irldate";
     public const string tagIRLTime = "irltime";
     public const string tagGameDay = "gametime";
+    public const string tagGameYear = "gameyear";
     public const string tagGameTime = "gamedate";
     public const string tagGameText = "gametext";
     #endregion
@@ -33,6 +34,7 @@ public class SaveDiary : MonoBehaviour
                 { tagIRLDate, PlayerPrefs.GetString($"{tagIRLDate}{i}") },
                 { tagIRLTime, PlayerPrefs.GetString($"{tagIRLTime}{i}") },
                 { tagGameDay, PlayerPrefs.GetString($"{tagGameDay}{i}") },
+                { tagGameYear, PlayerPrefs.GetString($"{tagGameYear}{i}") },
                 { tagGameTime, PlayerPrefs.GetString($"{tagGameTime}{i}") },
                 { tagGameText, PlayerPrefs.GetString($"{tagGameText}{i}") },
             });
@@ -46,8 +48,8 @@ public class SaveDiary : MonoBehaviour
         string newText = "";
         foreach (var entry in previousDiaryEntries)
         {
-            // Format: "Day X - 00:00: Diary text goes here."
-            newText += $@"Day {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n";
+            // Format: "Day name - 00:00: Diary text goes here."
+            newText += $@"Year {entry[tagGameYear]} {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n\n";
         }
         prevDiaryText.GetComponent<TMP_Text>().SetText(newText);
     }
@@ -68,7 +70,8 @@ public class SaveDiary : MonoBehaviour
         Dictionary<string, string> newEntry = new Dictionary<string, string>(){
             {tagIRLDate, irlDate},
             {tagIRLTime, System.DateTime.Now.TimeOfDay.ToString()},
-            {tagGameDay, time.days.ToString()},
+            {tagGameDay, time.timeTextDay},
+            {tagGameYear, time.years.ToString()},
             {tagGameTime, gameTime},
             {tagGameText, text.ToString()}
         };
@@ -76,6 +79,7 @@ public class SaveDiary : MonoBehaviour
         PlayerPrefs.SetString($"{tagIRLDate}{numDiaryEntries}", newEntry[tagIRLDate]);
         PlayerPrefs.SetString($"{tagIRLTime}{numDiaryEntries}", newEntry[tagIRLTime]);
         PlayerPrefs.SetString($"{tagGameDay}{numDiaryEntries}", newEntry[tagGameDay]);
+        PlayerPrefs.SetString($"{tagGameYear}{numDiaryEntries}", newEntry[tagGameYear]);
         PlayerPrefs.SetString($"{tagGameTime}{numDiaryEntries}", newEntry[tagGameTime]);
         PlayerPrefs.SetString($"{tagGameText}{numDiaryEntries}", newEntry[tagGameText]);
         numDiaryEntries++;
@@ -85,8 +89,8 @@ public class SaveDiary : MonoBehaviour
         string newText = "";
         foreach (var entry in previousDiaryEntries)
         {
-            // Format: "Day X - 00:00: Diary text goes here."
-            newText += $@"Day {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n";
+            // Format: "Year X Day - 00:00: Diary text goes here."
+            newText += $@"Year {entry[tagGameYear]} {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n\n";
         }
         prevDiaryText.GetComponent<TMP_Text>().SetText(newText);
         StartCoroutine(StopDiary());

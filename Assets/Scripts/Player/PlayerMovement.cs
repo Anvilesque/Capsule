@@ -16,12 +16,13 @@ public class PlayerMovement : MonoBehaviour
     private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
 
     public bool isMoving { get; private set; }
-    public Vector3Int currentPos { get; private set; }
+    public Vector3Int currentPos;
     public Vector3Int currentlyFacing { get; private set; }
     public float timeToMove;
     public float movementSpeed;
     public bool canMove;
     public Vector3Int defaultHomePosition;
+    public Vector3Int defaultBedPosition;
 
     private List<string> lastDirection;
 
