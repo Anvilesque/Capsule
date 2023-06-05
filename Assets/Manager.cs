@@ -22,7 +22,7 @@ public class Manager : MonoBehaviour
         numToClean = Random.Range(3, 6);
         statusMessage.text = "Antiques left: " + numToClean;
         numCleaned = 0;
-        currAntiqueIndex = Random.Range(antiques.Count - 1, antiques.Count);
+        currAntiqueIndex = Random.Range(0, antiques.Count);
         currAntique = antiques[currAntiqueIndex];
         currAntique.SetActive(true);
     }
@@ -42,12 +42,12 @@ public class Manager : MonoBehaviour
                 return;
             }
 
-            currAntiqueIndex = Random.Range(antiques.Count - 1, antiques.Count);
+            currAntiqueIndex = Random.Range(0, antiques.Count);
             currAntique = antiques[currAntiqueIndex];
             currAntique.SetActive(true);
         } else
         {
-            Debug.Log("antique " + currAntiqueIndex + " is not active");
+            // Debug.Log("antique " + currAntiqueIndex + " is not active");
         }
     }
 }

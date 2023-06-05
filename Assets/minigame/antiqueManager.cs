@@ -18,18 +18,15 @@ public class antiqueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (complete) {
-            Debug.Log("complete but not calling move off screen");
-        }
-        else
+        if (!complete)
         {
             complete = true;
             foreach (GameObject dirt in dirtSpots)
             {
-                if (dirt.GetComponent<SpriteRenderer>().color[3] > 0)
+                if (dirt.GetComponent<SpriteRenderer>().color.a > 0)
                 {
                     complete = false;
-                    Debug.Log("opacity of " + dirt.name + ": " + dirt.GetComponent<SpriteRenderer>().color[3]);
+                    Debug.Log("opacity of " + dirt.name + ": " + dirt.GetComponent<SpriteRenderer>().color.a);
                 }
             }
 
@@ -38,7 +35,6 @@ public class antiqueManager : MonoBehaviour
                 Debug.Log("clean!!");  
                 MoveOffScreen();
             }
-                
         }
     }
 
@@ -46,10 +42,10 @@ public class antiqueManager : MonoBehaviour
     {
         // animate movement
         gameObject.SetActive(false);
+        complete = false;
         foreach (GameObject dirt in dirtSpots)
         {
             dirt.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,1f);
-            // dirt.SetActive(true);
         }
     }
 }
