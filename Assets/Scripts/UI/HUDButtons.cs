@@ -20,6 +20,7 @@ public class HUDButtons : MonoBehaviour
     void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
+        root.style.display = DisplayStyle.Flex;
         timeController = FindObjectOfType<TimeController>();
         timeTime = root.Q<Label>("timeTime");
         Debug.Log(timeTime);
@@ -87,4 +88,8 @@ public class HUDButtons : MonoBehaviour
         }
     }
 
+    public void ToggleHUD()
+    {
+        root.style.display = root.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
+    }
 }

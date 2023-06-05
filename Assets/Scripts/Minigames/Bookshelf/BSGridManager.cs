@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class BSGridManager : MonoBehaviour
 {
+    public Vector2 mousePos;
     private const int DEFAULT_LAYER = 0;
     private const int IGNORE_RAYCAST_LAYER = 2;
     private const int GRID_WIDTH = 20;
@@ -17,7 +18,6 @@ public class BSGridManager : MonoBehaviour
     private List<GameObject> shelfObjects;
     public SpriteRenderer bookshelfSprite;
     public int shelfInterval {get; private set;}
-    private Vector2 mousePos;
     public bool snapPreviewEnabled {get; private set;}
 
     // Start is called before the first frame update
@@ -39,6 +39,7 @@ public class BSGridManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (bookshelfCam.rect.x == 1) return;
         mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
     }
 

@@ -6,6 +6,8 @@ public class BSBoxRandomManager : MonoBehaviour
 {
     List<BSItemInfo> itemStorage;
     BSItemInfo currentItem;
+    private Camera bookshelfCam;
+    private BSGridManager bookshelfGrid;
     Vector3 mousePos;
     public List<GameObject> itemsDay1, itemsDay2, itemsDay3, itemsDay4, itemsDay5, itemsDay6, itemsDay7;
     public List<List<GameObject>> itemsDayAll;
@@ -16,8 +18,9 @@ public class BSBoxRandomManager : MonoBehaviour
     {
         itemStorage = new List<BSItemInfo>();
         ChooseNextItem();
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
+        bookshelfGrid = FindObjectOfType<BSGridManager>();
+        bookshelfCam = bookshelfGrid.bookshelfCam;
+        mousePos = bookshelfGrid.mousePos;
 
         itemsDayAll = new List<List<GameObject>>() {itemsDay1, itemsDay2, itemsDay3, itemsDay4, itemsDay5, itemsDay6, itemsDay7};
         itemsDayAllCount = new List<int>() {30, 30, 10, 15, 10, 20, 30};
@@ -25,8 +28,7 @@ public class BSBoxRandomManager : MonoBehaviour
 
     void Update()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
+        mousePos = bookshelfGrid.mousePos;
         if (itemStorage.Count == 0) return;
         if ((GetComponent<Collider2D>().bounds.min.x <= mousePos.x && mousePos.x <= GetComponent<Collider2D>().bounds.max.x
             && GetComponent<Collider2D>().bounds.min.y <= mousePos.y && mousePos.y <= GetComponent<Collider2D>().bounds.max.y))

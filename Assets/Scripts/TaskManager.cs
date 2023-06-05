@@ -145,6 +145,7 @@ public class TaskManager : MonoBehaviour
             {
                 currentTask = taskName;
                 taskCam = bookshelfCam;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
                 break;
             }
             case "Diary":
@@ -152,6 +153,7 @@ public class TaskManager : MonoBehaviour
                 currentTask = taskName;
                 taskCam = diaryCam;
                 diaryInput.enabled = true;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
                 break;
             }
             case "Packaging":
@@ -192,11 +194,13 @@ public class TaskManager : MonoBehaviour
             case "Bookshelf":
             {
                 taskCam = bookshelfCam;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
                 break;
             }
             case "Diary":
             {
                 taskCam = diaryCam;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
                 break;
             }
             default:

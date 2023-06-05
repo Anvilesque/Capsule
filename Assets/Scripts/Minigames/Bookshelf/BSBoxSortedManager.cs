@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class BSBoxSortedManager : MonoBehaviour
 {
-    Stack<BSItemInfo> itemStack;
-    BSItemInfo itemNext;
-    Vector3 mousePos;
+    private Camera bookshelfCam;
+    private BSGridManager bookshelfGrid;
+    private Vector3 mousePos;
+    private Stack<BSItemInfo> itemStack;
+    private BSItemInfo itemNext;
     
     // Start is called before the first frame update
     void Start()
     {
+        bookshelfGrid = FindObjectOfType<BSGridManager>();
+        bookshelfCam = bookshelfGrid.bookshelfCam;
+        mousePos = bookshelfGrid.mousePos;
+
         itemStack = new Stack<BSItemInfo>();
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
     }
 
     void Update()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
+        mousePos = bookshelfGrid.mousePos;
         if ((GetComponent<Collider2D>().bounds.min.x <= mousePos.x && mousePos.x <= GetComponent<Collider2D>().bounds.max.x
             && GetComponent<Collider2D>().bounds.min.y <= mousePos.y && mousePos.y <= GetComponent<Collider2D>().bounds.max.y))
         {

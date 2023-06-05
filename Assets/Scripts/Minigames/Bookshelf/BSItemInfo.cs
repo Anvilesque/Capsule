@@ -5,7 +5,7 @@ using UnityEngine;
 public class BSItemInfo : MonoBehaviour
 {
     public Vector2Int itemSize;
-    [HideInInspector ]public SpriteRenderer sprite;
+    [HideInInspector] public SpriteRenderer sprite;
     [SerializeField] private bool isEntireSizeFilled;
     public List<Vector2Int> cellsFilledRelative {get; private set;}
     public List<Vector2Int> cellsFilledRelativeSpecial;

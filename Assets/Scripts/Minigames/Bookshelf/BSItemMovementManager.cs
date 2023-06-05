@@ -29,7 +29,7 @@ public class BSItemMovementManager : MonoBehaviour
         bookshelfCam = bookshelfGrid.bookshelfCam;
         boxSortedManager = FindObjectOfType<BSBoxSortedManager>();
 
-        mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = bookshelfGrid.mousePos;
 
         offsetMouseFromTransform = transform.position - (Vector3)mousePos;
         offsetHeldUp = new Vector2(0f, 0.2f);
@@ -49,7 +49,7 @@ public class BSItemMovementManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = bookshelfGrid.mousePos;
     }
 
     private void OnMouseDown()
