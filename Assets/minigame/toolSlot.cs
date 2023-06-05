@@ -22,10 +22,6 @@ public class toolSlot : MonoBehaviour
             Cursor.SetCursor(tool_cursor, Vector2.zero, CursorMode.Auto);
         else
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-
-
-
-
     }
 
     public void DeselectItem()

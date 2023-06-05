@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2dfad0f393ad4e9fab3b54c03661867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  antique: {fileID: 2477039931096700422}
   dirtSpots:
   - {fileID: 2477039931432533255}
   - {fileID: 2477039931354178068}

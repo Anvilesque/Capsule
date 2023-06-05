@@ -19,11 +19,11 @@ public class DirtSpot : MonoBehaviour
     }
 
     void Update() {
-        if (opacity <= 0)
-        {
-            // disable object
-            dirt.SetActive(false);
-        }
+        // if (opacity <= 0)
+        // {
+        //     // disable object
+        //     dirt.SetActive(false);
+        // }
     }
 
     void OnMouseEnter()
