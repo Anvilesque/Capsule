@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Interact_Bookshelf
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: 1de80b30273a2e3418cfc27135e5f482, type: 2}
-  newPos: {x: 0, y: 0, z: 0}
+  - {fileID: 11400000, guid: c2a7ba776284e8e498543e50ebee7524, type: 2}
   taskName: Bookshelf
+  pathType: 0

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Interact_Packaging
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: 864a6b1955243204b9df98dbb1eea0e2, type: 2}
-  newPos: {x: 0, y: 0, z: 0}
+  - {fileID: 11400000, guid: a900a2b8dee896441adebacd8a1c68c2, type: 2}
   taskName: Packaging
+  pathType: 0

@@ -13,8 +13,8 @@ public class TransitionPoint : MonoBehaviour
         Destination
     }
     public PointTypes pointType = PointTypes.Start;
-    [SerializeField] private TileManager tileManager;
-    [SerializeField] private Tilemap transitionMap;
+    private TileManager tileManager;
+    private Tilemap transitionMap;
 
     // Start is called before the first frame update
     void Start()
