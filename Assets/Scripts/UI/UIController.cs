@@ -22,7 +22,7 @@ public class UIController : MonoBehaviour
     private Button buttonDiary;
     private Button buttonMood;
     private Button buttonSettings;
-    private Button buttonQuit;
+    // private Button buttonQuit;
     public UIDocument tasklist;
     public UIDocument diaryEntries;
     private VisualElement taskRoot;
@@ -42,27 +42,27 @@ public class UIController : MonoBehaviour
         diaryRoot = diaryEntries.rootVisualElement;
         diaryRoot.style.display = DisplayStyle.None;
         
-        timeController = FindObjectOfType<TimeController>();
-        timeTime = root.Q<Label>("timeTime");
-        timeDay = root.Q<Label>("timeDay");
-        timeTime.text = timeController.timeTextTime;
-        timeDay.text = timeController.timeTextDay;
+        // timeController = FindObjectOfType<TimeController>();
+        // timeTime = root.Q<Label>("timeTime");
+        // timeDay = root.Q<Label>("timeDay");
+        // timeTime.text = timeController.timeTextTime;
+        // timeDay.text = timeController.timeTextDay;
         
         saveDiary = FindObjectOfType<SaveDiary>();
 
-        buttonMenu = root.Q<Button>("buttonMenu");
+        // buttonMenu = root.Q<Button>("buttonMenu");
         buttonTask = root.Q<Button>("buttonTask");
         buttonDiary = root.Q<Button>("buttonDiary");
         buttonMood = root.Q<Button>("buttonMood");
-        buttonSettings = root.Q<Button>("buttonSettings");
-        buttonQuit = root.Q<Button>("buttonQuit");
+        // buttonSettings = root.Q<Button>("buttonSettings");
+        // buttonQuit = root.Q<Button>("buttonQuit");
 
-        buttonMenu.clicked += buttonMenuPressed;
+        // buttonMenu.clicked += buttonMenuPressed;
         buttonTask.clicked += buttonTaskPressed;
         buttonDiary.clicked += buttonDiaryPressed;
         buttonMood.clicked += buttonMoodPressed;
-        buttonSettings.clicked += buttonSettingsPressed;
-        buttonQuit.clicked += buttonQuitPressed;
+        // buttonSettings.clicked += buttonSettingsPressed;
+        // buttonQuit.clicked += buttonQuitPressed;
 
         root.style.display = DisplayStyle.None;
     }
@@ -70,8 +70,8 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         rootWidth = (ROOT_WIDTH_PERCENTAGE * 1080f) * ((float)Screen.width / (float)Screen.height);
-        timeTime.text = timeController.timeTextTime;
-        timeDay.text = timeController.timeTextDay;
+        // timeTime.text = timeController.timeTextTime;
+        // timeDay.text = timeController.timeTextDay;
         if (Input.GetButtonDown("Open Menu"))
         {
             if (root.style.display == DisplayStyle.Flex) root.style.display = DisplayStyle.None;
@@ -117,8 +117,9 @@ public class UIController : MonoBehaviour
 
     }
 
-    void buttonQuitPressed() 
-    {
-        Application.Quit();
-    }
+    //  void buttonQuitPressed() 
+    // {
+    //     Application.Quit();
+    // }
+
 }

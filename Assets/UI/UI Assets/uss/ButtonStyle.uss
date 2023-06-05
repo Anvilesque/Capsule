@@ -11,7 +11,7 @@
     width: 80%;
     align-items: center;
     justify-content: space-around;
-    height: 10%;
+    height: 15%;
     -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
     font-size: 50px;
     -unity-font-style: normal;
@@ -27,31 +27,11 @@
     margin-bottom: 0;
     letter-spacing: 5px;
     -unity-text-outline-color: rgb(173, 173, 173);
-    color: rgba(115, 96, 88, 255);
-}
-
-.button-menu {
-    background-color: rgb(255, 210, 153);
-}
-
-.button-quit {
-    position: absolute;
-    bottom: 5%;
-    background-color: rgb(231, 180, 180);
+    color: rgb(115, 96, 88);
 }
 
 .button-general:hover {
     background-color: rgb(113, 204, 224);
-}
-
-.button-menu:hover {
-    background-color: rgb(241, 174, 89);
-}
-
-.button-quit:hover {
-    position: absolute;
-    bottom: 5%;
-    background-color: rgb(236, 143, 141);
 }
 
 .inventory-button {
@@ -168,4 +148,132 @@
     -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Notebook.ttf?fileID=12800000&guid=bbefb0ec0206e4bfbb491718897182ad&type=3#Notebook');
     font-size: 25px;
     -unity-font-style: normal;
+}
+
+.button-settings {
+    background-color: rgb(238, 172, 176);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    width: 80%;
+    align-items: center;
+    justify-content: space-around;
+    height: 15%;
+    -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
+    font-size: 50px;
+    -unity-font-style: normal;
+    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
+    -unity-text-align: middle-center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 10%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    letter-spacing: 5px;
+    -unity-text-outline-color: rgb(173, 173, 173);
+    color: rgb(115, 96, 88);
+}
+
+.button-settings:hover {
+    background-color: rgb(243, 123, 130);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    width: 80%;
+    align-items: center;
+    justify-content: space-around;
+    height: 15%;
+    -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
+    font-size: 50px;
+    -unity-font-style: normal;
+    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
+    -unity-text-align: middle-center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 10%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    letter-spacing: 5px;
+    -unity-text-outline-color: rgb(173, 173, 173);
+    color: rgb(115, 96, 88);
+}
+
+.button-settings-other {
+    background-color: rgb(239, 188, 159);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    width: 80%;
+    align-items: center;
+    justify-content: space-around;
+    height: 15%;
+    -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
+    font-size: 50px;
+    -unity-font-style: normal;
+    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
+    -unity-text-align: middle-center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 10%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    letter-spacing: 5px;
+    -unity-text-outline-color: rgb(173, 173, 173);
+    color: rgb(115, 96, 88);
+}
+
+.button-settings-other:hover {
+    background-color: rgb(250, 161, 110);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    width: 80%;
+    align-items: center;
+    justify-content: space-around;
+    height: 15%;
+    -unity-font: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO.otf?fileID=12800000&guid=c632cdf9515d84874812b408108183ef&type=3#Caramel Chestnut DEMO');
+    font-size: 50px;
+    -unity-font-style: normal;
+    -unity-font-definition: url('project://database/Assets/UI/UI%20Assets/fonts/Caramel%20Chestnut%20DEMO%20SDF.asset?fileID=11400000&guid=55dfdcc6c40174a89a2cff09cfccd46e&type=2#Caramel Chestnut DEMO SDF');
+    -unity-text-align: middle-center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 10%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    letter-spacing: 5px;
+    -unity-text-outline-color: rgb(173, 173, 173);
+    color: rgb(115, 96, 88);
 }

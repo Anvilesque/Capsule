@@ -8,11 +8,9 @@
         <ui:VisualElement name="panelContent" style="align-items: center; justify-content: flex-start; background-color: rgb(254, 237, 215); width: 100%; -unity-text-align: upper-left; flex-direction: column;">
             <ui:VisualElement name="spacer" style="width: 100%; height: 25%;" />
             <ui:GroupBox name="buttons" style="width: 100%; height: 50%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; align-items: center; justify-content: space-around;">
-                <ui:Button text="Tasks" display-tooltip-when-elided="true" name="buttonTask" class="button-general" style="-unity-text-align: middle-center;" />
-                <ui:Button text="Diary" display-tooltip-when-elided="true" name="buttonDiary" class="button-general" style="-unity-text-align: middle-center;" />
-                <ui:Button display-tooltip-when-elided="true" name="buttonMood" class="button-general">
-                    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/UI/UI%20Assets/icons/face%20icon.png?fileID=2800000&amp;guid=3c0efa5c0262446bd88234839a236b6d&amp;type=3#face icon&apos;); width: 80%; height: 80%; -unity-background-scale-mode: scale-to-fit;" />
-                </ui:Button>
+                <ui:Button text="Sound" display-tooltip-when-elided="true" name="buttonSound" class="button-settings-other" />
+                <ui:Button text="Support" display-tooltip-when-elided="true" name="buttonSupport" enable-rich-text="false" class="button-settings-other" />
+                <ui:Button text="Quit" display-tooltip-when-elided="true" name="buttonQuit" class="button-settings" />
             </ui:GroupBox>
             <ui:VisualElement name="spacer" style="width: 100%; height: 25%;" />
         </ui:VisualElement>

@@ -11,6 +11,7 @@
 .text-task-general {
     color: rgb(106, 83, 83);
     font-size: 50px;
+    -unity-text-align: upper-left;
 }
 
 .text-diary-general {
