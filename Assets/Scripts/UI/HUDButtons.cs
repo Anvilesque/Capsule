@@ -8,9 +8,13 @@ public class HUDButtons : MonoBehaviour
 {
     private VisualElement root;
     private VisualElement menuRoot;
+    private VisualElement settingsRoot;
     private GameObject menu;
+    private GameObject settings;
     public UIDocument buttonDocument;
     public Button menuButton;
+    public Button settingsButton;
+
 
 
     private Label timeTime;
@@ -29,43 +33,68 @@ public class HUDButtons : MonoBehaviour
         timeDay.text = timeController.timeTextDay;
 
         menu = GameObject.Find("HUD");
-        if (menu != null)
-        {
-            Debug.Log("Menu found");
-        }
+        // if (menu != null)
+        // {
+        //     Debug.Log("Menu found");
+        // }
 
         menuRoot = menu.GetComponent<UIDocument>().rootVisualElement;
-        if (menuRoot != null)
+        // if (menuRoot != null)
+        // {
+        //     Debug.Log("Menu UI document found");
+        // }
+
+        settings = GameObject.Find("SettingsHUD");
+        if (settings != null)
         {
-            Debug.Log("Menu UI document found");
+            Debug.Log("Settings found");
+        }
+
+        settingsRoot = settings.GetComponent<UIDocument>().rootVisualElement;
+        if (settingsRoot != null)
+        {
+            Debug.Log("Setting UI document found");
         }
     }
+
 
     void OnEnable() 
     {
         buttonDocument = GetComponent<UIDocument>();
 
-        if (buttonDocument == null)
-        {
-            Debug.LogError("No button document found.");
-        }
-        else 
-        {
-            Debug.Log("Button document found.");
-        }
+        // if (buttonDocument == null)
+        // {
+        //     Debug.LogError("No button document found.");
+        // }
+        // else 
+        // {
+        //     Debug.Log("Button document found.");
+        // }
 
         menuButton = buttonDocument.rootVisualElement.Q("menu-button") as Button;
 
-        if (menuButton != null)
+        // if (menuButton != null)
+        // {
+        //     Debug.Log("Button found");
+        // }
+        // else
+        // {
+        //     Debug.LogError("Button not found");
+        // }
+
+        menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
+
+        settingsButton = buttonDocument.rootVisualElement.Q("settings-button") as Button;
+        if (settingsButton != null)
         {
-            Debug.Log("Button found");
+            Debug.Log("Setting button found");
         }
         else
         {
-            Debug.LogError("Button not found");
+            Debug.LogError("Setting button not found");
         }
 
-        menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
+        settingsButton.RegisterCallback<ClickEvent>(SettingsButtonClick);
     }
 
     private void Update()
@@ -76,7 +105,7 @@ public class HUDButtons : MonoBehaviour
 
     void MenuButtonClick(ClickEvent evt)
     {
-        Debug.Log("HI");
+        // Debug.Log("HI");
 
         if (menuRoot.style.display == DisplayStyle.Flex) 
         {
@@ -85,6 +114,18 @@ public class HUDButtons : MonoBehaviour
         else 
         {
             menuRoot.style.display = DisplayStyle.Flex;
+        }
+    }
+
+    void SettingsButtonClick(ClickEvent evt)
+    {
+        if (settingsRoot.style.display == DisplayStyle.Flex) 
+        {
+            settingsRoot.style.display = DisplayStyle.None;
+        }
+        else 
+        {
+            settingsRoot.style.display = DisplayStyle.Flex;
         }
     }
 
