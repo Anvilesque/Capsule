@@ -14,6 +14,8 @@ public class BSGridManager : MonoBehaviour
     private Tilemap bookshelfMap;
     [SerializeField] public Dictionary<Vector2Int, BSItemInfo> occupiedCells;
     private List<int> shelfPositions;
+    private List<GameObject> shelfObjects;
+    public SpriteRenderer bookshelfSprite;
     public int shelfInterval {get; private set;}
     private Vector2 mousePos;
     public bool snapPreviewEnabled {get; private set;}
@@ -29,6 +31,7 @@ public class BSGridManager : MonoBehaviour
         occupiedCells = new Dictionary<Vector2Int, BSItemInfo>();
         snapPreviewEnabled = false;
         shelfPositions = new List<int>();
+        shelfObjects = new List<GameObject>();
         shelfInterval = 4;
         UpdateShelfPositions();
     }
@@ -46,12 +49,33 @@ public class BSGridManager : MonoBehaviour
 
     public void UpdateShelfPositions()
     {
+        foreach (GameObject shelf in shelfObjects)
+        {
+            Destroy(shelf);
+        }
+        shelfObjects.Clear();
+        shelfPositions.Clear();
+
         int tempShelfPosition = bookshelfMap.cellBounds.yMin;
         while (tempShelfPosition <= bookshelfMap.cellBounds.yMax)
         {
             shelfPositions.Add(tempShelfPosition);
+            if (tempShelfPosition != bookshelfMap.cellBounds.yMin && tempShelfPosition != bookshelfMap.cellBounds.yMax)
+            {
+                GameObject newShelf = (GameObject)Instantiate(Resources.Load("Prefabs/Minigames/Bookshelf/Bookshelf_Shelf"), Vector3.zero, Quaternion.identity, bookshelfSprite.transform);
+                shelfObjects.Add(newShelf);
+                newShelf.transform.position = bookshelfMap.CellToWorld(new Vector3Int(0, tempShelfPosition, 0));
+            }
             tempShelfPosition += shelfInterval;
         }
+    }
+
+    public void ChangeShelfInterval()
+    {
+        List<int> possibleIntervals = new List<int>() {6, 4, 3, 2};
+        int nextIndex = (possibleIntervals.FindIndex(interval => interval == shelfInterval) + 1) % possibleIntervals.Count;
+        shelfInterval = possibleIntervals[nextIndex];
+        UpdateShelfPositions();
     }
 
     public bool MouseOnGrid()
@@ -80,10 +104,20 @@ public class BSGridManager : MonoBehaviour
 
     public bool CheckFit(Vector2 itemPosBottomLeft, List<Vector2Int> cellsFilledRelative)
     {
+        int currentShelf = bookshelfMap.cellBounds.yMin;
+        foreach (int shelfPosition in shelfPositions)
+        {
+            if (shelfPosition <= bookshelfMap.WorldToCell(itemPosBottomLeft).y && shelfPosition >= currentShelf)
+                currentShelf = shelfPosition;
+        }
+        int nextShelfIndex = Mathf.Min((shelfPositions.FindIndex(position => position == currentShelf) + 1), shelfPositions.Count - 1);
+        int nextShelf = shelfPositions[nextShelfIndex];
         foreach (Vector2Int cellRelative in cellsFilledRelative)
         {
             if (!bookshelfMap.cellBounds.Contains((bookshelfMap.WorldToCell(itemPosBottomLeft) + (Vector3Int)cellRelative))) return false;
+            if ((bookshelfMap.WorldToCell(itemPosBottomLeft) + (Vector3Int)cellRelative).y == nextShelf) return false;
         }
+        
         return true;
     }
 
@@ -99,7 +133,8 @@ public class BSGridManager : MonoBehaviour
     public bool CheckStackable(Vector2 itemWorldPos, BSItemInfo heldItemInfo)
     {
         if (!occupiedCells.ContainsKey(GetCellFromWorldPos(itemWorldPos))) return false;
-        if (occupiedCells[GetCellFromWorldPos(itemWorldPos)].itemType == heldItemInfo.itemType) return true;
+        if (occupiedCells[GetCellFromWorldPos(itemWorldPos)].itemType == heldItemInfo.itemType
+        && occupiedCells[GetCellFromWorldPos(itemWorldPos)].itemSize == heldItemInfo.itemSize) return true;
         else return false;
     }
 
@@ -147,6 +182,7 @@ public class BSGridManager : MonoBehaviour
 
     public void OccupyCells(Vector2Int startingPoint, BSItemInfo itemInfo)
     {
+        itemInfo.isBookshelfed = true;
         foreach (Vector2Int cellRelative in itemInfo.cellsFilledRelative)
         {
             occupiedCells.Add(startingPoint + cellRelative, itemInfo);
@@ -156,6 +192,7 @@ public class BSGridManager : MonoBehaviour
 
     public void UnoccupyCells(Vector2Int startingPoint, BSItemInfo itemInfo)
     {
+        itemInfo.isBookshelfed = false;
         foreach (Vector2Int cellRelative in itemInfo.cellsFilledRelative)
         {
             occupiedCells.Remove(startingPoint + cellRelative);
@@ -196,5 +233,30 @@ public class BSGridManager : MonoBehaviour
         int x = Mathf.Clamp(GetCellFromWorldPos(itemPosBottomLeftRounded).x, bookshelfMap.cellBounds.xMin, bookshelfMap.cellBounds.xMax);
         int y = Mathf.Clamp(GetCellFromWorldPos(itemPosBottomLeftRounded).y, bookshelfMap.cellBounds.yMin, bookshelfMap.cellBounds.yMax);
         return new Vector2Int(x, y);
+    }
+
+    public void ClearItems(float percentageChance)
+    {
+        List<GameObject> itemsToDestroy = new List<GameObject>();
+        foreach (BSItemInfo item in FindObjectsOfType<BSItemInfo>())
+        {
+            if (!item.isBookshelfed) continue;
+            if (Random.Range(0, 100) >= percentageChance) continue;
+            
+            if (item.isStacked)
+            {
+                itemsToDestroy.Add(item.stackedItems.Peek().gameObject);
+                UnStackItem(bookshelfMap.CellToWorld((Vector3Int)item.cellsOccupied[0]), item.stackedItems.Peek());
+            }
+            else
+            {
+                itemsToDestroy.Add(item.gameObject);
+                UnoccupyCells(item.cellsOccupied[0], item);
+            }
+        }
+        foreach (GameObject obj in itemsToDestroy)
+        {
+            Destroy(obj);
+        }
     }
 }

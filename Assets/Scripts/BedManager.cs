@@ -32,6 +32,8 @@ public class BedManager : MonoBehaviour
     {
         bedCanvas.gameObject.SetActive(false);
         StartCoroutine("DoSleepTransition");
+        BSBoxRandomManager boxRandomManager = FindObjectOfType<BSBoxRandomManager>();
+        boxRandomManager.AddObjects(boxRandomManager.itemsDayAll[timeController.days - 1], boxRandomManager.itemsDayAllCount[timeController.days - 1]);
     }
 
     IEnumerator DoSleepTransition()
@@ -40,7 +42,7 @@ public class BedManager : MonoBehaviour
         StartCoroutine(playerTransition.TeleportFadeInOut(movementController.currentPos));
         while (playerTransition.isTeleporting) yield return null;
         movementController.FaceDirection(Vector3Int.down);
-        timeController.days += 1;
+        timeController.days = (timeController.days + 1 % 7) + 1;
         timeController.hours += 8;
         timeController.mins = 0;
         timeController.seconds = 0;

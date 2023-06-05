@@ -70,7 +70,8 @@ public class TimeController : MonoBehaviour
  
         if (hours >= 24) //24 hr = 1 day
         {
-            days += hours / 24;
+            // Days will be handled manually in BedManager
+            // days += hours / 24;
             hours = hours % 24;
         }
     }

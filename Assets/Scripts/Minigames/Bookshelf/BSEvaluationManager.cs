@@ -43,8 +43,8 @@ public class BSEvaluationManager : MonoBehaviour
         float scoreAbundance = countItems / (float)countItemsTotal;
         float scoreAesthetic = Mathf.Clamp01(Mathf.Max(percentAdjacentType, percentAdjacentColor) + percentBestSubsize * 0.1f);
         float scoreOrganization = Mathf.Clamp01(percentSymmetry + percentStacked * 0.05f);
-        float totalScore = scoreAbundance * 0.5f + scoreAesthetic * 0.2f + scoreOrganization * 0.5f;
-        Debug.Log("Total score: " + totalScore);
+        // float totalScore = scoreAbundance * 0.5f + scoreAesthetic * 0.2f + scoreOrganization * 0.5f;
+        Debug.Log("Total score: " + Mathf.Max(scoreAbundance, scoreAesthetic, scoreOrganization));
     }
 
     public void EvaluateNumberOfItems()

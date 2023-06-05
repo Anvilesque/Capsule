@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BSItemMovementManager : MonoBehaviour
 {
     private BSItemInfo itemInfo;
     private Camera bookshelfCam;
     private BSGridManager bookshelfGrid;
+    private BSBoxSortedManager boxSortedManager;
     private Vector2 mousePos;
     private Vector3 prevPosBottomLeft;
     private Vector3 itemPosBottomLeft;
@@ -25,6 +27,7 @@ public class BSItemMovementManager : MonoBehaviour
         itemInfo = GetComponent<BSItemInfo>();
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfCam = bookshelfGrid.bookshelfCam;
+        boxSortedManager = FindObjectOfType<BSBoxSortedManager>();
 
         mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -60,7 +63,7 @@ public class BSItemMovementManager : MonoBehaviour
         {
             bookshelfGrid.UnStackItem(itemPosBottomLeft, itemInfo);
         }
-        else bookshelfGrid.UnoccupyCells(targetCell, itemInfo);
+        else if (itemInfo.isBookshelfed) bookshelfGrid.UnoccupyCells(targetCell, itemInfo);
     }
 
     private void OnMouseDrag()
@@ -91,7 +94,6 @@ public class BSItemMovementManager : MonoBehaviour
             return;
         }
 
-        itemInfo.isBookshelfed = true;
         transform.position = itemPosCenter;
         Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
         if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilledRelative))
@@ -193,11 +195,34 @@ public class BSItemMovementManager : MonoBehaviour
 
     private void ReturnItemToPreviousPosition()
     {
+        BoundsInt bookshelfBounds = bookshelfGrid.GetComponent<Tilemap>().cellBounds;
+        Bounds boxSortedBounds = boxSortedManager.GetComponent<Collider2D>().bounds;
+        
+        // If prev position wasn't in tilemap bounds
+        if (!
+        (  bookshelfGrid.GetWorldFromCellPos((Vector2Int)bookshelfBounds.min).x <= prevPosBottomLeft.x
+        && bookshelfGrid.GetWorldFromCellPos((Vector2Int)bookshelfBounds.min).y <= prevPosBottomLeft.y
+        && bookshelfGrid.GetWorldFromCellPos((Vector2Int)bookshelfBounds.max).x >= prevPosBottomLeft.x
+        && bookshelfGrid.GetWorldFromCellPos((Vector2Int)bookshelfBounds.max).y >= prevPosBottomLeft.y))
+        {
+            boxSortedManager.AddToBox(GetComponent<BSItemInfo>());
+            return;
+        }
+        else if (boxSortedBounds.min.x <= mousePos.x && mousePos.x <= boxSortedBounds.max.x
+        && boxSortedBounds.min.y <= mousePos.y && mousePos.y <= boxSortedBounds.max.y)
+        {
+            boxSortedManager.AddToBox(GetComponent<BSItemInfo>());
+            return;
+        }
         itemPosBottomLeft = prevPosBottomLeft;
         UpdateItemPosCenterFromBL();
         transform.position = itemPosCenter;
         Vector2Int targetCell = bookshelfGrid.GetCellFromWorldPos(itemPosBottomLeft);
-        if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilledRelative))
+        if (!bookshelfGrid.CheckFit(itemPosBottomLeft, itemInfo.cellsFilledRelative))
+        {
+            boxSortedManager.AddToBox(GetComponent<BSItemInfo>());
+        }
+        else if (bookshelfGrid.CheckOccupied(itemPosBottomLeft, itemInfo.cellsFilledRelative))
         {
             bookshelfGrid.StackItem(itemPosBottomLeft, itemInfo);
             transform.position += (itemInfo.stackCount - 1) * (Vector3)offsetStacked;
