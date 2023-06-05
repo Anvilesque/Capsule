@@ -7,6 +7,7 @@ public class NPCMovement : MonoBehaviour
 {
     private TileManager tileManager;
     private Tilemap floorMap;
+    private TimeController timeController;
     private NonPC nonPC;
     private Vector3Int destination;
     public List<Vector3Int> destinations;
@@ -21,20 +22,38 @@ public class NPCMovement : MonoBehaviour
     {
         isMoving = false;
         tileManager = FindObjectOfType<TileManager>();
+        timeController = FindObjectOfType<TimeController>();
         floorMap = tileManager.floorMap;
         nonPC = GetComponent<NonPC>();
         path = FindClosestPath(nonPC.position, destination, tileManager.tilesStandable);
         destinationInd = 0;
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        switch(timeController.hours)
+        {
+            case > 18:
+                destinationInd = 3;
+                break;
+            case > 12:
+                destinationInd = 2;
+                break;
+            case > 6:
+                destinationInd = 1;
+                break;
+            default:
+                destinationInd = 0;
+                break;
+        }
         destination = destinations[destinationInd];
+        if(isMoving)
+            return;
         if (path.Count == 0 && nonPC.position != destination)
         {
             path = FindClosestPath(nonPC.position, destination, tileManager.tilesStandable);
         }
-        else if (!isMoving && path.Count > 0)
+        else if (path.Count > 0)
         {
             Vector3Int dir = path[0] - nonPC.position;
             StartCoroutine(MoveOne(dir));
@@ -95,7 +114,7 @@ public class NPCMovement : MonoBehaviour
     }
     IEnumerator MoveOne(Vector3Int direction)
     {
-        float movementSpeed = 3f;
+        float movementSpeed = 4f;
         float timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
 
@@ -117,11 +136,12 @@ public class NPCMovement : MonoBehaviour
         else yield break;
 
         // Check if player is in the way
-        if (FindObjectOfType<PlayerMovement>().transform.position == tempPosition) yield break;
+        if (floorMap.WorldToCell(FindObjectOfType<PlayerMovement>().transform.position) == tempPosition) yield break;
 
         // All checks cleared --> handle movement
         isMoving = true;
         float elapsedTime = 0f;
+        path.RemoveAt(0);
         while (elapsedTime < timeToMove)
         {
             // Lerp moves from one position to the other in some amount of time.
@@ -130,7 +150,6 @@ public class NPCMovement : MonoBehaviour
             yield return null;
         }
         transform.position = floorMap.CellToWorld(tempPosition);
-        path.RemoveAt(0);
         isMoving = false;
     }
 
