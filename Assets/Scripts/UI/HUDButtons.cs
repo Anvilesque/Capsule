@@ -7,8 +7,11 @@ using DG.Tweening;
 public class HUDButtons : MonoBehaviour
 {
     private VisualElement root;
-    UIDocument buttonDocument;
-    Button settingButton;
+    private VisualElement menuRoot;
+    private GameObject menu;
+    public UIDocument buttonDocument;
+    public Button menuButton;
+
 
     private Label timeTime;
     private Label timeDay;
@@ -23,29 +26,65 @@ public class HUDButtons : MonoBehaviour
         timeDay = root.Q<Label>("timeDay");
         timeTime.text = timeController.timeTextTime;
         timeDay.text = timeController.timeTextDay;
+
+        menu = GameObject.Find("HUD");
+        if (menu != null)
+        {
+            Debug.Log("Menu found");
+        }
+
+        menuRoot = menu.GetComponent<UIDocument>().rootVisualElement;
+        if (menuRoot != null)
+        {
+            Debug.Log("Menu UI document found");
+        }
+    }
+
+    void OnEnable() 
+    {
+        buttonDocument = GetComponent<UIDocument>();
+
+        if (buttonDocument == null)
+        {
+            Debug.LogError("No button document found.");
+        }
+        else 
+        {
+            Debug.Log("Button document found.");
+        }
+
+        menuButton = buttonDocument.rootVisualElement.Q("menu-button") as Button;
+
+        if (menuButton != null)
+        {
+            Debug.Log("Button found");
+        }
+        else
+        {
+            Debug.LogError("Button not found");
+        }
+
+        menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
     }
 
     private void Update()
     {
         timeTime.text = timeController.timeTextTime;
-        timeDay.text = timeController.timeTextDay;
+        timeDay.text = timeController.timeTextDay;  
     }
 
-    void OnEnable()
+    void MenuButtonClick(ClickEvent evt)
     {
-        buttonDocument = GetComponent<UIDocument>();
-        if (buttonDocument == null)
+        Debug.Log("HI");
+
+        if (menuRoot.style.display == DisplayStyle.Flex) 
         {
-            Debug.LogError("No button document found.");
+            menuRoot.style.display = DisplayStyle.None;
         }
-
-        settingButton = buttonDocument.rootVisualElement.Q("settings-button") as Button;
-        settingButton.RegisterCallback<ClickEvent>(SettingButtonClick);
-    }
-
-    public void SettingButtonClick(ClickEvent evt)
-    {
-
+        else 
+        {
+            menuRoot.style.display = DisplayStyle.Flex;
+        }
     }
 
 }
