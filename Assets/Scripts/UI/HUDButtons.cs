@@ -9,12 +9,14 @@ public class HUDButtons : MonoBehaviour
     private VisualElement root;
     private VisualElement menuRoot;
     private VisualElement settingsRoot;
+    private VisualElement tasksRoot;
     private GameObject menu;
     private GameObject settings;
-
+    private GameObject tasks;
     public UIDocument buttonDocument;
     public Button menuButton;
     public Button settingsButton;
+    public Button tasksButton;
 
     private Label timeTime;
     private Label timeDay;
@@ -48,11 +50,27 @@ public class HUDButtons : MonoBehaviour
         //     Debug.Log("Settings found");
         // }
 
-        // settingsRoot = settings.GetComponent<UIDocument>().rootVisualElement;
+
+        settingsRoot = settings.GetComponent<UIDocument>().rootVisualElement;
+
         // if (settingsRoot != null)
         // {
         //     Debug.Log("Setting UI document found");
         // }
+
+        tasks = GameObject.Find("TaskMap");
+        if (tasks != null)
+        {
+            Debug.Log("tasks found");
+        }
+
+        tasksRoot = tasks.GetComponent<UIDocument>().rootVisualElement;
+        if (tasksRoot != null)
+        {
+            Debug.Log("tasks UI document found");
+        }
+
+        tasksRoot.style.display = DisplayStyle.None;
     }
 
 
@@ -83,16 +101,28 @@ public class HUDButtons : MonoBehaviour
         menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
 
         settingsButton = buttonDocument.rootVisualElement.Q("settings-button") as Button;
-        if (settingsButton != null)
+        // if (settingsButton != null)
+        // {
+        //     Debug.Log("Setting button found");
+        // }
+        // else
+        // {
+        //     Debug.LogError("Setting button not found");
+        // }
+
+        settingsButton.RegisterCallback<ClickEvent>(SettingsButtonClick);
+
+        tasksButton = buttonDocument.rootVisualElement.Q("map-button") as Button;
+        if (tasksButton != null)
         {
-            Debug.Log("Setting button found");
+            Debug.Log("Task button found");
         }
         else
         {
-            Debug.LogError("Setting button not found");
+            Debug.LogError("Task button not found");
         }
 
-        settingsButton.RegisterCallback<ClickEvent>(SettingsButtonClick);
+        tasksButton.RegisterCallback<ClickEvent>(TasksButtonClick);
     }
 
     private void Update()
@@ -109,6 +139,18 @@ public class HUDButtons : MonoBehaviour
     void SettingsButtonClick(ClickEvent evt)
     {
         settingsRoot.style.display = settingsRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
+    }
+
+    void TasksButtonClick(ClickEvent evt)
+    {
+        if (tasksRoot.style.display == DisplayStyle.Flex) 
+        {
+            tasksRoot.style.display = DisplayStyle.None;
+        }
+        else 
+        {
+            tasksRoot.style.display = DisplayStyle.Flex;
+        }
     }
 
     public void ToggleHUD()

@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UI%20Assets/uss/TaskMap.uss?fileID=7433441132597879392&amp;guid=4dcfb9f5065d5439cb248e38ba37439e&amp;type=3#TaskMap" />
+    <ui:VisualElement name="root" style="height: 100%; width: 28%; flex-direction: row;">
+        <ui:VisualElement name="leftBorder" style="height: 100%; width: 12%;" />
+        <ui:VisualElement name="contentPanel" style="height: 100%; flex-grow: 1;">
+            <ui:VisualElement name="topSpacer" style="height: 17%;" />
+            <ui:VisualElement name="taskMap" style="height: 20%; background-color: rgba(218, 202, 185, 0.88); border-top-left-radius: 50px; border-bottom-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-left-color: rgb(218, 202, 185); border-right-color: rgb(218, 202, 185); border-top-color: rgb(218, 202, 185); border-bottom-color: rgb(218, 202, 185); border-left-width: 4px; border-right-width: 4px; border-top-width: 4px; border-bottom-width: 4px; justify-content: flex-start; flex-direction: row;">
+                <ui:VisualElement name="taskmapEdge" style="width: 10%;" />
+                <ui:VisualElement name="taskList" style="justify-content: space-around;">
+                    <ui:VisualElement name="tasklistTopSpacer" style="height: 3%;" />
+                    <ui:Toggle name="task-one" text=" Some heavy lifting in the garage" class="task-toggle" />
+                    <ui:Toggle name="task-two" text=" Stack some books in the back" class="task-toggle" />
+                    <ui:Toggle name="task-three" text=" Clean up the store" class="task-toggle" />
+                    <ui:Toggle name="task-four" text=" Greet the customers!" class="task-toggle" />
+                    <ui:Toggle name="task-five" text=" Head upstairs to review the capsule" class="task-toggle" />
+                    <ui:VisualElement name="tasklistBottomSpacer" style="height: 3%;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="taskmapEdge" style="width: 10%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
