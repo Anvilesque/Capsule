@@ -2,7 +2,7 @@
 tags:
 position: -19,-22
 ---
-Winter the Calm Teacher: Hello, dear! Yes, yes, my ducks are doing fantastic.
+Winter the Calm Teacher: Hey! Hope you've been well.
 <<if GetDay() is 0>> <<jump winter_newyears>> <<endif>>
 <<if GetDay() is 1>> <<jump winter_valentines>> <<endif>>
 <<if GetDay() is 2>> <<jump winter_graduation>> <<endif>>
