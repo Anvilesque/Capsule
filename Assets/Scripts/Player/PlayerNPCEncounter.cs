@@ -111,13 +111,13 @@ public class PlayerNPCEncounter : MonoBehaviour
             mvmtControl.FaceDirection(nearestNPCDirection);
             nearestNPC.GetComponent<NPCMovement>().FaceDirection(-nearestNPCDirection);
             dialogueRunner.StartDialogue(nearestNPC.introTitle);
-            FindObjectOfType<HUDButtons>().ToggleHUD();
+            FindObjectOfType<HUDButtons>().DisableHUD();
         }
     }
 
     void AfterDialogue()
     {
         mvmtControl.EnableMovement();
-        FindObjectOfType<HUDButtons>().ToggleHUD();
+        FindObjectOfType<HUDButtons>().EnableHUD();
     }
 }

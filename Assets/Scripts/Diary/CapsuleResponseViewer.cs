@@ -38,13 +38,13 @@ public class CapsuleResponseViewer : MonoBehaviour
         questionText.SetText(question);
         capsuleResponseCanvas.GetComponentInChildren<TMP_InputField>().text = "";
         capsuleResponseCanvas.gameObject.SetActive(true);
-        FindObjectOfType<HUDButtons>().ToggleHUD();
+        FindObjectOfType<HUDButtons>().DisableHUD();
     }
 
     public void HideCapsuleResponse()
     {
         isWriting = false;
         capsuleResponseCanvas.gameObject.SetActive(false);
-        FindObjectOfType<HUDButtons>().ToggleHUD();
+        FindObjectOfType<HUDButtons>().EnableHUD();
     }
 }

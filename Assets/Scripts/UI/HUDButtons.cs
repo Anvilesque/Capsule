@@ -153,8 +153,13 @@ public class HUDButtons : MonoBehaviour
         }
     }
 
-    public void ToggleHUD()
+    public void EnableHUD()
     {
-        root.style.display = root.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
+        root.style.display = DisplayStyle.Flex;
+    }
+
+    public void DisableHUD()
+    {
+        root.style.display = DisplayStyle.None;
     }
 }
