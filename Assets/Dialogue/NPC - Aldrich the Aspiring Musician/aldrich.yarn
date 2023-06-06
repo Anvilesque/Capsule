@@ -44,22 +44,24 @@ title: aldrich_valentines
 position: -416,236
 ---
 <<if GetNPCDialogueNumber("aldrich") is 1>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+Aldrich the Aspiring Musician: It's Valentine's Day. I'm hanging out with my guitar later today.
+Aldrich the Aspiring Musician: People love each other, and I love my guitar. :)
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 2>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+Aldrich the Aspiring Musician: I'm not really a fan of Valentine's Day chocolate, to be honest.
+Aldrich the Aspiring Musician: Unless if it's homemade, of course. My friend makes amazing homemade chocolates.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 3>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
-Aldrich the Aspiring Musician: Why are you the way you are?
+Aldrich the Aspiring Musician: At the end of the day, Valentine's Day is about the heart.
+Aldrich the Aspiring Musician: What kind of music speaks to your heart?
 <<setNextDialogueFor "Dialogue System" "aldrich">>
-<<openCapsuleResponse "Dialogue System" "aldrich" "Why are you the way you are?">>
+<<openCapsuleResponse "Dialogue System" "aldrich" "What kind of music speaks to your heart?">>
 <<stop>>
 <<endif>>
 
@@ -71,20 +73,22 @@ title: aldrich_graduation
 position: -224,384
 ---
 <<if GetNPCDialogueNumber("aldrich") is 1>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+Aldrich the Aspiring Musician: I graduated a couple years ago. Those were the days.
+Aldrich the Aspiring Musician: It's strange, graduation makes you feel both free and lost.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 2>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+Aldrich the Aspiring Musician: People like to think of graduation as an end of an era.
+Aldrich the Aspiring Musician: But at the same time, it starts so much more.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 3>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
-<<declare $aldrich_question_graduation to "[INSERT QUESTION HERE]">>
+Aldrich the Aspiring Musician: Say you're graduating at this very moment. What's next in store for you?
+<<declare $aldrich_question_graduation to "Say you're graduating at this very moment. What's next in store for you?">>
 Aldrich the Aspiring Musician: {$aldrich_question_graduation}
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_graduation}>>
@@ -99,23 +103,25 @@ title: aldrich_fourthjuly
 position: -14,384
 ---
 <<if GetNPCDialogueNumber("aldrich") is 1>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+Aldrich the Aspiring Musician: Ah yes, 'Murica Day.
+Aldrich the Aspiring Musician: It's always nice to hang out with friends and family on this day.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 2>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+Aldrich the Aspiring Musician: You know, for how loud fireworks are, they're oddly calm for me.
+Aldrich the Aspiring Musician: When they go off, everyone stops what they're doing and just watches. Kinda peaceful.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 3>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
-<<declare $aldrich_question_fourthjuly to "[INSERT QUESTION HERE]">>
-Aldrich the Aspiring Musician: {$aldrich_question_fourthjuly}
+Aldrich the Aspiring Musician: Today's definitely a day for everyone to come together and celebrate.
+Aldrich the Aspiring Musician: Not really an independence, when you think about it.
+Aldrich the Aspiring Musician: Who do you want to hang out with for this year's Fourth of July?
 <<setNextDialogueFor "Dialogue System" "aldrich">>
-<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_fourthjuly}>>
+<<openCapsuleResponse "Dialogue System" "aldrich" "Who do you want to hang out with for this year's Fourth of July?">>
 <<stop>>
 <<endif>>
 
@@ -127,23 +133,24 @@ title: aldrich_halloween
 position: 198,377
 ---
 <<if GetNPCDialogueNumber("aldrich") is 1>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+Aldrich the Aspiring Musician: Jumpscares don't really scare me anymore. I need some more stimulation.
+Aldrich the Aspiring Musician: I'll have to check out Team Idoll's game.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 2>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+Aldrich the Aspiring Musician: The last time I dressed up for Halloween was in first grade.
+Aldrich the Aspiring Musician: Well, to be fair, that's kinda when it matters most.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 3>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
-<<declare $aldrich_question_halloween to "[INSERT QUESTION HERE]">>
-Aldrich the Aspiring Musician: {$aldrich_question_halloween}
+Aldrich the Aspiring Musician: I don't know, I don't really treat Halloween as a holiday.
+Aldrich the Aspiring Musician: But I am curious. What's the last thing you dressed up as, and how do you feel about it?
 <<setNextDialogueFor "Dialogue System" "aldrich">>
-<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_halloween}>>
+<<openCapsuleResponse "Dialogue System" "aldrich" "What's the last thing you dressed up as, and how do you feel about it?">>
 <<stop>>
 <<endif>>
 
@@ -155,23 +162,23 @@ title: aldrich_thanksgiving
 position: 386,234
 ---
 <<if GetNPCDialogueNumber("aldrich") is 1>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+Aldrich the Aspiring Musician: I'm not really a family person, but I do love me a Thanksgiving dinner.
+Aldrich the Aspiring Musician: Mostly the turkey.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 2>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+Aldrich the Aspiring Musician: People like to think about how cruel and terrible Americans were on this day.
+Aldrich the Aspiring Musician: I don't really care. It's a day of giving thanks, so I'm giving thanks.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 3>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
-<<declare $aldrich_question_thanksgiving to "[INSERT QUESTION HERE]">>
-Aldrich the Aspiring Musician: {$aldrich_question_thanksgiving}
+Aldrich the Aspiring Musician: You ever had a really good meal? What was your favorite Thanksgiving meal like?
 <<setNextDialogueFor "Dialogue System" "aldrich">>
-<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_thanksgiving}>>
+<<openCapsuleResponse "Dialogue System" "aldrich" "You ever had a really good meal? What was your favorite Thanksgiving meal like?">>
 <<stop>>
 <<endif>>
 
@@ -183,23 +190,22 @@ title: aldrich_christmas
 position: 496,88
 ---
 <<if GetNPCDialogueNumber("aldrich") is 1>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+Aldrich the Aspiring Musician: Merry Christmas! Maybe this year, I'll give myself another guitar.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 2>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+Aldrich the Aspiring Musician: Here's a hot tip: If you ever want anything seasonal for super cheap, buy it right AFTER Christmas.
 <<setNextDialogueFor "Dialogue System" "aldrich">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("aldrich") is 3>>
-Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
-<<declare $aldrich_question_christmas to "[INSERT QUESTION HERE]">>
-Aldrich the Aspiring Musician: {$aldrich_question_christmas}
+Aldrich the Aspiring Musician: Christmas is always filled with symbols of purity.
+Aldrich the Aspiring Musician: Who's the most pure person you know? You think you could ever be that pure?
 <<setNextDialogueFor "Dialogue System" "aldrich">>
-<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_christmas}>>
+<<openCapsuleResponse "Dialogue System" "aldrich" "Who's the most pure person you know? You think you could ever be that pure?">>
 <<stop>>
 <<endif>>
 
