@@ -14,11 +14,11 @@ public class TimeController : MonoBehaviour
     private int displayInterval; // Changes how often display text updates
     
     public float tick; // Increasing the tick, increases second rate
-    public float seconds; 
-    public int mins;
-    public int hours;
-    public int days;
-    public int years;
+    [HideInInspector] public float seconds;
+    [HideInInspector] public int mins;
+    [HideInInspector] public int hours;
+    [HideInInspector] public int days;
+    [HideInInspector] public int years;
     private int hourShopClose;
     private int hourPassOut;
     private DialogueRunner dialogueRunner;
@@ -41,6 +41,11 @@ public class TimeController : MonoBehaviour
         canUpdateTime = true;
         isShopClosed = false;
         isPassingOut = false;
+        seconds = PlayerPrefs.GetFloat("timeSeconds", 0);
+        mins = PlayerPrefs.GetInt("timeMins", 0);
+        hours = PlayerPrefs.GetInt("timeHours", 8);
+        days = PlayerPrefs.GetInt("timeDays", 0);
+        years = PlayerPrefs.GetInt("timeYears", 0);
     }
  
     // Update is called once per frame
@@ -64,6 +69,22 @@ public class TimeController : MonoBehaviour
         }
     }
  
+    public void SaveTime()
+    {
+        PlayerPrefs.SetFloat("timeSeconds", seconds);
+        PlayerPrefs.SetInt("timeMins", mins);
+        PlayerPrefs.SetInt("timeHours", hours);
+        PlayerPrefs.SetInt("timeDays", days);
+        PlayerPrefs.SetInt("timeYears", years);
+    }
+    
+    private void OnApplicationQuit()
+    {
+        SaveTime();
+    }
+
+    
+
     public void CalcTime() // Used to calculate sec, min and hours
     {
         seconds += Time.fixedDeltaTime * tick; // multiply time between fixed update by tick

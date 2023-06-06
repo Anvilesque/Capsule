@@ -1,0 +1,210 @@
+﻿title: winter_intro
+tags:
+position: -19,-22
+---
+Winter the Calm Teacher: Hello, dear! Yes, yes, my ducks are doing fantastic.
+<<if GetDay() is 0>> <<jump winter_newyears>> <<endif>>
+<<if GetDay() is 1>> <<jump winter_valentines>> <<endif>>
+<<if GetDay() is 2>> <<jump winter_graduation>> <<endif>>
+<<if GetDay() is 3>> <<jump winter_fourthjuly>> <<endif>>
+<<if GetDay() is 4>> <<jump winter_halloween>> <<endif>>
+<<if GetDay() is 5>> <<jump winter_thanksgiving>> <<endif>>
+<<if GetDay() is 6>> <<jump winter_christmas>> <<endif>>
+===
+title: winter_newyears
+position: -529,85
+---
+<<if GetNPCDialogueNumber("winter") is 1>>
+Winter the Calm Teacher: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 2>>
+Winter the Calm Teacher: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 3>>
+Winter the Calm Teacher: Yes! Here's dialogue 3!
+<<declare $winter_question_newyears to "[INSERT QUESTION HERE]">>
+Winter the Calm Teacher: {$winter_question_newyears}
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_newyears}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: winter_valentines
+position: -416,236
+---
+<<if GetNPCDialogueNumber("winter") is 1>>
+Winter the Calm Teacher: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 2>>
+Winter the Calm Teacher: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 3>>
+Winter the Calm Teacher: Yes! Here's dialogue 3!
+<<declare $winter_question_valentines to "[INSERT QUESTION HERE]">>
+Winter the Calm Teacher: {$winter_question_valentines}
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_valentines}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: winter_graduation
+position: -224,384
+---
+<<if GetNPCDialogueNumber("winter") is 1>>
+Winter the Calm Teacher: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 2>>
+Winter the Calm Teacher: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 3>>
+Winter the Calm Teacher: Yes! Here's dialogue 3!
+<<declare $winter_question_graduation to "[INSERT QUESTION HERE]">>
+Winter the Calm Teacher: {$winter_question_graduation}
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_graduation}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: winter_fourthjuly
+position: -14,384
+---
+<<if GetNPCDialogueNumber("winter") is 1>>
+Winter the Calm Teacher: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 2>>
+Winter the Calm Teacher: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 3>>
+Winter the Calm Teacher: Yes! Here's dialogue 3!
+<<declare $winter_question_fourthjuly to "[INSERT QUESTION HERE]">>
+Winter the Calm Teacher: {$winter_question_fourthjuly}
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_fourthjuly}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: winter_halloween
+position: 198,377
+---
+<<if GetNPCDialogueNumber("winter") is 1>>
+Winter the Calm Teacher: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 2>>
+Winter the Calm Teacher: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 3>>
+Winter the Calm Teacher: Yes! Here's dialogue 3!
+<<declare $winter_question_halloween to "[INSERT QUESTION HERE]">>
+Winter the Calm Teacher: {$winter_question_halloween}
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_halloween}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: winter_thanksgiving
+position: 386,234
+---
+<<if GetNPCDialogueNumber("winter") is 1>>
+Winter the Calm Teacher: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 2>>
+Winter the Calm Teacher: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 3>>
+Winter the Calm Teacher: Yes! Here's dialogue 3!
+<<declare $winter_question_thanksgiving to "[INSERT QUESTION HERE]">>
+Winter the Calm Teacher: {$winter_question_thanksgiving}
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_thanksgiving}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: winter_christmas
+position: 496,88
+---
+<<if GetNPCDialogueNumber("winter") is 1>>
+Winter the Calm Teacher: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 2>>
+Winter the Calm Teacher: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 3>>
+Winter the Calm Teacher: Yes! Here's dialogue 3!
+<<declare $winter_question_christmas to "[INSERT QUESTION HERE]">>
+Winter the Calm Teacher: {$winter_question_christmas}
+<<setNextDialogueFor "Dialogue System" "winter">>
+<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_christmas}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("winter") is 4>>
+<<jump random>>
+<<endif>>
+===
+

@@ -19,10 +19,12 @@ public class TaskManager : MonoBehaviour
 
     private Camera bookshelfCam;
     private Camera diaryCam;
+    private Camera cleaningCam;
+    private Camera capsuleCam;
 
     private string currentTask;
     private bool isPlayerNextToTask;
-    private bool isTasking;
+    public bool isTasking {get; private set;}
     private string taskName;
     private Vector3Int lastInteractDirection;
     private float isoViewRatio;
@@ -56,6 +58,12 @@ public class TaskManager : MonoBehaviour
 
         diaryCam = taskCams.Find(x=> x.name.Contains("Diary"));
         diaryCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
+
+        cleaningCam = taskCams.Find(x=> x.name.Contains("Cleaning"));
+        cleaningCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
+
+        capsuleCam = taskCams.Find(x=> x.name.Contains("Capsule View"));
+        capsuleCam.rect = new Rect(1f, 0, (1 - isoViewRatio), 1f);
 
         lastInteractDirection = Vector3Int.zero;
 
@@ -155,6 +163,20 @@ public class TaskManager : MonoBehaviour
                 FindObjectOfType<HUDButtons>().ToggleHUD();
                 break;
             }
+            case "Cleaning":
+            {
+                currentTask = taskName;
+                taskCam = cleaningCam;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
+                break;
+            }
+            case "Capsule":
+            {
+                currentTask = taskName;
+                taskCam = capsuleCam;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
+                break;
+            }
             case "Packaging":
             {
                 SceneManager.LoadScene("Packaging Minigame");
@@ -200,6 +222,19 @@ public class TaskManager : MonoBehaviour
             case "Diary":
             {
                 taskCam = diaryCam;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
+                break;
+            }
+            case "Cleaning":
+            {
+                taskCam = cleaningCam;
+                FindObjectOfType<HUDButtons>().ToggleHUD();
+                FindObjectOfType<CleaningManager>().ResetMinigame();
+                break;
+            }
+            case "Capsule":
+            {
+                taskCam = capsuleCam;
                 FindObjectOfType<HUDButtons>().ToggleHUD();
                 break;
             }

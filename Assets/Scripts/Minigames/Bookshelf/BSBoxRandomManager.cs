@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BSBoxRandomManager : MonoBehaviour
 {
     List<BSItemInfo> itemStorage;
     BSItemInfo currentItem;
-    private Camera bookshelfCam;
+    private Camera bookshelfCam;    
     private BSGridManager bookshelfGrid;
     Vector3 mousePos;
     bool pickedUpItem;
     public List<GameObject> itemsDay1, itemsDay2, itemsDay3, itemsDay4, itemsDay5, itemsDay6, itemsDay7;
     public List<List<GameObject>> itemsDayAll;
+    public TMP_Text countText;
     [HideInInspector] public List<int> itemsDayAllCount;
 
     // Start is called before the first frame update
@@ -30,6 +32,7 @@ public class BSBoxRandomManager : MonoBehaviour
     void Update()
     {
         mousePos = bookshelfGrid.mousePos;
+        countText.text = $"Items left: {itemStorage.Count}";
         if (itemStorage.Count == 0) return;
         if (Input.GetMouseButtonUp(0))
         {

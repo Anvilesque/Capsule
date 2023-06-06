@@ -54,4 +54,10 @@ public class YarnFunctions : MonoBehaviour
     {
         npcToNumber[npc]++;
     }
+
+    [YarnCommand("openCapsuleResponse")]
+    public void OpenCapsuleResponse(string npc, string question)
+    {
+        FindObjectOfType<CapsuleResponseViewer>().DisplayCapsuleResponse(npc, question);
+    }
 }

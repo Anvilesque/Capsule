@@ -2,20 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Yarn.Unity;
 
 public class NPCMovement : MonoBehaviour
 {
+    public float movementSpeed;
     private TileManager tileManager;
     private Tilemap floorMap;
     private TimeController timeController;
     private NonPC nonPC;
-    private Vector3Int destination;
+    public List<Sprite> sprites;
+    private Vector3Int currentlyFacing;
+    private Vector2Int currentTime;
+    private Vector3Int currentDestination;
+    public List<Vector3Int> directionsToFace;
+    public List<Vector2Int> timesHoursMins;
     public List<Vector3Int> destinations;
-    private int destinationInd;
+    public Vector2Int timeToDisappear;
+    private int destinationIndex;
     private Vector3Int nearestNodeNPC;
     private Vector3Int nearestNodeDestination;
+    public bool isDisappeared;
     private bool isMoving;
     private List<Vector3Int> path;
+    private Coroutine movementCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -25,38 +35,87 @@ public class NPCMovement : MonoBehaviour
         timeController = FindObjectOfType<TimeController>();
         floorMap = tileManager.floorMap;
         nonPC = GetComponent<NonPC>();
-        path = FindClosestPath(nonPC.position, destination, tileManager.tilesStandable);
-        destinationInd = 0;
+        CalculateDestinationIndex();
+        currentDestination = destinations[destinationIndex];
+        nonPC.position = currentDestination;
+        isDisappeared = false;
+        AttemptDisappear();
+        if (isDisappeared) Teleport(false);
+        else transform.position = floorMap.CellToWorld(nonPC.position);
+        FaceDirection(directionsToFace[destinationIndex]);
+        path = FindClosestPath(nonPC.position, currentDestination, tileManager.tilesStandable);
     }
 
     void FixedUpdate()
     {
-        switch(timeController.hours)
+        CalculateDestinationIndex();
+        AttemptDisappear();
+        currentDestination = destinations[destinationIndex];
+        if (isMoving) return;
+        if (FindObjectOfType<DialogueRunner>().IsDialogueRunning) return;
+        if (path.Count == 0)
         {
-            case > 18:
-                destinationInd = 3;
-                break;
-            case > 12:
-                destinationInd = 2;
-                break;
-            case > 6:
-                destinationInd = 1;
-                break;
-            default:
-                destinationInd = 0;
-                break;
-        }
-        destination = destinations[destinationInd];
-        if(isMoving)
-            return;
-        if (path.Count == 0 && nonPC.position != destination)
-        {
-            path = FindClosestPath(nonPC.position, destination, tileManager.tilesStandable);
+            if (nonPC.position != currentDestination)
+            {
+                path = FindClosestPath(nonPC.position, currentDestination, tileManager.tilesStandable);
+            }
+            else if (currentlyFacing != directionsToFace[destinationIndex])
+            {
+                FaceDirection(directionsToFace[destinationIndex]);
+            }
         }
         else if (path.Count > 0)
         {
             Vector3Int dir = path[0] - nonPC.position;
-            StartCoroutine(MoveOne(dir));
+            if (movementCoroutine == null) movementCoroutine = StartCoroutine(MoveOne(dir));
+        }
+    }
+
+    void CalculateDestinationIndex()
+    {
+        destinationIndex = 0;
+        foreach (Vector2Int time in timesHoursMins)
+        {
+            if (timeController.hours >= time.x && timeController.mins >= time.y)
+            {
+                currentTime = time;
+            }
+        }
+        destinationIndex = timesHoursMins.FindIndex(time => time == currentTime);
+    }
+
+    void AttemptDisappear()
+    {
+        if (timeController.hours >= timeToDisappear.x && timeController.mins >= timeToDisappear.y)
+        {
+            StartCoroutine(MakeDisappear());
+        }
+    }
+
+    IEnumerator MakeDisappear()
+    {
+        float timer = 0f;
+        float duration = 3f;
+        while (GetComponent<SpriteRenderer>().color.a > 0)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, Mathf.Clamp01(1 - timer / duration));
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Teleport(false);
+    }
+
+    public void Teleport(bool tpToStartingPoint)
+    {
+        if (tpToStartingPoint)
+        {
+            isDisappeared = false;
+            transform.position = floorMap.CellToWorld(destinations[0]);
+        }
+        else
+        {
+            isDisappeared = true;
+            transform.position = new Vector3(100f, 100f, 2);
         }
     }
 
@@ -114,11 +173,8 @@ public class NPCMovement : MonoBehaviour
     }
     IEnumerator MoveOne(Vector3Int direction)
     {
-        float movementSpeed = 4f;
         float timeToMove = 1 / movementSpeed;
         if (timeToMove < 0) yield break;
-
-        FaceDirection(direction);
 
         Vector3Int prevPosition = nonPC.position;
         Vector3Int tempPosition = prevPosition + direction;
@@ -142,18 +198,23 @@ public class NPCMovement : MonoBehaviour
         isMoving = true;
         float elapsedTime = 0f;
         path.RemoveAt(0);
+        FaceDirection(direction);
+        currentlyFacing = direction;
         while (elapsedTime < timeToMove)
         {
+            while (FindObjectOfType<DialogueRunner>().IsDialogueRunning) yield return null;
             // Lerp moves from one position to the other in some amount of time.
             transform.position = Vector3.Lerp(floorMap.CellToWorld(prevPosition), floorMap.CellToWorld(tempPosition), (elapsedTime / timeToMove));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        nonPC.position = tempPosition;
         transform.position = floorMap.CellToWorld(tempPosition);
+        movementCoroutine = null;
         isMoving = false;
     }
 
-    void FaceDirection(Vector3Int direction)
+    public void FaceDirection(Vector3Int direction)
     {
         const int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
         int directionIndex =
@@ -162,6 +223,6 @@ public class NPCMovement : MonoBehaviour
             direction == Vector3Int.left ? LEFT :
             direction == Vector3Int.right ? RIGHT : -1;
         if (directionIndex == -1) return;
-        // nonPC.sprite = sprites[directionIndex];
+        nonPC.GetComponent<SpriteRenderer>().sprite = sprites[directionIndex];
     }
 }

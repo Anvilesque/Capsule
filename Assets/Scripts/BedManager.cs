@@ -34,6 +34,7 @@ public class BedManager : MonoBehaviour
         StartCoroutine("DoSleepTransition");
         BSBoxRandomManager boxRandomManager = FindObjectOfType<BSBoxRandomManager>();
         boxRandomManager.AddObjects(boxRandomManager.itemsDayAll[timeController.days - 1], boxRandomManager.itemsDayAllCount[timeController.days - 1]);
+        FindObjectOfType<YarnFunctions>().ResetNPCDialogueNumber();
     }
 
     IEnumerator DoSleepTransition()
@@ -49,9 +50,15 @@ public class BedManager : MonoBehaviour
         else timeController.hours += 8;
         timeController.mins = 0;
         timeController.seconds = 0;
+        timeController.SaveTime();
         timeController.isShopClosed = false;
         timeController.isPassingOut = false;
         timeController.canUpdateTime = true;
+        foreach (NPCMovement npc in FindObjectsOfType<NPCMovement>())
+        {
+            npc.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            npc.Teleport(true);
+        }
         taskManager.SetIsTasking(false);
         movementController.EnableMovement();
     }

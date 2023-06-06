@@ -14,7 +14,6 @@ public class InputFieldManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inputFields = new List<TMP_InputField>(FindObjectsOfType<TMP_InputField>());
         isInputFocused = false;
     }
 
@@ -26,6 +25,7 @@ public class InputFieldManager : MonoBehaviour
 
     void CheckInputFocus()
     {
+        inputFields = new List<TMP_InputField>(FindObjectsOfType<TMP_InputField>());
         foreach (TMP_InputField field in inputFields)
         {
             if (field.isFocused)

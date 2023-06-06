@@ -26,13 +26,13 @@ public class antiqueManager : MonoBehaviour
                 if (dirt.GetComponent<SpriteRenderer>().color.a > 0)
                 {
                     complete = false;
-                    Debug.Log("opacity of " + dirt.name + ": " + dirt.GetComponent<SpriteRenderer>().color.a);
+                    // Debug.Log("opacity of " + dirt.name + ": " + dirt.GetComponent<SpriteRenderer>().color.a);
                 }
             }
 
             if (complete) 
             {
-                Debug.Log("clean!!");  
+                // Debug.Log("clean!!");  
                 MoveOffScreen();
             }
         }

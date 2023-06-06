@@ -1,0 +1,204 @@
+﻿title: joanne_intro
+tags:
+position: -19,-22
+---
+Joanne the Duck Lady: Hello, dear! Yes, yes, my ducks are doing fantastic.
+<<if GetDay() is 0>> <<jump joanne_newyears>> <<endif>>
+<<if GetDay() is 1>> <<jump joanne_valentines>> <<endif>>
+<<if GetDay() is 2>> <<jump joanne_graduation>> <<endif>>
+<<if GetDay() is 3>> <<jump joanne_fourthjuly>> <<endif>>
+<<if GetDay() is 4>> <<jump joanne_halloween>> <<endif>>
+<<if GetDay() is 5>> <<jump joanne_thanksgiving>> <<endif>>
+<<if GetDay() is 6>> <<jump joanne_christmas>> <<endif>>
+===
+title: joanne_newyears
+position: -529,85
+---
+<<if GetNPCDialogueNumber("joanne") is 1>>
+Joanne the Duck Lady: Happy new year! May your year be filled with many blessings.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 2>>
+Joanne the Duck Lady: This morning I took a stroll near the pond. Seeing the ducks splashing about fills me with such joy. It's my favorite way to start the year.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 3>>
+Joanne the Duck Lady: You've been a lovely young child. I hope your day has been swell so far.
+Joanne the Duck Lady: What do you like to do when you begin the new year?
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<openCapsuleResponse "Dialogue System" "joanne" "What do you like to do when you begin the new year?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: joanne_valentines
+position: -416,236
+---
+<<if GetNPCDialogueNumber("joanne") is 1>>
+Joanne the Duck Lady: Happy valentine's day! Here, take a chocolate. It's shaped like a duck!
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 2>>
+Joanne the Duck Lady: I've been making duck shaped chocolates since I was a little girl. It's something small that brings me joy, and I like to share that joy with others when I can.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 3>>
+Joanne the Duck Lady: You know, Valentine's isn't always about love. It's about all the feel-good feelings in life.
+Joanne the Duck Lady: Do you have any small traditions that bring you joy?
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<openCapsuleResponse "Dialogue System" "joanne" "Do you have any small traditions that bring you joy?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: joanne_graduation
+position: -224,384
+---
+<<if GetNPCDialogueNumber("joanne") is 1>>
+Joanne the Duck Lady: This time of year always makes me nostalgic.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 2>>
+Joanne the Duck Lady: Oh, I just love going to graduations. Everyone is dressed up nicely and so happy.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 3>>
+Joanne the Duck Lady: With all these young children graduating, I can't help but think about my own ducks.
+Joanne the Duck Lady: If ducks had to go to school, what do you think they would teach?
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<openCapsuleResponse "Dialogue System" "joanne" "If ducks had to go to school, what do you think they would teach?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: joanne_fourthjuly
+position: -14,384
+---
+<<if GetNPCDialogueNumber("joanne") is 1>>
+Joanne the Duck Lady: I always love watching the fireworks every year.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 2>>
+Joanne the Duck Lady: When ducks see the fireworks in the sky, I wonder what they think.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 3>>
+Joanne the Duck Lady: Hmm... I'm still wondering...
+Joanne the Duck Lady: If you were a duck, what would you think of fireworks? 
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<openCapsuleResponse "Dialogue System" "joanne" "If you were a duck, what would you think of fireworks?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: joanne_halloween
+position: 198,377
+---
+<<if GetNPCDialogueNumber("joanne") is 1>>
+Joanne the Duck Lady: This year, I dressed up like a duck! And I dressed my ducks up like me!
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 2>>
+Joanne the Duck Lady: It was hard work to fit my ducks into those costumes, but I'd say it was well worth it.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 3>>
+Joanne the Duck Lady: Back in my day, it was all arts and crafts when it came to costumes.
+Joanne the Duck Lady: Have you ever made a Halloween costume from scratch before? Would you ever want to?
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<openCapsuleResponse "Dialogue System" "joanne" "Have you ever made a Halloween costume from scratch before? Would you ever want to?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: joanne_thanksgiving
+position: 386,234
+---
+<<if GetNPCDialogueNumber("joanne") is 1>>
+Joanne the Duck Lady: Everyone has a seat at my table during Thanksgiving, especially my ducks!
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 2>>
+Joanne the Duck Lady: I'm grateful to spend time with my loving family, to be able to make small crafts in my free time, and to see the ducks swimming around the pond in the morning.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 3>>
+Joanne the Duck Lady: I hope you're not working too hard this Thanksgiving.
+Joanne the Duck Lady: Talk to your family and friends! You can do a little reflection, while you're at it.
+Joanne the Duck Lady: What are you grateful for?
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<openCapsuleResponse "Dialogue System" "joanne" "What are you grateful for?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: joanne_christmas
+position: 496,88
+---
+<<if GetNPCDialogueNumber("joanne") is 1>>
+Joanne the Duck Lady: I knitted sweaters for all my children and grandkids this year for Christmas.
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 2>>
+Joanne the Duck Lady: My ducks? Of course I knitted sweaters for my sweet ducklings! They're my children as well~
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 3>>
+Joanne the Duck Lady: Whenever the Christmas season comes, I always like to think about what I can get for my ducks.
+Joanne the Duck Lady: If you were a duck, what would you want for Christmas?
+<<setNextDialogueFor "Dialogue System" "joanne">>
+<<openCapsuleResponse "Dialogue System" "joanne" "If you were a duck, what would you want for Christmas?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("joanne") is 4>>
+<<jump random>>
+<<endif>>
+===
+

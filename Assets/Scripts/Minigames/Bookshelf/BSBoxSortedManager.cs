@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BSBoxSortedManager : MonoBehaviour
 {
+    public TMP_Text countText;
     private Camera bookshelfCam;
     private BSGridManager bookshelfGrid;
     private Vector3 mousePos;
@@ -23,6 +25,7 @@ public class BSBoxSortedManager : MonoBehaviour
     void Update()
     {
         mousePos = bookshelfGrid.mousePos;
+        countText.text = $"Items left: {itemStack.Count}";
         if ((GetComponent<Collider2D>().bounds.min.x <= mousePos.x && mousePos.x <= GetComponent<Collider2D>().bounds.max.x
             && GetComponent<Collider2D>().bounds.min.y <= mousePos.y && mousePos.y <= GetComponent<Collider2D>().bounds.max.y))
         {

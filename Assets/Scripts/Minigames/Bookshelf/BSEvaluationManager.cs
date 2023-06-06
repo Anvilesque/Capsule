@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 
 public class BSEvaluationManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class BSEvaluationManager : MonoBehaviour
     BSGridManager bookshelfGrid;
     Tilemap bookshelfMap;
     List<BSItemInfo> items;
+    public TMP_Text evaluationText;
     private int countItems;
     private int countItemsTotal;
     private int countTypes;
@@ -28,6 +30,7 @@ public class BSEvaluationManager : MonoBehaviour
         bookshelfMap = bookshelfGrid.GetComponent<Tilemap>();
         bookshelfMap.CompressBounds();
         ResetEvaluation();
+        evaluationText.gameObject.SetActive(false);
     }
 
     public void ResetEvaluation()
@@ -57,8 +60,42 @@ public class BSEvaluationManager : MonoBehaviour
         float scoreAbundance = countItems / (float)countItemsTotal * 0.8f;
         float scoreAesthetic = Mathf.Clamp01(Mathf.Max(percentAdjacentType, percentAdjacentColor) + percentBestSubsize * 0.1f);
         float scoreOrganization = Mathf.Clamp01(percentSymmetry + percentStacked * 0.05f);
-        // float totalScore = scoreAbundance * 0.5f + scoreAesthetic * 0.2f + scoreOrganization * 0.5f;
+        float score = Mathf.Max(scoreAbundance, scoreAesthetic, scoreOrganization);
+        string rating;
+        if (score >= 1) rating = "S";
+        else if (score >= 0.8) rating = "A";
+        else if (score >= 0.4) rating = "B";
+        else rating = "C";
+        evaluationText.text = $"Great job! This is {rating}-level work!";
+        evaluationText.gameObject.SetActive(true);
+        StartCoroutine(FadeUpErrorText(evaluationText));
         Debug.Log("Total score: " + Mathf.Max(scoreAbundance, scoreAesthetic, scoreOrganization));
+    }
+
+    IEnumerator FadeUpErrorText(TMP_Text evaluationText)
+    {
+        float holdTimer = 0f;
+        float holdDuration = 0.5f;
+        float fadeTimer = 0f;
+        float fadeDuration = 0.5f;
+        float moveUpInterval = 0.01f;
+        Vector3 originalPosition = evaluationText.rectTransform.position;
+        while (holdTimer < holdDuration)
+        {
+            evaluationText.rectTransform.position = new Vector3(evaluationText.rectTransform.position.x, evaluationText.rectTransform.position.y + moveUpInterval, evaluationText.rectTransform.position.z);
+            holdTimer += Time.deltaTime;
+            yield return null;
+        }
+        while (evaluationText.color.a > 0)
+        {
+            evaluationText.rectTransform.position = new Vector3(evaluationText.rectTransform.position.x, evaluationText.rectTransform.position.y + moveUpInterval, evaluationText.rectTransform.position.z);
+            evaluationText.color = new Color(evaluationText.color.r, evaluationText.color.g, evaluationText.color.b, 1 - fadeTimer / fadeDuration);
+            fadeTimer += Time.deltaTime;
+            yield return null;
+        }
+        evaluationText.gameObject.SetActive(false);
+        evaluationText.rectTransform.position = originalPosition;
+        evaluationText.color = new Color(evaluationText.color.r, evaluationText.color.g, evaluationText.color.b, 1);
     }
 
     public void EvaluateNumberOfItems()

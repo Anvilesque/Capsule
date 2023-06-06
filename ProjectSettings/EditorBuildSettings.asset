@@ -5,12 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Showcase with NPCs.unity
-    guid: d90d4eebaa7e00f489c1caf1bf45858b
+    path: Assets/Scenes/Title Menu.unity
+    guid: a81cac6b9d8457c44ac9b241a8186f50
+  - enabled: 1
+    path: Assets/Scenes/Showcase.unity
+    guid: d488769741ad9cd4f9dbd3ef60311933
   - enabled: 1
     path: Assets/Scenes/Packaging MInigame.unity
     guid: 51d07b3355fad4c1f95cf27b8adb90ee

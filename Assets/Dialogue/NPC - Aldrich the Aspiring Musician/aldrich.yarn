@@ -1,0 +1,210 @@
+﻿title: aldrich_intro
+tags:
+position: -19,-22
+---
+Aldrich the Aspiring Musician: Hey, how's it hangin'?
+<<if GetDay() is 0>> <<jump aldrich_newyears>> <<endif>>
+<<if GetDay() is 1>> <<jump aldrich_valentines>> <<endif>>
+<<if GetDay() is 2>> <<jump aldrich_graduation>> <<endif>>
+<<if GetDay() is 3>> <<jump aldrich_fourthjuly>> <<endif>>
+<<if GetDay() is 4>> <<jump aldrich_halloween>> <<endif>>
+<<if GetDay() is 5>> <<jump aldrich_thanksgiving>> <<endif>>
+<<if GetDay() is 6>> <<jump aldrich_christmas>> <<endif>>
+===
+title: aldrich_newyears
+position: -529,85
+---
+<<if GetNPCDialogueNumber("aldrich") is 1>>
+Aldrich the Aspiring Musician: New Year's is such a bizarre time. It's like new, but also not new at all.
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 2>>
+Aldrich the Aspiring Musician: I don't really like fireworks. I have sensitive ears so loud things just hurt.
+Aldrich the Aspiring Musician: They do look pretty though.
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 3>>
+Aldrich the Aspiring Musician: I never know what to do when the New Year comes.
+Aldrich the Aspiring Musician: There's just so much going on, it honestly feels a bit overwhelming.
+Aldrich the Aspiring Musician: Have you ever stayed home for New Year's? What was your favorite memory of that?
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<openCapsuleResponse "Dialogue System" "aldrich" "Have you ever stayed home for New Year's? What was your favorite memory of that?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: aldrich_valentines
+position: -416,236
+---
+<<if GetNPCDialogueNumber("aldrich") is 1>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 2>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 3>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
+Aldrich the Aspiring Musician: Why are you the way you are?
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<openCapsuleResponse "Dialogue System" "aldrich" "Why are you the way you are?">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: aldrich_graduation
+position: -224,384
+---
+<<if GetNPCDialogueNumber("aldrich") is 1>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 2>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 3>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
+<<declare $aldrich_question_graduation to "[INSERT QUESTION HERE]">>
+Aldrich the Aspiring Musician: {$aldrich_question_graduation}
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_graduation}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: aldrich_fourthjuly
+position: -14,384
+---
+<<if GetNPCDialogueNumber("aldrich") is 1>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 2>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 3>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
+<<declare $aldrich_question_fourthjuly to "[INSERT QUESTION HERE]">>
+Aldrich the Aspiring Musician: {$aldrich_question_fourthjuly}
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_fourthjuly}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: aldrich_halloween
+position: 198,377
+---
+<<if GetNPCDialogueNumber("aldrich") is 1>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 2>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 3>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
+<<declare $aldrich_question_halloween to "[INSERT QUESTION HERE]">>
+Aldrich the Aspiring Musician: {$aldrich_question_halloween}
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_halloween}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: aldrich_thanksgiving
+position: 386,234
+---
+<<if GetNPCDialogueNumber("aldrich") is 1>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 2>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 3>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
+<<declare $aldrich_question_thanksgiving to "[INSERT QUESTION HERE]">>
+Aldrich the Aspiring Musician: {$aldrich_question_thanksgiving}
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_thanksgiving}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 4>>
+<<jump random>>
+<<endif>>
+===
+title: aldrich_christmas
+position: 496,88
+---
+<<if GetNPCDialogueNumber("aldrich") is 1>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 1!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 2>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 2!
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 3>>
+Aldrich the Aspiring Musician: Yes! Here's dialogue 3!
+<<declare $aldrich_question_christmas to "[INSERT QUESTION HERE]">>
+Aldrich the Aspiring Musician: {$aldrich_question_christmas}
+<<setNextDialogueFor "Dialogue System" "aldrich">>
+<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_christmas}>>
+<<stop>>
+<<endif>>
+
+<<if GetNPCDialogueNumber("aldrich") is 4>>
+<<jump random>>
+<<endif>>
+===
+

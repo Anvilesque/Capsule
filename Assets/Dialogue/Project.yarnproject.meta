@@ -15,6 +15,11 @@ ScriptedImporter:
   - {fileID: 6391573757903218779, guid: d3f7c7325675e5c419e0b181803a631d, type: 3}
   - {fileID: 6391573757903218779, guid: c46fa45b3bc732b498f2a9ee8607d211, type: 3}
   - {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - {fileID: 6391573757903218779, guid: c8059c9e31bcffd44b580c3c421e3fa8, type: 3}
+  - {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - {fileID: 6391573757903218779, guid: b2060ef299071cf4fa407425fa444c3a, type: 3}
+  - {fileID: 6391573757903218779, guid: f0470c0d3ea31ae4197a1289de6e88f0, type: 3}
   compileErrors: []
   serializedDeclarations:
   - name: $firstAsk
@@ -33,6 +38,230 @@ ScriptedImporter:
     description: 
     isImplicit: 0
     sourceYarnAsset: {fileID: 6391573757903218779, guid: 0046763247f1dc8409b7483d0e821474, type: 3}
+  - name: $ben_question_newyears
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - name: $ben_question_valentines
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - name: $ben_question_graduation
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - name: $ben_question_fourthjuly
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - name: $ben_question_halloween
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - name: $ben_question_thanksgiving
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - name: $ben_question_christmas
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 2b0b0fe05b6e912498570a54e98e915d, type: 3}
+  - name: $aldrich_question_newyears
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: c8059c9e31bcffd44b580c3c421e3fa8, type: 3}
+  - name: $aldrich_question_graduation
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: c8059c9e31bcffd44b580c3c421e3fa8, type: 3}
+  - name: $aldrich_question_fourthjuly
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: c8059c9e31bcffd44b580c3c421e3fa8, type: 3}
+  - name: $aldrich_question_halloween
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: c8059c9e31bcffd44b580c3c421e3fa8, type: 3}
+  - name: $aldrich_question_thanksgiving
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: c8059c9e31bcffd44b580c3c421e3fa8, type: 3}
+  - name: $aldrich_question_christmas
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: c8059c9e31bcffd44b580c3c421e3fa8, type: 3}
+  - name: $joanne_question_newyears
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - name: $joanne_question_valentines
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - name: $joanne_question_graduation
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - name: $joanne_question_fourthjuly
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - name: $joanne_question_halloween
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - name: $joanne_question_thanksgiving
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - name: $joanne_question_christmas
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 141ff00c643c64e4b9058e37a9476c7f, type: 3}
+  - name: $winter_question_newyears
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - name: $winter_question_valentines
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - name: $winter_question_graduation
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - name: $winter_question_fourthjuly
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - name: $winter_question_halloween
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - name: $winter_question_thanksgiving
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - name: $winter_question_christmas
+    typeName: String
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: '[INSERT QUESTION HERE]'
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 11a87312a30974248afdaa2782383789, type: 3}
+  - name: $random_value
+    typeName: Number
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: b2060ef299071cf4fa407425fa444c3a, type: 3}
   defaultLanguage: en-US
   languagesToSourceAssets: []
   useAddressableAssets: 0

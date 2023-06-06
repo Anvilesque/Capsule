@@ -53,8 +53,18 @@ public class PlayerMovement : MonoBehaviour
         UpdateMovement();
     }
 
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetFloat("PlayerX", transform.position.x);
+        PlayerPrefs.SetFloat("PlayerY", transform.position.y);
+        PlayerPrefs.SetFloat("PlayerZ", transform.position.z);
+        PlayerPrefs.SetInt("DirX", currentlyFacing.x);
+        PlayerPrefs.SetInt("DirY", currentlyFacing.y);
+    }
+
     private void UpdateMovement()
     {
+        if (CapsuleResponseViewer.isWriting) return;
         List<string> buttonNames = new List<string>() { "Left", "Right", "Up", "Down" };
         foreach (string button in buttonNames)
         {

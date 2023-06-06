@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Manager : MonoBehaviour
+public class CleaningManager : MonoBehaviour
 {
     [SerializeField]
     public List<GameObject> antiques;
@@ -11,6 +11,7 @@ public class Manager : MonoBehaviour
     int currAntiqueIndex;
     
     public TMP_Text statusMessage;
+    public TMP_Text completeMessage;
     int numToClean;
     int numCleaned;
     bool jobDone;
@@ -18,13 +19,7 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        jobDone = false;
-        numToClean = Random.Range(3, 6);
-        statusMessage.text = "Antiques left: " + numToClean;
-        numCleaned = 0;
-        currAntiqueIndex = Random.Range(0, antiques.Count);
-        currAntique = antiques[currAntiqueIndex];
-        currAntique.SetActive(true);
+        ResetMinigame();
     }
 
     // Update is called once per frame
@@ -49,6 +44,22 @@ public class Manager : MonoBehaviour
         {
             // Debug.Log("antique " + currAntiqueIndex + " is not active");
         }
+        if (jobDone)
+        {
+            if (!completeMessage.gameObject.activeSelf) completeMessage.gameObject.SetActive(true);
+        }
+    }
+
+    public void ResetMinigame()
+    {
+        completeMessage.gameObject.SetActive(false);
+        jobDone = false;
+        numToClean = Random.Range(3, 6);
+        statusMessage.text = "Antiques left: " + numToClean;
+        numCleaned = 0;
+        currAntiqueIndex = Random.Range(0, antiques.Count);
+        currAntique = antiques[currAntiqueIndex];
+        currAntique.SetActive(true);
     }
 }
 

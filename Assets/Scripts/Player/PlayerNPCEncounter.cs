@@ -103,11 +103,13 @@ public class PlayerNPCEncounter : MonoBehaviour
 
     void AttemptInteractNPC()
     {
+        if (FindObjectOfType<TaskManager>().isTasking) return;
         if (Input.GetButtonDown("Interact"))
         {
             canInteractNPC = false;
             mvmtControl.DisableMovement();
             mvmtControl.FaceDirection(nearestNPCDirection);
+            nearestNPC.GetComponent<NPCMovement>().FaceDirection(-nearestNPCDirection);
             dialogueRunner.StartDialogue(nearestNPC.introTitle);
             FindObjectOfType<HUDButtons>().ToggleHUD();
         }
