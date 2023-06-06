@@ -27,7 +27,7 @@ public class toolSlot : MonoBehaviour
     public void DeselectItem()
     {
         Debug.Log("deselect the other slots");
-        item.SetActive(true);
+        item.SetActive(false);
         item_selected = false;
     }
 }
