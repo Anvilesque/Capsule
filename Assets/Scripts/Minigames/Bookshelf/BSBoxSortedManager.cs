@@ -5,16 +5,20 @@ using TMPro;
 
 public class BSBoxSortedManager : MonoBehaviour
 {
+    private SaveManager saveManager;
+    private SaveData saveData;
     public TMP_Text countText;
     private Camera bookshelfCam;
     private BSGridManager bookshelfGrid;
     private Vector3 mousePos;
-    private Stack<BSItemInfo> itemStack;
-    private BSItemInfo itemNext;
+    public Stack<BSItemInfo> itemStack;
+    public BSItemInfo itemNext;
     
     // Start is called before the first frame update
     void Start()
     {
+        saveManager = FindObjectOfType<SaveManager>();
+        saveData = saveManager.myData;
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfCam = bookshelfGrid.bookshelfCam;
         mousePos = bookshelfGrid.mousePos;

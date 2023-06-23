@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class MovePlayer : MonoBehaviour
 {
+    private PackageMinigameManager minigameManager;
+    private TaskManager taskManager;
     private Vector2 playerVelocity;
     private float playerSpeed = 10.0f;
     public int boxesCaught = 0;
@@ -14,17 +16,38 @@ public class MovePlayer : MonoBehaviour
     public Sprite rightSprite;
     public Sprite frontSprite;
     public Sprite catchSprite;
-    private float caughtTime = 0f;
+    private float catchSpriteTimer = 0f;
     public float distanceAboutToCatch;
     // Start is called before the first frame update
     void Start()
     {
+        minigameManager = FindObjectOfType<PackageMinigameManager>();
+        taskManager = FindObjectOfType<TaskManager>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>(); 
     }
 
     // Update is called once per frame
     void Update()
+    {
+        UpdatePlayerMovement();
+        if (catchSpriteTimer > 0)
+            sprite.sprite = catchSprite;
+        rb.velocity = playerVelocity;
+        catchSpriteTimer -= Time.deltaTime;
+
+        List<Package> packages = new List<Package>(FindObjectsOfType<Package>());
+        foreach (Package package in packages)
+        {
+            if (Vector2.Distance(transform.position, package.transform.position) <= distanceAboutToCatch
+                && package.transform.position.y >= transform.position.y)
+            {
+                sprite.sprite = catchSprite;
+            }
+        }
+    }
+
+    private void UpdatePlayerMovement()
     {
         if (Input.GetButton("Left"))
         {
@@ -41,31 +64,21 @@ public class MovePlayer : MonoBehaviour
             playerVelocity.x = 0;
             sprite.sprite = frontSprite;
         }
-        if (caughtTime > 0)
-            sprite.sprite = catchSprite;
-        rb.velocity = playerVelocity;
-        caughtTime -= Time.deltaTime;
-
-        List<Package> packages = new List<Package>(FindObjectsOfType<Package>());
-        foreach (Package package in packages)
-        {
-            if (Vector2.Distance(transform.position, package.transform.position) <= distanceAboutToCatch
-                && package.transform.position.y >= transform.position.y)
-                sprite.sprite = catchSprite;
-        }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Package")
         {
-            caughtTime = 0.3f;
+            catchSpriteTimer = 0.3f;
             Destroy(collision.gameObject);
-            int balance = PlayerPrefs.GetInt("money", 0);
-            PlayerPrefs.SetInt("money", balance + 5);
-            StartCoroutine("Indicator");
+            taskManager.balance += 5;
+            minigameManager.UpdateBalanceText();
+            StartCoroutine(DisplayIndicator());
         }
     }
-    IEnumerator Indicator()
+
+    IEnumerator DisplayIndicator()
     {
         float timer = 0f;
         float duration = 1f;

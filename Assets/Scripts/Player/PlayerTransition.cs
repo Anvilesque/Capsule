@@ -7,19 +7,22 @@ using TMPro;
 public class PlayerTransition : MonoBehaviour
 {
     private TileManager tileManager;
-    private Tilemap floorMap, wallMap, transitionMap, interactableMap;
+    private Tilemap transitionMap;
+    private Tilemap transitionMapFloor;
     private PlayerMovement playerMovement;
     private TimeController timeController;
     private List<TransitionPoint> transitionPoints;
     public bool canTeleport;
     public bool isTeleporting {get; private set;}
-    private GameObject errorDisplay;
+    public bool isInRoom;
+    public GameObject shopClosedDisplay;
 
     // Start is called before the first frame update
     void Start()
     {
         tileManager = FindObjectOfType<TileManager>();
         transitionMap = tileManager.transitionMap;
+        transitionMapFloor = tileManager.transitionMapFloor;
         playerMovement = GetComponent<PlayerMovement>();
         timeController = FindObjectOfType<TimeController>();
         transitionPoints = new List<TransitionPoint>(FindObjectsOfType<TransitionPoint>());
@@ -29,14 +32,14 @@ public class PlayerTransition : MonoBehaviour
         }
         canTeleport = true;
         isTeleporting = false;
-
-        errorDisplay = new List<Canvas>(FindObjectsOfType<Canvas>()).Find(canvas => canvas.gameObject.name.Contains("Error")).gameObject;
-        errorDisplay.SetActive(false);
+        isInRoom = FindObjectOfType<SaveManager>().myData.playerIsInRoom;
+        shopClosedDisplay.SetActive(false);
     }
 
     public void HandleTeleportFromTransitionTilemap()
     {
-        bool onTeleportTile = tileManager.ScanForTile(transitionMap, playerMovement.currentPos);
+        bool onTeleportTile = tileManager.ScanForTile(transitionMap, playerMovement.currentPos)
+                           || tileManager.ScanForTile(transitionMapFloor, playerMovement.currentPos);
         if (canTeleport)
         {
             if (onTeleportTile) DoTeleport();
@@ -70,6 +73,7 @@ public class PlayerTransition : MonoBehaviour
                 return false;
             }
         }
+
         if (nameTransition.Contains("RoomReturn"))
         {
             if (timeController.isShopClosed) 
@@ -78,21 +82,25 @@ public class PlayerTransition : MonoBehaviour
                 return false;
             }
             timeController.mins += 30;
+            isInRoom = false;
             return true;
         }
+
         if (nameTransition.Contains("RoomGo"))
         {
             timeController.mins += 30;
             if (timeController.hours >= 21) timeController.isShopClosed = true;
+            isInRoom = true;
             return true;
         }
+
         return true;
     }
 
     private void DisplayShopClosedError()
     {
-        errorDisplay.SetActive(true);
-        StartCoroutine(FadeUpErrorText(errorDisplay));
+        shopClosedDisplay.SetActive(true);
+        StartCoroutine(FadeUpErrorText(shopClosedDisplay));
         playerMovement.EnableMovement();
     }
 
@@ -130,7 +138,7 @@ public class PlayerTransition : MonoBehaviour
         FadeController fadeController = FindObjectOfType<FadeController>();
         fadeController.FadeIn();
         while (fadeController.isFading) yield return null;
-        playerMovement.UpdateCurrentPosition(destination);
+        playerMovement.currentPos = destination;
         transform.position = transitionMap.CellToWorld(destination);
         yield return new WaitForSeconds(2f);
         canTeleport = false;

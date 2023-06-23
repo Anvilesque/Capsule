@@ -5,21 +5,26 @@ using TMPro;
 
 public class BedManager : MonoBehaviour
 {
-    private Canvas bedCanvas;
+    private SaveManager saveManager;
     private TaskManager taskManager;
     private TimeController timeController;
     private PlayerMovement movementController;
     private PlayerTransition playerTransition;
+    private BSBoxRandomManager boxRandomManager;
+    private BSBoxSortedManager boxSortedManager;
+    public Canvas bedCanvas;
 
     // Start is called before the first frame update
     void Start()
     {
-        bedCanvas = new List<Canvas>(FindObjectsOfType<Canvas>()).Find(canvas => canvas.name.Contains("Bed"));
-        bedCanvas.gameObject.SetActive(false);
+        saveManager = FindObjectOfType<SaveManager>();
         taskManager = FindObjectOfType<TaskManager>();
         timeController = FindObjectOfType<TimeController>();
         movementController = FindObjectOfType<PlayerMovement>();
         playerTransition = FindObjectOfType<PlayerTransition>();
+        boxRandomManager = FindObjectOfType<BSBoxRandomManager>();
+        boxSortedManager = FindObjectOfType<BSBoxSortedManager>();
+        bedCanvas.gameObject.SetActive(false);
     }
 
     public void OpenSleepMenu()
@@ -32,8 +37,10 @@ public class BedManager : MonoBehaviour
     {
         bedCanvas.gameObject.SetActive(false);
         StartCoroutine("DoSleepTransition");
-        BSBoxRandomManager boxRandomManager = FindObjectOfType<BSBoxRandomManager>();
-        boxRandomManager.AddObjects(boxRandomManager.itemsDayAll[timeController.days - 1], boxRandomManager.itemsDayAllCount[timeController.days - 1]);
+        if (boxRandomManager.itemStorage.Count + boxSortedManager.itemStack.Count < 30)
+        {
+            boxRandomManager.AddObjects(boxRandomManager.itemsDayAll[timeController.days], boxRandomManager.itemsDayAllCount[timeController.days]);
+        }
         FindObjectOfType<YarnFunctions>().ResetNPCDialogueNumber();
     }
 
@@ -45,21 +52,21 @@ public class BedManager : MonoBehaviour
         movementController.FaceDirection(Vector3Int.down);
         timeController.days = (timeController.days + 1) % 7;
         if (timeController.days == 0) timeController.years++;
-        if (timeController.hours >= 8 && timeController.hours <= 20) timeController.hours = 6;
-        else if (timeController.hours >= 21) timeController.hours = 8;
-        else timeController.hours += 8;
+        timeController.hours = timeController.hours >= 24 ? timeController.hours % 24 + 8 :
+                               timeController.hours >= 22 ? 8 :
+                               6;
         timeController.mins = 0;
         timeController.seconds = 0;
-        timeController.SaveTime();
         timeController.isShopClosed = false;
         timeController.isPassingOut = false;
         timeController.canUpdateTime = true;
-        foreach (NPCMovement npc in FindObjectsOfType<NPCMovement>())
+        foreach (NPCMovement npc in FindObjectsOfType<NPCMovement>(true))
         {
-            npc.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-            npc.Teleport(true);
+            npc.gameObject.SetActive(true);
+            npc.PrepareForNextDay();
         }
         taskManager.SetIsTasking(false);
+        saveManager.SaveData();
         movementController.EnableMovement();
     }
 

@@ -6,12 +6,13 @@ using Yarn.Unity;
 
 public class TimeController : MonoBehaviour
 {
-    
+    private SaveManager saveManager;
+    private SaveData saveData;
     // public TextMeshProUGUI timeDisplay; // Display Time
     // public TextMeshProUGUI dayDisplay; // Display Day
     public string timeTextTime {get; private set;}
     public string timeTextDay {get; private set;}
-    private int displayInterval; // Changes how often display text updates
+    private int displayInterval = 10; // Changes how often display text updates
     
     public float tick; // Increasing the tick, increases second rate
     [HideInInspector] public float seconds;
@@ -19,12 +20,13 @@ public class TimeController : MonoBehaviour
     [HideInInspector] public int hours;
     [HideInInspector] public int days;
     [HideInInspector] public int years;
-    private int hourShopClose;
-    private int hourPassOut;
+    private int hourShopClose = 21;
+    private int hourPassOut = 29;
+    private TaskManager taskManager;
     private DialogueRunner dialogueRunner;
     private PlayerMovement movementController;
     private PlayerTransition playerTransition;
-    [SerializeField] private float closeShopWindowDuration;
+    private float closeShopWindowDuration = 3f;
     public bool isPassingOut;
     public bool isShopClosed;
     public bool canUpdateTime;
@@ -32,24 +34,25 @@ public class TimeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        saveManager = FindObjectOfType<SaveManager>();
+        saveData = saveManager.myData;
+        taskManager = FindObjectOfType<TaskManager>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
         movementController = FindObjectOfType<PlayerMovement>();
         playerTransition = FindObjectOfType<PlayerTransition>();
-        displayInterval = 30;
-        hourShopClose = 21;
-        hourPassOut = 5;
         canUpdateTime = true;
-        isShopClosed = false;
+        // canUpdateTime = saveData.canUpdateTime;
+        isShopClosed = saveData.isShopClosed;
         isPassingOut = false;
-        seconds = PlayerPrefs.GetFloat("timeSeconds", 0);
-        mins = PlayerPrefs.GetInt("timeMins", 0);
-        hours = PlayerPrefs.GetInt("timeHours", 8);
-        days = PlayerPrefs.GetInt("timeDays", 0);
-        years = PlayerPrefs.GetInt("timeYears", 0);
+        seconds = saveData.seconds;
+        mins = saveData.mins;
+        hours = saveData.hours;
+        days = saveData.days;
+        years = saveData.years;
     }
  
     // Update is called once per frame
-    void FixedUpdate() // we used fixed update, since update is frame dependant. 
+    void FixedUpdate() // we used fixed update, since update is frame-dependent.
     {
         if (canUpdateTime)
         {
@@ -68,22 +71,6 @@ public class TimeController : MonoBehaviour
             StartCoroutine(CloseShop());
         }
     }
- 
-    public void SaveTime()
-    {
-        PlayerPrefs.SetFloat("timeSeconds", seconds);
-        PlayerPrefs.SetInt("timeMins", mins);
-        PlayerPrefs.SetInt("timeHours", hours);
-        PlayerPrefs.SetInt("timeDays", days);
-        PlayerPrefs.SetInt("timeYears", years);
-    }
-    
-    private void OnApplicationQuit()
-    {
-        SaveTime();
-    }
-
-    
 
     public void CalcTime() // Used to calculate sec, min and hours
     {
@@ -101,17 +88,13 @@ public class TimeController : MonoBehaviour
             mins = mins % 60;
         }
  
-        if (hours >= 24) //24 hr = 1 day
-        {
-            // Days will be handled manually in BedManager
-            // days += hours / 24;
-            hours = hours % 24;
-        }
+        // Hours can go past 24, for late wake-up mechanic
+        // Days handled manually in BedManager
     }
  
     public void UpdateTimeText() // Shows time and day in ui
     {
-        timeTextTime = string.Format("{0:00}:{1:00}", hours, (int)(mins / displayInterval) * displayInterval); // The formatting ensures that there will always be 0's in empty spaces
+        timeTextTime = string.Format("{0:00}:{1:00}", hours % 24, (int)(mins / displayInterval) * displayInterval); // The formatting ensures that there will always be 0's in empty spaces
         switch (days)
         {
             case 0: { timeTextDay = "New Year's Day"; break; }
@@ -129,7 +112,10 @@ public class TimeController : MonoBehaviour
         canUpdateTime = false;
         isShopClosed = true;
         movementController.DisableMovement();
-        dialogueRunner.StartDialogue("close_shop");
+        taskManager.StopTask();
+        FindObjectOfType<HUDButtons>().DisableHUD();
+        if (playerTransition.isInRoom) dialogueRunner.StartDialogue("close_shop_from_room");
+        else dialogueRunner.StartDialogue("close_shop_from_shop");
         yield return new WaitForSeconds(closeShopWindowDuration);
         if (dialogueRunner.IsDialogueRunning)
         {
@@ -141,7 +127,8 @@ public class TimeController : MonoBehaviour
         mins = 0;
         seconds = 0;
         canUpdateTime = true;
-        movementController.EnableMovement();
+        saveManager.SaveData();
+        FindObjectOfType<HUDButtons>().EnableHUD();
     }
 
      public IEnumerator PassOut() // checks the current time and performs events at a certain time

@@ -3,13 +3,15 @@ tags:
 position: -19,-22
 ---
 Winter the Calm Teacher: Hey! Hope you've been well.
-<<if GetDay() is 0>> <<jump winter_newyears>> <<endif>>
-<<if GetDay() is 1>> <<jump winter_valentines>> <<endif>>
-<<if GetDay() is 2>> <<jump winter_graduation>> <<endif>>
-<<if GetDay() is 3>> <<jump winter_fourthjuly>> <<endif>>
-<<if GetDay() is 4>> <<jump winter_halloween>> <<endif>>
-<<if GetDay() is 5>> <<jump winter_thanksgiving>> <<endif>>
-<<if GetDay() is 6>> <<jump winter_christmas>> <<endif>>
+<<declare $currentDay to 0>>
+<<set $currentDay to GetDay()>>
+<<if $currentDay is 0>> <<jump winter_newyears>> <<endif>>
+<<if $currentDay is 1>> <<jump winter_valentines>> <<endif>>
+<<if $currentDay is 2>> <<jump winter_graduation>> <<endif>>
+<<if $currentDay is 3>> <<jump winter_fourthjuly>> <<endif>>
+<<if $currentDay is 4>> <<jump winter_halloween>> <<endif>>
+<<if $currentDay is 5>> <<jump winter_thanksgiving>> <<endif>>
+<<if $currentDay is 6>> <<jump winter_christmas>> <<endif>>
 ===
 title: winter_newyears
 position: -529,85

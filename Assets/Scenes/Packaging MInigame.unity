@@ -410,7 +410,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.40792987, g: 0.9335033, b: 0.9716981, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -738,7 +738,6 @@ GameObject:
   - component: {fileID: 643835884}
   - component: {fileID: 643835886}
   - component: {fileID: 643835885}
-  - component: {fileID: 643835887}
   m_Layer: 5
   m_Name: Balance
   m_TagString: Untagged
@@ -863,18 +862,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643835883}
   m_CullTransparentMesh: 1
---- !u!114 &643835887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643835883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb579ebfb4dd04bc184735795121dc47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1054671643
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +892,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.7425003, y: 0.52816236}
+  m_Offset: {x: -0.75, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -916,7 +903,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45785713, y: 2.056325}
+  m_Size: {x: 0.5, y: 2}
   m_EdgeRadius: 0
 --- !u!4 &1054671645
 Transform:
@@ -963,7 +950,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.7425003, y: 0.52816236}
+  m_Offset: {x: -0.75, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -974,7 +961,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45785713, y: 2.056325}
+  m_Size: {x: 0.5, y: 2}
   m_EdgeRadius: 0
 --- !u!4 &1379315135
 Transform:
@@ -1289,7 +1276,7 @@ GameObject:
   - component: {fileID: 1960033927}
   - component: {fileID: 1960033926}
   m_Layer: 0
-  m_Name: PackageCreator
+  m_Name: PackageMinigameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1309,6 +1296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnLocation: {x: 0, y: 0, z: 0}
   spawnVelocity: {x: 0, y: 0}
+  balanceText: {fileID: 643835885}
 --- !u!4 &1960033927
 Transform:
   m_ObjectHideFlags: 0

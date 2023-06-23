@@ -7,13 +7,13 @@ using TMPro;
 
 public class InputFieldManager : MonoBehaviour
 {
-    List<TMP_InputField> inputFields;
-    
-    public static bool isInputFocused {get; private set;}
+    public static bool isInputFocused;
+    public List<TMP_InputField> inputFields;
 
     // Start is called before the first frame update
     void Start()
     {
+        inputFields = new List<TMP_InputField>(FindObjectsOfType<TMP_InputField>(true));
         isInputFocused = false;
     }
 
@@ -25,7 +25,6 @@ public class InputFieldManager : MonoBehaviour
 
     void CheckInputFocus()
     {
-        inputFields = new List<TMP_InputField>(FindObjectsOfType<TMP_InputField>());
         foreach (TMP_InputField field in inputFields)
         {
             if (field.isFocused)

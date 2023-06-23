@@ -10,10 +10,10 @@ public class HUDButtons : MonoBehaviour
     private VisualElement menuRoot;
     private VisualElement settingsRoot;
     private VisualElement tasksRoot;
-    private GameObject menu;
-    private GameObject settings;
-    private GameObject tasks;
-    public UIDocument buttonDocument;
+    public GameObject menu;
+    public GameObject settings;
+    public GameObject tasks;
+    private UIDocument buttonDocument;
     public Button menuButton;
     public Button settingsButton;
     public Button tasksButton;
@@ -32,7 +32,7 @@ public class HUDButtons : MonoBehaviour
         timeTime.text = timeController.timeTextTime;
         timeDay.text = timeController.timeTextDay;
 
-        menu = GameObject.Find("HUD");
+        // menu = GameObject.Find("HUD");
         // if (menu != null)
         // {
         //     Debug.Log("Menu found");
@@ -44,7 +44,7 @@ public class HUDButtons : MonoBehaviour
         //     Debug.Log("Menu UI document found");
         // }
 
-        settings = GameObject.Find("SettingsHUD");
+        // settings = GameObject.Find("SettingsHUD");
         // if (settings != null)
         // {
         //     Debug.Log("Settings found");
@@ -58,17 +58,17 @@ public class HUDButtons : MonoBehaviour
         //     Debug.Log("Setting UI document found");
         // }
 
-        tasks = GameObject.Find("TaskMap");
-        if (tasks != null)
-        {
-            Debug.Log("tasks found");
-        }
+        // tasks = GameObject.Find("TaskMap");
+        // if (tasks != null)
+        // {
+        //     Debug.Log("tasks found");
+        // }
 
         tasksRoot = tasks.GetComponent<UIDocument>().rootVisualElement;
-        if (tasksRoot != null)
-        {
-            Debug.Log("tasks UI document found");
-        }
+        // if (tasksRoot != null)
+        // {
+        //     Debug.Log("tasks UI document found");
+        // }
 
         tasksRoot.style.display = DisplayStyle.None;
     }
@@ -113,14 +113,14 @@ public class HUDButtons : MonoBehaviour
         settingsButton.RegisterCallback<ClickEvent>(SettingsButtonClick);
 
         tasksButton = buttonDocument.rootVisualElement.Q("map-button") as Button;
-        if (tasksButton != null)
-        {
-            Debug.Log("Task button found");
-        }
-        else
-        {
-            Debug.LogError("Task button not found");
-        }
+        // if (tasksButton != null)
+        // {
+        //     Debug.Log("Task button found");
+        // }
+        // else
+        // {
+        //     Debug.LogError("Task button not found");
+        // }
 
         tasksButton.RegisterCallback<ClickEvent>(TasksButtonClick);
     }
@@ -128,7 +128,7 @@ public class HUDButtons : MonoBehaviour
     private void Update()
     {
         timeTime.text = timeController.timeTextTime;
-        timeDay.text = timeController.timeTextDay;  
+        timeDay.text = timeController.timeTextDay;
     }
 
     void MenuButtonClick(ClickEvent evt)

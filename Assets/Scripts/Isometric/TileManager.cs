@@ -6,33 +6,25 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
-    public static List<Vector3Int> cardinalDirections;
+    public static List<Vector3Int> cardinalDirections = new List<Vector3Int>()
+    {
+        Vector3Int.up,
+        Vector3Int.down,
+        Vector3Int.left,
+        Vector3Int.right
+    };
     [SerializeField] private List<TileData> tileDatas;
     public Dictionary<TileBase, TileData> dataFromTiles;
     public List<Vector3Int> tilesStandable;
-    public Tilemap floorMap {get; private set;}
-    public Tilemap wallMap {get; private set;}
-    public Tilemap transitionMap {get; private set;}
-    public Tilemap interactableMap {get; private set;}
+    public Tilemap floorMap, stairsMap, wallMap, transitionMap, transitionMapFloor, interactableMap;
 
     // Start is called before the first frame update
     void Start()
     {
-        cardinalDirections = new List<Vector3Int>()
-        {
-            Vector3Int.up,
-            Vector3Int.down,
-            Vector3Int.left,
-            Vector3Int.right,
-        };
+        Tilemap[] tilemaps = new Tilemap[] {floorMap, stairsMap, wallMap, transitionMap, transitionMapFloor, interactableMap};
         foreach (Tilemap tilemap in FindObjectsOfType<Tilemap>())
         {
             tilemap.CompressBounds();
-            string tilemapName = tilemap.gameObject.name;
-            if (tilemapName.Contains("Floor")) floorMap = tilemap;
-            else if (tilemapName.Contains("Wall")) wallMap = tilemap;
-            else if (tilemapName.Contains("Transition")) transitionMap = tilemap;
-            else if (tilemapName.Contains("Interactable")) interactableMap = tilemap;
         }
         CreateTileDictionary();
         CreateStandableList();
@@ -53,7 +45,7 @@ public class TileManager : MonoBehaviour
     private void CreateStandableList()
     {
         tilesStandable = new List<Vector3Int>();
-        List<Tilemap> groundMaps = new List<Tilemap>() {floorMap, transitionMap};
+        List<Tilemap> groundMaps = new List<Tilemap>() {floorMap, stairsMap, transitionMap, transitionMapFloor};
         // Do for both floorMap and transitionMap
         foreach (Tilemap groundMap in groundMaps)
         {
@@ -65,6 +57,7 @@ public class TileManager : MonoBehaviour
                 if (wallMap.HasTile(legLevel) || wallMap.HasTile(headLevel)) continue;
                 if (interactableMap.HasTile(legLevel) || interactableMap.HasTile(headLevel)) continue;
                 if (floorMap.HasTile(headLevel)) continue;
+                if (ScanForTile(stairsMap, tilePos) && GetTilePosition(stairsMap, tilePos).z > tilePos.z) continue;
                 tilesStandable.Add(new Vector3Int(tilePos.x, tilePos.y, tilePos.z + 2));
             }
         }

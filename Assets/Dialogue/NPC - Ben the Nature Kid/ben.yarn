@@ -28,10 +28,10 @@ Ben the Nature Kid: Yes! Here's dialogue 2!
 
 <<if GetNPCDialogueNumber("ben") is 3>>
 Ben the Nature Kid: Yes! Here's dialogue 3!
-<<declare $ben_question_newyears to "[INSERT QUESTION HERE]">>
-Ben the Nature Kid: {$ben_question_newyears}
+
+Ben the Nature Kid: Question?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" {$ben_question_newyears}>>
+<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
 <<stop>>
 <<endif>>
 
@@ -56,10 +56,9 @@ Ben the Nature Kid: Yes! Here's dialogue 2!
 
 <<if GetNPCDialogueNumber("ben") is 3>>
 Ben the Nature Kid: Yes! Here's dialogue 3!
-<<declare $ben_question_valentines to "[INSERT QUESTION HERE]">>
-Ben the Nature Kid: {$ben_question_valentines}
+Ben the Nature Kid: Question?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" {$ben_question_valentines}>>
+<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
 <<stop>>
 <<endif>>
 
@@ -84,10 +83,9 @@ Ben the Nature Kid: Yes! Here's dialogue 2!
 
 <<if GetNPCDialogueNumber("ben") is 3>>
 Ben the Nature Kid: Yes! Here's dialogue 3!
-<<declare $ben_question_graduation to "[INSERT QUESTION HERE]">>
-Ben the Nature Kid: {$ben_question_graduation}
+Ben the Nature Kid: Question?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" {$ben_question_graduation}>>
+<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
 <<stop>>
 <<endif>>
 
@@ -112,10 +110,9 @@ Ben the Nature Kid: Yes! Here's dialogue 2!
 
 <<if GetNPCDialogueNumber("ben") is 3>>
 Ben the Nature Kid: Yes! Here's dialogue 3!
-<<declare $ben_question_fourthjuly to "[INSERT QUESTION HERE]">>
-Ben the Nature Kid: {$ben_question_fourthjuly}
+Ben the Nature Kid: Question?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" {$ben_question_fourthjuly}>>
+<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
 <<stop>>
 <<endif>>
 
@@ -140,10 +137,9 @@ Ben the Nature Kid: Yes! Here's dialogue 2!
 
 <<if GetNPCDialogueNumber("ben") is 3>>
 Ben the Nature Kid: Yes! Here's dialogue 3!
-<<declare $ben_question_halloween to "[INSERT QUESTION HERE]">>
-Ben the Nature Kid: {$ben_question_halloween}
+Ben the Nature Kid: Question?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" {$ben_question_halloween}>>
+<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
 <<stop>>
 <<endif>>
 
@@ -168,10 +164,9 @@ Ben the Nature Kid: Yes! Here's dialogue 2!
 
 <<if GetNPCDialogueNumber("ben") is 3>>
 Ben the Nature Kid: Yes! Here's dialogue 3!
-<<declare $ben_question_thanksgiving to "[INSERT QUESTION HERE]">>
-Ben the Nature Kid: {$ben_question_thanksgiving}
+Ben the Nature Kid: Question?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" {$ben_question_thanksgiving}>>
+<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
 <<stop>>
 <<endif>>
 
@@ -196,10 +191,9 @@ Ben the Nature Kid: Yes! Here's dialogue 2!
 
 <<if GetNPCDialogueNumber("ben") is 3>>
 Ben the Nature Kid: Yes! Here's dialogue 3!
-<<declare $ben_question_christmas to "[INSERT QUESTION HERE]">>
-Ben the Nature Kid: {$ben_question_christmas}
+Ben the Nature Kid: Question?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" {$ben_question_christmas}>>
+<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
 <<stop>>
 <<endif>>
 

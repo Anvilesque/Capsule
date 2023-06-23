@@ -6,52 +6,30 @@ using TMPro;
 
 public class SaveDiary : MonoBehaviour
 {
-    //Make sure to attach these Buttons in the Inspector
+    private SaveManager saveManager;
+    private SaveData saveData;
     public Button saveDiaryButton;
     public GameObject inputField;
     private TaskManager taskManager;
     private TimeController time;
-    public List<Dictionary<string, string>> previousDiaryEntries = new List<Dictionary<string, string>>();
+    public List<ResponseEntry> previousEntries;
     public GameObject prevDiaryText;
     public GameObject saveDiaryText;
     public int numDiaryEntries;
 
-    #region Entry Tags
-    public const string tagIRLDate = "irldate";
-    public const string tagIRLTime = "irltime";
-    public const string tagGameDay = "gametime";
-    public const string tagGameYear = "gameyear";
-    public const string tagGameTime = "gamedate";
-    public const string tagGameText = "gametext";
-    #endregion
-
     void Start()
     {
-        numDiaryEntries = PlayerPrefs.GetInt("numDiaryEntries", 0);
-        for (int i = 0; i < numDiaryEntries; i++)
-        {
-            previousDiaryEntries.Add(new Dictionary<string, string>(){
-                { tagIRLDate, PlayerPrefs.GetString($"{tagIRLDate}{i}") },
-                { tagIRLTime, PlayerPrefs.GetString($"{tagIRLTime}{i}") },
-                { tagGameDay, PlayerPrefs.GetString($"{tagGameDay}{i}") },
-                { tagGameYear, PlayerPrefs.GetString($"{tagGameYear}{i}") },
-                { tagGameTime, PlayerPrefs.GetString($"{tagGameTime}{i}") },
-                { tagGameText, PlayerPrefs.GetString($"{tagGameText}{i}") },
-            });
-        }
+        saveManager = FindObjectOfType<SaveManager>();
+        saveData = saveManager.myData;
+        numDiaryEntries = saveData.numDiaryEntries;
+        previousEntries = saveData.diaryEntries;
         taskManager = FindObjectOfType<TaskManager>();
         time = FindObjectOfType<TimeController>();
         // Calls Save when button is clicked
         saveDiaryButton.onClick.AddListener(Save);
         saveDiaryText.SetActive(false);
         inputField.SetActive(true);
-        string newText = "";
-        foreach (var entry in previousDiaryEntries)
-        {
-            // Format: "Day name - 00:00: Diary text goes here."
-            newText += $@"Year {entry[tagGameYear]} {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n\n";
-        }
-        prevDiaryText.GetComponent<TMP_Text>().SetText(newText);
+        UpdateDiaryText();
     }
 
     public void Save()
@@ -63,58 +41,43 @@ public class SaveDiary : MonoBehaviour
         inputField.GetComponent<TMP_InputField>().text = "";
 
         // Set up separately because these strings are multi-part
-        string irlDate = $"{System.DateTime.Now.Month}/{System.DateTime.Now.Day}/{System.DateTime.Now.Year}";
         string gameTime = $"{time.hours.ToString("00")}:{time.mins.ToString("00")}";
 
         // Tag all data separately, concatenate them into one string
-        Dictionary<string, string> newEntry = new Dictionary<string, string>(){
-            {tagIRLDate, irlDate},
-            {tagIRLTime, System.DateTime.Now.TimeOfDay.ToString()},
-            {tagGameDay, time.timeTextDay},
-            {tagGameYear, time.years.ToString()},
-            {tagGameTime, gameTime},
-            {tagGameText, text.ToString()}
-        };
-        previousDiaryEntries.Add(newEntry);
-        PlayerPrefs.SetString($"{tagIRLDate}{numDiaryEntries}", newEntry[tagIRLDate]);
-        PlayerPrefs.SetString($"{tagIRLTime}{numDiaryEntries}", newEntry[tagIRLTime]);
-        PlayerPrefs.SetString($"{tagGameDay}{numDiaryEntries}", newEntry[tagGameDay]);
-        PlayerPrefs.SetString($"{tagGameYear}{numDiaryEntries}", newEntry[tagGameYear]);
-        PlayerPrefs.SetString($"{tagGameTime}{numDiaryEntries}", newEntry[tagGameTime]);
-        PlayerPrefs.SetString($"{tagGameText}{numDiaryEntries}", newEntry[tagGameText]);
+        ResponseEntry newEntry = new ResponseEntry();
+        newEntry.irlYear = System.DateTime.Now.Year;
+        newEntry.irlMonth = System.DateTime.Now.Month;
+        newEntry.irlDay = System.DateTime.Now.Day;
+        newEntry.irlTime = System.DateTime.Now.TimeOfDay.ToString();
+        newEntry.gameYear = time.years;
+        newEntry.gameDay = time.timeTextDay;
+        newEntry.gameTime = gameTime;
+        newEntry.gameText = text.ToString();
+        previousEntries.Add(newEntry);
         numDiaryEntries++;
-        PlayerPrefs.SetInt("numDiaryEntries", numDiaryEntries);
+        UpdateDiaryText();
+        StartCoroutine(SaveAndCloseDiary());
+    }
 
-        // Write new entries into left side
+    void UpdateDiaryText()
+    {
         string newText = "";
-        foreach (var entry in previousDiaryEntries)
+        foreach (ResponseEntry entry in previousEntries)
         {
-            // Format: "Year X Day - 00:00: Diary text goes here."
-            newText += $@"Year {entry[tagGameYear]} {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n\n";
+            // "Year X Day - 00:00: Diary text goes here."
+            newText += $"Year {entry.gameYear} {entry.gameDay} - {entry.gameTime}: {entry.gameText}" + "\n\n";
         }
         prevDiaryText.GetComponent<TMP_Text>().SetText(newText);
-        StartCoroutine(StopDiary());
     }
-    IEnumerator StopDiary()
+
+    IEnumerator SaveAndCloseDiary()
     {
+        saveManager.UpdateDataDiary();
+        saveManager.SaveData(false);
         saveDiaryText.SetActive(true);
         inputField.GetComponent<TMP_InputField>().enabled = false;
         yield return new WaitForSeconds(1);
         saveDiaryText.SetActive(false);
         taskManager.StopTask();
     }
-
-    /* private string TagString(string str, string tag)
-    {
-        // <tag>str</tag>
-        return $"<{tag}>{str}</{tag}>";
-    }
-
-    private string GetSubstringByTag(string str, string tag)
-    {
-        // Start at the end of the start-tag (i.e., the character right after the '>')
-        int startingPoint = str.IndexOf($"<{tag}>") + $"<{tag}>".Length;
-        // End at the start of the end-tag (i.e., the character right before the '</')
-        return str.Substring(startingPoint, str.IndexOf($"</{tag}>") - startingPoint);
-    } */
 }

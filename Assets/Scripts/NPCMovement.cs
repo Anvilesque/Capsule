@@ -6,24 +6,30 @@ using Yarn.Unity;
 
 public class NPCMovement : MonoBehaviour
 {
-    public float movementSpeed;
     private TileManager tileManager;
     private Tilemap floorMap;
     private TimeController timeController;
+    private Transform player;
+    private SpriteRenderer sprite;
+
+    public int numFixedUpdatesToMoveOne;
     private NonPC nonPC;
     public List<Sprite> sprites;
-    private Vector3Int currentlyFacing;
-    private Vector2Int currentTime;
-    private Vector3Int currentDestination;
     public List<Vector3Int> directionsToFace;
     public List<Vector2Int> timesHoursMins;
     public List<Vector3Int> destinations;
+
+    private Vector3Int currentlyFacing;
+    private Vector2Int currentTime;
+    private Vector3Int currentDestination;
     public Vector2Int timeToDisappear;
     private int destinationIndex;
     private Vector3Int nearestNodeNPC;
     private Vector3Int nearestNodeDestination;
+
     public bool isDisappeared;
     private bool isMoving;
+
     private List<Vector3Int> path;
     private Coroutine movementCoroutine;
 
@@ -31,26 +37,41 @@ public class NPCMovement : MonoBehaviour
     void Start()
     {
         isMoving = false;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         tileManager = FindObjectOfType<TileManager>();
         timeController = FindObjectOfType<TimeController>();
         floorMap = tileManager.floorMap;
         nonPC = GetComponent<NonPC>();
+        sprite = GetComponent<SpriteRenderer>();
+        
+        path = new List<Vector3Int>();
         CalculateDestinationIndex();
-        currentDestination = destinations[destinationIndex];
-        nonPC.position = currentDestination;
-        isDisappeared = false;
-        AttemptDisappear();
-        if (isDisappeared) Teleport(false);
-        else transform.position = floorMap.CellToWorld(nonPC.position);
-        FaceDirection(directionsToFace[destinationIndex]);
-        path = FindClosestPath(nonPC.position, currentDestination, tileManager.tilesStandable);
+        if (CheckNPCInShop())
+        {
+            isDisappeared = false;
+            currentDestination = destinations[destinationIndex];
+            FaceDirection(directionsToFace[destinationIndex]);
+            nonPC.position = currentDestination;
+            transform.position = floorMap.CellToWorld(nonPC.position);
+        }
+        else if (!CheckNPCShopEntered())
+        {
+            PrepareForNextDay();
+        }
+        else AttemptDisappear(true);
     }
 
     void FixedUpdate()
     {
+        if (!CheckNPCShopEntered()) return;
+        if (isDisappeared && CheckNPCInShop()) StartCoroutine(MakeUndisappear());
         CalculateDestinationIndex();
         AttemptDisappear();
-        currentDestination = destinations[destinationIndex];
+        if (currentDestination != destinations[destinationIndex])
+        {
+            path.Clear(); // resets path if updating destination
+            currentDestination = destinations[destinationIndex];
+        }
         if (isMoving) return;
         if (FindObjectOfType<DialogueRunner>().IsDialogueRunning) return;
         if (path.Count == 0)
@@ -73,10 +94,15 @@ public class NPCMovement : MonoBehaviour
 
     void CalculateDestinationIndex()
     {
+        if (!CheckNPCShopEntered())
+        {
+            destinationIndex = -1;
+            return;
+        }
         destinationIndex = 0;
         foreach (Vector2Int time in timesHoursMins)
         {
-            if (timeController.hours >= time.x && timeController.mins >= time.y)
+            if (timeController.hours > time.x || timeController.hours == time.x && timeController.mins >= time.y)
             {
                 currentTime = time;
             }
@@ -84,39 +110,96 @@ public class NPCMovement : MonoBehaviour
         destinationIndex = timesHoursMins.FindIndex(time => time == currentTime);
     }
 
-    void AttemptDisappear()
+    bool CheckNPCInShop()
     {
-        if (timeController.hours >= timeToDisappear.x && timeController.mins >= timeToDisappear.y)
+
+        if (CheckNPCShopEntered() && !CheckNPCShopLeft()) return true;
+        return false;
+    }
+
+    bool CheckNPCShopEntered()
+    {
+        return timeController.hours > timesHoursMins[0].x ||
+              (timeController.hours == timesHoursMins[0].x && timeController.mins >= timesHoursMins[0].y);
+    }
+
+    bool CheckNPCShopLeft()
+    {
+        return timeController.hours >= timeToDisappear.x && timeController.mins >= timeToDisappear.y;
+    }
+
+    void AttemptDisappear(bool disappearImmediately = false)
+    {
+        if (CheckNPCShopLeft())
         {
-            StartCoroutine(MakeDisappear());
+            StartCoroutine(MakeDisappear(disappearImmediately));
         }
     }
 
-    IEnumerator MakeDisappear()
+    IEnumerator MakeDisappear(bool disappearImmediately)
     {
         float timer = 0f;
         float duration = 3f;
-        while (GetComponent<SpriteRenderer>().color.a > 0)
+        isDisappeared = true;
+        // Enable/disable nonPC component to remove "collider" and interactability
+        nonPC.enabled = false;
+
+        if (disappearImmediately)
         {
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, Mathf.Clamp01(1 - timer / duration));
+            sprite.color = new Color(1f, 1f, 1f, 0f);
+            TeleportAway();
+            yield break;
+        }
+
+        while (sprite.color.a > 0)
+        {
+            sprite.color = new Color(1f, 1f, 1f, Mathf.Clamp01(1 - timer / duration));
             timer += Time.deltaTime;
             yield return null;
         }
-        Teleport(false);
+        TeleportAway();
     }
 
-    public void Teleport(bool tpToStartingPoint)
+    private IEnumerator MakeUndisappear()
     {
-        if (tpToStartingPoint)
+        isDisappeared = false;
+        float timer = 0f;
+        float duration = 3f;
+        while (sprite.color.a < 1)
         {
-            isDisappeared = false;
-            transform.position = floorMap.CellToWorld(destinations[0]);
+            sprite.color = new Color(1f, 1f, 1f, Mathf.Clamp01(timer / duration));
+            timer += Time.deltaTime;
+            yield return null;
         }
-        else
-        {
-            isDisappeared = true;
-            transform.position = new Vector3(100f, 100f, 2);
-        }
+        // Enable at the end to make sure NPC fully transitions into Scene first
+        nonPC.enabled = true;
+    }
+
+    public void PrepareForNextDay()
+    {
+        movementCoroutine = null;
+        isDisappeared = true;
+        nonPC.enabled = false;
+        sprite.color = new Color(1f, 1f, 1f, 0f);
+        TeleportToStart();
+    }
+
+    public void TeleportToStart()
+    {
+        path.Clear();
+        Vector3Int positionShopEntrance = new Vector3Int(-12, -9, 2);
+        transform.position = floorMap.CellToWorld(positionShopEntrance);
+        nonPC.position = positionShopEntrance;
+    }
+
+    public void TeleportAway()
+    {
+        path.Clear();
+        isMoving = false;
+        StopAllCoroutines();
+        transform.position = new Vector3(100f, 100f, 2);
+        nonPC.position = new Vector3Int(100, 100, 2);
+        gameObject.SetActive(false);
     }
 
     List<Vector3Int> FindClosestPath(Vector3Int startposition, Vector3Int destination, List<Vector3Int> standableList)
@@ -125,6 +208,11 @@ public class NPCMovement : MonoBehaviour
             return new List<Vector3Int>();
         Queue<(Vector3Int, List<Vector3Int>)> nodesToSearch = new Queue<(Vector3Int, List<Vector3Int>)>();
         HashSet<Vector3Int> standableSet = new HashSet<Vector3Int>(standableList);
+        foreach (NonPC npc in FindObjectsOfType<NonPC>())
+        {
+            if (npc == nonPC) continue;
+            standableSet.Remove(npc.position);
+        }
         HashSet<Vector3Int> visited = new HashSet<Vector3Int>();
         nodesToSearch.Enqueue((startposition, new List<Vector3Int>()));
         visited.Add(startposition);
@@ -173,8 +261,7 @@ public class NPCMovement : MonoBehaviour
     }
     IEnumerator MoveOne(Vector3Int direction)
     {
-        float timeToMove = 1 / movementSpeed;
-        if (timeToMove < 0) yield break;
+        if (numFixedUpdatesToMoveOne < 0) yield break;
 
         Vector3Int prevPosition = nonPC.position;
         Vector3Int tempPosition = prevPosition + direction;
@@ -191,22 +278,36 @@ public class NPCMovement : MonoBehaviour
         }
         else yield break;
 
+        // Change facing direction here (so that if Player is blocking, then NPC still turns in direction-to-go)
+        if (currentlyFacing != direction)
+        {
+            currentlyFacing = direction;
+            FaceDirection(direction);
+        }
+
         // Check if player is in the way
-        if (floorMap.WorldToCell(FindObjectOfType<PlayerMovement>().transform.position) == tempPosition) yield break;
+        float playerBypassTimer = 0f;
+        float playerBypassThreshold = 3f;
+        while (floorMap.WorldToCell(player.position) == tempPosition && playerBypassTimer < playerBypassThreshold)
+        {
+            playerBypassTimer += Time.deltaTime;
+            yield return null;
+        }
 
         // All checks cleared --> handle movement
         isMoving = true;
         float elapsedTime = 0f;
         path.RemoveAt(0);
-        FaceDirection(direction);
-        currentlyFacing = direction;
-        while (elapsedTime < timeToMove)
+        
+        float movementCompletePercentage = 0f;
+        while (movementCompletePercentage < 1)
         {
             while (FindObjectOfType<DialogueRunner>().IsDialogueRunning) yield return null;
             // Lerp moves from one position to the other in some amount of time.
-            transform.position = Vector3.Lerp(floorMap.CellToWorld(prevPosition), floorMap.CellToWorld(tempPosition), (elapsedTime / timeToMove));
+            movementCompletePercentage += 1.0f / numFixedUpdatesToMoveOne;
+            transform.position = Vector3.Lerp(floorMap.CellToWorld(prevPosition), floorMap.CellToWorld(tempPosition), Mathf.Clamp01(movementCompletePercentage));
             elapsedTime += Time.deltaTime;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         nonPC.position = tempPosition;
         transform.position = floorMap.CellToWorld(tempPosition);
@@ -224,5 +325,6 @@ public class NPCMovement : MonoBehaviour
             direction == Vector3Int.right ? RIGHT : -1;
         if (directionIndex == -1) return;
         nonPC.GetComponent<SpriteRenderer>().sprite = sprites[directionIndex];
+        currentlyFacing = direction;
     }
 }

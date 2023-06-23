@@ -74,6 +74,7 @@ public class UIController : MonoBehaviour
         // timeDay.text = timeController.timeTextDay;
         if (Input.GetButtonDown("Open Menu"))
         {
+            if (InputFieldManager.isInputFocused) return;
             if (root.style.display == DisplayStyle.Flex) root.style.display = DisplayStyle.None;
             else root.style.display = DisplayStyle.Flex;
         }
@@ -99,9 +100,9 @@ public class UIController : MonoBehaviour
             {
                 entries.RemoveAt(0);
             }
-            foreach (Dictionary<string, string> entry in saveDiary.previousDiaryEntries)
+            foreach (ResponseEntry entry in saveDiary.previousEntries)
             {
-                Label label = new Label($@"Day {entry[tagGameDay]} - {entry[tagGameTime]}: {entry[tagGameText]}" + "\n");
+                Label label = new Label($"Day {entry.gameDay} - {entry.gameTime}: {entry.gameText}" + "\n");
                 label.AddToClassList("text-diary-general");
                 label.style.whiteSpace = WhiteSpace.Normal;
                 entries.Add(label);

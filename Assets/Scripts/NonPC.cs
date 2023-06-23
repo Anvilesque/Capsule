@@ -10,6 +10,7 @@ public class NonPC : MonoBehaviour
     public Vector3Int position;
     private TileManager tileManager;
     private Tilemap floorMap;
+    private NPCMovement npcMovement;
 
     // private float movementSpeed;
 
@@ -19,13 +20,13 @@ public class NonPC : MonoBehaviour
         tileManager = FindObjectOfType<TileManager>();
         floorMap = tileManager.floorMap;
         position = floorMap.WorldToCell(transform.position);
+        npcMovement = GetComponent<NPCMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (floorMap.localBounds.Contains(transform.position))
+        if (!npcMovement.isDisappeared)
         position = floorMap.WorldToCell(transform.position);
-        else position = new Vector3Int(100, 100, 2);
     }
 }

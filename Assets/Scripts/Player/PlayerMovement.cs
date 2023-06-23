@@ -7,42 +7,47 @@ using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Tilemap floorMap, wallMap, transitionMap, interactableMap;
+    private SaveManager saveManager;
+    private SaveData saveData;
     private TileManager tileManager;
+    private Tilemap floorMap;
+    private Tilemap stairsMap;
     private TaskManager taskManager;
     private PlayerTransition playerTransition;
     private SpriteRenderer playerSprite;
+    private PlayerNPCEncounter playerNPCEncounter;
     [SerializeField] private List<Sprite> sprites;
     private static int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
+    private static float STAIRS_OFFSET = -0.15f;
 
     public bool isMoving { get; private set; }
+    private bool isRunningCoroutine;
     public Vector3Int currentPos;
-    public Vector3Int currentlyFacing { get; private set; }
-    public float timeToMove;
-    public float movementSpeed;
-    public bool canMove;
+    public Vector3Int currentlyFacing;
+    public int numFixedUpdatesToMoveOne;
+    private bool canMove;
     public Vector3Int defaultHomePosition;
     public Vector3Int defaultBedPosition;
 
-    private List<string> lastDirection;
+    private List<string> lastDirection = new List<string>();
 
     // Start is called before the first frame update
     void Start()
     {
+        saveManager = FindObjectOfType<SaveManager>();
+        saveData = saveManager.myData;
         tileManager = FindObjectOfType<TileManager>();
         taskManager = FindObjectOfType<TaskManager>();
         playerTransition = GetComponent<PlayerTransition>();
         floorMap = tileManager.floorMap;
-        wallMap = tileManager.wallMap;
-        transitionMap = tileManager.transitionMap;
-        interactableMap = tileManager.interactableMap;
+        stairsMap = tileManager.stairsMap;
         playerSprite = GetComponent<SpriteRenderer>();
+        playerNPCEncounter = GetComponent<PlayerNPCEncounter>();
 
         // movementSpeed = 5; // Set this in Editor
         // angle = Mathf.Atan(1/2f);
-        transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ", 2));
-        FaceDirection(new Vector3Int(PlayerPrefs.GetInt("DirX", 0), PlayerPrefs.GetInt("DirY", 1), 0));
-        lastDirection = new List<string>();
+        transform.position = saveData.playerTransformPosition;
+        FaceDirection(saveData.playerCurrentlyFacing);
         currentPos = floorMap.WorldToCell(transform.position);
         canMove = true;
     }
@@ -51,15 +56,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         UpdateMovement();
-    }
-
-    private void OnApplicationQuit()
-    {
-        PlayerPrefs.SetFloat("PlayerX", transform.position.x);
-        PlayerPrefs.SetFloat("PlayerY", transform.position.y);
-        PlayerPrefs.SetFloat("PlayerZ", transform.position.z);
-        PlayerPrefs.SetInt("DirX", currentlyFacing.x);
-        PlayerPrefs.SetInt("DirY", currentlyFacing.y);
     }
 
     private void UpdateMovement()
@@ -82,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (lastDirection.Count == 0) return;
         if (isMoving) return;
+        if (isRunningCoroutine) return;
         if (Input.GetButton("Left") && lastDirection[lastDirection.Count - 1] == "Left")
             StartCoroutine(MovePlayer(Vector3Int.left));
         else if (Input.GetButton("Right") && lastDirection[lastDirection.Count - 1] == "Right")
@@ -92,20 +89,27 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(MovePlayer(Vector3Int.down));
     }
 
+    private string DirectionToStr(Vector3Int direction)
+    {
+        return direction == Vector3Int.left ? "Left" :
+               direction == Vector3Int.right ? "Right" :
+               direction == Vector3Int.up ? "Up" :
+               direction == Vector3Int.down ? "Down" : null;
+    }
+
     private IEnumerator MovePlayer(Vector3Int direction)
     {
-        if (!canMove) yield break;
-        timeToMove = 1 / movementSpeed;
-        if (timeToMove < 0) yield break;
+        isRunningCoroutine = true;
+        if (!canMove) { isRunningCoroutine = false; yield break; }
+        if (numFixedUpdatesToMoveOne < 0) { isRunningCoroutine = false; yield break; }
 
         FaceDirection(direction);
-        currentlyFacing = direction;
 
         Vector3Int prevPos = currentPos;
         Vector3Int tempPos = prevPos + direction;
 
         // Check if next position is standable
-        if (tileManager.tilesStandable.Contains(tempPos)) { }
+        if (tileManager.tilesStandable.Contains(tempPos)) {}
         else if (tileManager.tilesStandable.Contains(new Vector3Int(tempPos.x, tempPos.y, tempPos.z - 2)))
         {
             tempPos.z -= 2;
@@ -114,31 +118,48 @@ public class PlayerMovement : MonoBehaviour
         {
             tempPos.z += 2;
         }
-        else yield break;
+        else { isRunningCoroutine = false; yield break; }
 
         // Check if NPC is in the way
-        if (GetComponent<PlayerNPCEncounter>().GetNPCAtPosition(tempPos) != null) yield break;
+        float npcBypassTimer = 0f;
+        float npcBypassThreshold = 1f;
+        while (playerNPCEncounter.GetNPCAtPosition(tempPos) != null && npcBypassTimer < npcBypassThreshold)
+        {
+            if (Input.GetButton(DirectionToStr(direction)))
+            {
+                npcBypassTimer += Time.deltaTime;
+                yield return null;
+            }
+            else { isRunningCoroutine = false; yield break; }
+        }
 
         // All checks cleared --> handle movement
         isMoving = true;
-        float elapsedTime = 0f;
+        bool prevOnStairs = tileManager.ScanForTile(stairsMap, prevPos) ? true : false;
+        bool currentOnStairs = tileManager.ScanForTile(stairsMap, tempPos) ? true : false;
         // Note: Currently updates player's currentPos BEFORE they actually get there; I think this is preferable
         // when it comes to NPC interactions, but it could be changed.
         currentPos = tempPos;
-        while (elapsedTime < timeToMove)
+        Vector3 prevPosWorld  = floorMap.CellToWorld(prevPos);
+        Vector3 currentPosWorld = floorMap.CellToWorld(currentPos);
+        prevPosWorld.y += prevOnStairs ? STAIRS_OFFSET : 0f;
+        currentPosWorld.y += currentOnStairs ? STAIRS_OFFSET : 0f;
+        float movementCompletePercentage = 0f;
+        while (movementCompletePercentage < 1)
         {
             // Lerp moves from one position to the other in some amount of time.
-            transform.position = Vector3.Lerp(floorMap.CellToWorld(prevPos), floorMap.CellToWorld(tempPos), (elapsedTime / timeToMove));
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            movementCompletePercentage += 1.0f / numFixedUpdatesToMoveOne;
+            transform.position = Vector3.Lerp(prevPosWorld, currentPosWorld, Mathf.Clamp01(movementCompletePercentage));
+            yield return new WaitForFixedUpdate();
         }
-        transform.position = floorMap.CellToWorld(currentPos);
         playerTransition.HandleTeleportFromTransitionTilemap();
         isMoving = false;
+        isRunningCoroutine = false;
     }
 
     public void FaceDirection(Vector3Int direction)
     {
+        currentlyFacing = direction;
         int directionIndex =
             direction == Vector3Int.up ? UP :
             direction == Vector3Int.down ? DOWN :
@@ -156,15 +177,5 @@ public class PlayerMovement : MonoBehaviour
     public void EnableMovement()
     {
         canMove = true;
-    }
-
-    public void UpdateCurrentPosition()
-    {
-        currentPos = floorMap.WorldToCell(transform.position);
-    }
-
-    public void UpdateCurrentPosition(Vector3Int newPos)
-    {
-        currentPos = newPos;
     }
 }

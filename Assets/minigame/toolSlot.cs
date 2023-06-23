@@ -4,30 +4,47 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class toolSlot : MonoBehaviour
+public class ToolSlot : MonoBehaviour
 {
-    [SerializeField] 
-    public GameObject item;
-    public bool item_selected = false;
+    private GameObject toolSpriteObject;
+    public Texture2D toolCursor;
+    public bool toolSelected {get; private set;}
 
-    [SerializeField] private Texture2D tool_cursor;
-
-    public void SelectItem()
+    private List<ToolSlot> otherTools;
+    
+    private void Start()
     {
-        Debug.Log("select this slot");
-        item.SetActive(item_selected);
-        item_selected = !(item_selected);
-
-        if(item_selected)
-            Cursor.SetCursor(tool_cursor, Vector2.zero, CursorMode.Auto);
-        else
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        toolSpriteObject = transform.GetChild(0).gameObject;
+        toolSelected = false;
+        otherTools = new List<ToolSlot>(FindObjectsOfType<ToolSlot>());
+        otherTools.Remove(this);
     }
 
-    public void DeselectItem()
+    public void SelectTool()
     {
-        Debug.Log("deselect the other slots");
-        item.SetActive(false);
-        item_selected = false;
+        if (toolSelected) return;
+        toolSpriteObject.SetActive(false);
+        toolSelected = true;
+        if (toolCursor == null) return;
+        Cursor.SetCursor(toolCursor, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void DeselectTool()
+    {
+        if (!toolSelected) return;
+        toolSpriteObject.SetActive(true);
+        toolSelected = false;
+        if (toolCursor == null) return;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void ToggleSelect()
+    {
+        foreach (ToolSlot tool in otherTools)
+        {
+            if (tool.toolSelected) tool.DeselectTool();
+        }
+        if (toolSelected) DeselectTool();
+        else SelectTool();
     }
 }

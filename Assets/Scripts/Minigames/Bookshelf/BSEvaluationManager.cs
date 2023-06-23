@@ -29,7 +29,6 @@ public class BSEvaluationManager : MonoBehaviour
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfMap = bookshelfGrid.GetComponent<Tilemap>();
         bookshelfMap.CompressBounds();
-        ResetEvaluation();
         evaluationText.gameObject.SetActive(false);
     }
 
@@ -62,10 +61,10 @@ public class BSEvaluationManager : MonoBehaviour
         float scoreOrganization = Mathf.Clamp01(percentSymmetry + percentStacked * 0.05f);
         float score = Mathf.Max(scoreAbundance, scoreAesthetic, scoreOrganization);
         string rating;
-        if (score >= 1) rating = "S";
-        else if (score >= 0.8) rating = "A";
-        else if (score >= 0.4) rating = "B";
-        else rating = "C";
+        rating = score >= 1 ? "S" :
+                score >= 0.8 ? "A" :
+                score >= 0.4 ? "B" :
+                                "C";
         evaluationText.text = $"Great job! This is {rating}-level work!";
         evaluationText.gameObject.SetActive(true);
         StartCoroutine(FadeUpErrorText(evaluationText));
@@ -273,10 +272,9 @@ public class BSEvaluationManager : MonoBehaviour
     private List<Vector2Int> FindAdjacentCells(BSItemInfo item)
     {
         HashSet<Vector2Int> adjacentCells = new HashSet<Vector2Int>();
-        List<Vector2Int> cardinalDirections = new List<Vector2Int>() {Vector2Int.left, Vector2Int.right, Vector2Int.up, Vector2Int.down};
         foreach (Vector2Int cell in item.cellsOccupied)
         {
-            foreach (Vector2Int direction in cardinalDirections)
+            foreach (Vector2Int direction in TileManager.cardinalDirections)
             {
                 if (item.cellsOccupied.Contains(cell + direction)) continue;
                 adjacentCells.Add(cell + direction);

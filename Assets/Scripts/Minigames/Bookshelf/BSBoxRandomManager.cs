@@ -5,8 +5,10 @@ using TMPro;
 
 public class BSBoxRandomManager : MonoBehaviour
 {
-    List<BSItemInfo> itemStorage;
-    BSItemInfo currentItem;
+    private SaveManager saveManager;
+    private SaveData saveData;
+    public List<BSItemInfo> itemStorage;
+    public BSItemInfo currentItem {get; private set;}
     private Camera bookshelfCam;    
     private BSGridManager bookshelfGrid;
     Vector3 mousePos;
@@ -19,14 +21,18 @@ public class BSBoxRandomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        saveManager = FindObjectOfType<SaveManager>();
+        saveData = saveManager.myData;
         itemStorage = new List<BSItemInfo>();
         bookshelfGrid = FindObjectOfType<BSGridManager>();
         bookshelfCam = bookshelfGrid.bookshelfCam;
         mousePos = bookshelfGrid.mousePos;
 
         itemsDayAll = new List<List<GameObject>>() {itemsDay1, itemsDay2, itemsDay3, itemsDay4, itemsDay5, itemsDay6, itemsDay7};
-        itemsDayAllCount = new List<int>() {30, 30, 10, 15, 10, 20, 30};
+        itemsDayAllCount = new List<int>() {10, 10, 3, 5, 5, 7, 10};
+        if (currentItem == null) ChooseNextItem();
         pickedUpItem = false;
+        RegisterRandomItems();
     }
 
     void Update()
@@ -46,12 +52,13 @@ public class BSBoxRandomManager : MonoBehaviour
             {
                 currentItem.sprite.enabled = true;
                 currentItem.transform.position = mousePos;
+                // currentItem.isInRandom = false;
                 itemStorage.Remove(currentItem);
                 pickedUpItem = true;
                 return;
             }
             if (currentItem == null) ChooseNextItem();
-            else if (pickedUpItem) {}
+            else if (pickedUpItem) return;
             else
             {
                 currentItem.gameObject.layer = LayerMask.NameToLayer("Default");
@@ -106,12 +113,18 @@ public class BSBoxRandomManager : MonoBehaviour
                 counter++;
             }
         }
+        RegisterRandomItems();     
+    }
+
+    public void RegisterRandomItems()
+    {
         foreach (BSItemInfo item in itemStorage)
         {
             item.isBookshelfed = false;
+            // item.isInRandom = true;
             item.GetComponent<SpriteRenderer>().enabled = false;
             item.transform.position = transform.position;
             item.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        }        
+        }   
     }
 }

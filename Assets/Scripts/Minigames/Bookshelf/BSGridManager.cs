@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class BSGridManager : MonoBehaviour
 {
+    private SaveManager saveManager;
+    private SaveData saveData;
     public Vector2 mousePos;
     private const int DEFAULT_LAYER = 0;
     private const int IGNORE_RAYCAST_LAYER = 2;
@@ -13,26 +15,27 @@ public class BSGridManager : MonoBehaviour
     public Vector2 cellSize {get; private set;}
     public Camera bookshelfCam;
     private Tilemap bookshelfMap;
-    [SerializeField] public Dictionary<Vector2Int, BSItemInfo> occupiedCells;
+    public Dictionary<Vector2Int, BSItemInfo> occupiedCells;
     private List<int> shelfPositions;
     private List<GameObject> shelfObjects;
     public SpriteRenderer bookshelfSprite;
+    List<int> possibleIntervals = new List<int>() {6, 4, 3, 2};
     public int shelfInterval {get; private set;}
     public bool snapPreviewEnabled {get; private set;}
 
     // Start is called before the first frame update
     void Start()
     {
-        mousePos = bookshelfCam.ScreenToWorldPoint(Input.mousePosition);
-        bookshelfCam.transparencySortMode = TransparencySortMode.Default;
+        saveManager = FindObjectOfType<SaveManager>();
+        saveData = saveManager.myData;
         bookshelfMap = GetComponent<Tilemap>();
         bookshelfMap.CompressBounds();
         cellSize = bookshelfMap.cellSize;
         occupiedCells = new Dictionary<Vector2Int, BSItemInfo>();
-        snapPreviewEnabled = false;
+        snapPreviewEnabled = saveData.snapPreviewEnabled;
         shelfPositions = new List<int>();
         shelfObjects = new List<GameObject>();
-        shelfInterval = 4;
+        shelfInterval = saveData.shelfInterval;
         UpdateShelfPositions();
     }
 
@@ -73,7 +76,6 @@ public class BSGridManager : MonoBehaviour
 
     public void ChangeShelfInterval()
     {
-        List<int> possibleIntervals = new List<int>() {6, 4, 3, 2};
         int nextIndex = (possibleIntervals.FindIndex(interval => interval == shelfInterval) + 1) % possibleIntervals.Count;
         shelfInterval = possibleIntervals[nextIndex];
         UpdateShelfPositions();
@@ -134,8 +136,9 @@ public class BSGridManager : MonoBehaviour
     public bool CheckStackable(Vector2 itemWorldPos, BSItemInfo heldItemInfo)
     {
         if (!occupiedCells.ContainsKey(GetCellFromWorldPos(itemWorldPos))) return false;
-        if (occupiedCells[GetCellFromWorldPos(itemWorldPos)].itemType == heldItemInfo.itemType
-        && occupiedCells[GetCellFromWorldPos(itemWorldPos)].itemSize == heldItemInfo.itemSize) return true;
+        BSItemInfo itemOnShelf = occupiedCells[GetCellFromWorldPos(itemWorldPos)];
+        if (!itemOnShelf.isStackable) return false;
+        if (itemOnShelf.itemType == heldItemInfo.itemType && itemOnShelf.itemSize == heldItemInfo.itemSize) return true;
         else return false;
     }
 

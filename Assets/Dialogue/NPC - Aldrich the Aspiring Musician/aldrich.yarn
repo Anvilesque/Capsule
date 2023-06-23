@@ -88,10 +88,8 @@ Aldrich the Aspiring Musician: But at the same time, it starts so much more.
 
 <<if GetNPCDialogueNumber("aldrich") is 3>>
 Aldrich the Aspiring Musician: Say you're graduating at this very moment. What's next in store for you?
-<<declare $aldrich_question_graduation to "Say you're graduating at this very moment. What's next in store for you?">>
-Aldrich the Aspiring Musician: {$aldrich_question_graduation}
 <<setNextDialogueFor "Dialogue System" "aldrich">>
-<<openCapsuleResponse "Dialogue System" "aldrich" {$aldrich_question_graduation}>>
+<<openCapsuleResponse "Dialogue System" "aldrich" "Say you're graduating at this very moment. What's next in store for you?">>
 <<stop>>
 <<endif>>
 

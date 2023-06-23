@@ -8,25 +8,23 @@ public class CapsuleResponseViewer : MonoBehaviour
 {
     public static bool isWriting {get; private set;}
 
-    Canvas capsuleResponseCanvas;
-    TMP_Text questionText;
-    Image npcIcon;
+    public Canvas capsuleResponseCanvas;
+    public TMP_Text questionText;
+    public Image npcIcon;
     public List<Sprite> sprites;
-    Dictionary<string, int> npcNameToSpriteIndex;
+    private Dictionary<string, int> npcNameToSpriteIndex = new Dictionary<string, int>()
+    {
+        {"ben", 0},
+        {"aldrich", 1},
+        {"joanne", 2},
+        {"winter", 3}
+    };
+    private TimeController timeController;
 
     // Start is called before the first frame update
     void Start()
     {
-        capsuleResponseCanvas = new List<Canvas>(FindObjectsOfType<Canvas>()).Find(canvas => canvas.name.Contains("Response"));
-        questionText = new List<TMP_Text>(FindObjectsOfType<TMP_Text>()).Find(text => text.name.Contains("QuestionView"));
-        npcIcon = new List<Image>(FindObjectsOfType<Image>()).Find(image => image.name.Contains("NPC"));
-        npcNameToSpriteIndex = new Dictionary<string, int>()
-        {
-            {"ben", 0},
-            {"aldrich", 1},
-            {"joanne", 2},
-            {"winter", 3}
-        };
+        timeController = FindObjectOfType<TimeController>();
         capsuleResponseCanvas.gameObject.SetActive(false);
         isWriting = false;
     }
@@ -34,17 +32,20 @@ public class CapsuleResponseViewer : MonoBehaviour
     public void DisplayCapsuleResponse(string npcName, string question)
     {
         isWriting = true;
+        timeController.canUpdateTime = false;
+        FindObjectOfType<HUDButtons>().DisableHUD();
         npcIcon.sprite = sprites[npcNameToSpriteIndex[npcName]];
         questionText.SetText(question);
         capsuleResponseCanvas.GetComponentInChildren<TMP_InputField>().text = "";
         capsuleResponseCanvas.gameObject.SetActive(true);
-        FindObjectOfType<HUDButtons>().DisableHUD();
     }
 
     public void HideCapsuleResponse()
     {
         isWriting = false;
+        timeController.canUpdateTime = true;
         capsuleResponseCanvas.gameObject.SetActive(false);
         FindObjectOfType<HUDButtons>().EnableHUD();
+        FindObjectOfType<PlayerMovement>().EnableMovement();
     }
 }
