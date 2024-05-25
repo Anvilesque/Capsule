@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct ResponseEntry
@@ -73,6 +74,7 @@ public class SaveManager : MonoBehaviour
 
     private void Awake()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         player = GameObject.FindWithTag("Player");
         gameManager = GameObject.FindWithTag("GameController");
         playerMovement = player.GetComponent<PlayerMovement>();
@@ -90,6 +92,26 @@ public class SaveManager : MonoBehaviour
         capsuleManager = GameObject.FindObjectOfType<CapsuleViewManager>();
         
         LoadData();
+    }
+
+    void OnSceneLoaded (UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "Showcase") return;
+        player = GameObject.FindWithTag("Player");
+        gameManager = GameObject.FindObjectOfType<TaskManager>().gameObject;
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerTransition = player.GetComponent<PlayerTransition>();
+        yarnFunctions = GameObject.FindObjectOfType<YarnFunctions>();
+
+        timeController = gameManager.GetComponent<TimeController>();
+        taskManager = gameManager.GetComponent<TaskManager>();
+
+        bsBoxRandomManager = GameObject.FindObjectOfType<BSBoxRandomManager>();
+        bsBoxSortedManager = GameObject.FindObjectOfType<BSBoxSortedManager>();
+        bsGridManager = GameObject.FindObjectOfType<BSGridManager>();
+
+        diary = GameObject.FindObjectOfType<SaveDiary>();
+        capsuleManager = GameObject.FindObjectOfType<CapsuleViewManager>();
     }
 
     private void OnApplicationQuit()
@@ -119,7 +141,6 @@ public class SaveManager : MonoBehaviour
         UpdateDataPlayer();
         UpdateDataTime();
         UpdateDataBookshelf();
-        UpdateDataBalance();
         UpdateDataDiary();
         UpdateDataCapsule();
     }
@@ -230,9 +251,9 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public void UpdateDataBalance()
+    public void AddToDataBalance(int amountToAdd)
     {
-        myData.balance = taskManager.balance;
+        myData.balance += amountToAdd;
     }
 
     public void UpdateDataDiary()

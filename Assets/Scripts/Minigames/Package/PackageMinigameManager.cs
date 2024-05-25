@@ -31,6 +31,6 @@ public class PackageMinigameManager : MonoBehaviour
 
     public void UpdateBalanceText()
     {
-        balanceText.SetText($"Balance: {taskManager.balance}");
+        balanceText.SetText($"Balance: {FindObjectOfType<SaveManager>().myData.balance}");
     }
 }

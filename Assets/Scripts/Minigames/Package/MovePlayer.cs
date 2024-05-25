@@ -72,7 +72,7 @@ public class MovePlayer : MonoBehaviour
         {
             catchSpriteTimer = 0.3f;
             Destroy(collision.gameObject);
-            taskManager.balance += 5;
+            FindObjectOfType<SaveManager>().AddToDataBalance(5);
             minigameManager.UpdateBalanceText();
             StartCoroutine(DisplayIndicator());
         }

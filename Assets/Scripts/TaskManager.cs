@@ -39,7 +39,6 @@ public class TaskManager : MonoBehaviour
     public bool isTasking {get; private set;}
     private string taskName;
     private TMP_InputField diaryInput;
-    public int balance;
 
     // Start is called before the first frame update
     void Start()
@@ -73,8 +72,6 @@ public class TaskManager : MonoBehaviour
         // canvasBookshelf.gameObject.SetActive(false);
         diaryInput = FindObjectOfType<SaveDiary>().transform.root.GetComponentInChildren<TMP_InputField>();
         diaryInput.enabled = false;
-
-        balance = saveData.balance;
     }
 
     // Update is called once per frame
