@@ -122,9 +122,10 @@ public class SaveManager : MonoBehaviour
     public void LoadData()
     {
         myData = (SaveData)ScriptableObject.CreateInstance<SaveData>();
-        if (File.Exists(jsonFilePath))
+        using (FileStream fileStream = File.Open(jsonFilePath, FileMode.OpenOrCreate))
+        using (StreamReader reader = new StreamReader(fileStream))
         {
-            string jsonData = File.ReadAllText(jsonFilePath);
+            string jsonData = reader.ReadToEnd();
             JsonUtility.FromJsonOverwrite(jsonData, myData);
         }
     }
@@ -133,7 +134,13 @@ public class SaveManager : MonoBehaviour
     {
         if (updateAllFirst) UpdateDataAll();
         string jsonData = JsonUtility.ToJson(myData);
-        File.WriteAllText(jsonFilePath, jsonData);
+        // overwrite contents
+        using (FileStream fileStream = File.Open(jsonFilePath, FileMode.OpenOrCreate))
+        using (StreamWriter writer = new StreamWriter(fileStream))
+        {
+            fileStream.SetLength(0);
+            writer.Write(jsonData);
+        }
     }
 
     public void UpdateDataAll()
