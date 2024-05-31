@@ -17,23 +17,26 @@ title: winter_newyears
 position: -529,85
 ---
 <<if GetNPCDialogueNumber("winter") is 1>>
-Winter the Calm Teacher: Yes! Here's dialogue 1!
+Winter the Calm Teacher: The new year already, eh?
+Winter the Calm Teacher: It's always exciting going back to school after the new year.
+Winter the Calm Teacher: It might be just another day, but there's a fresh vibe to it.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 2>>
-Winter the Calm Teacher: Yes! Here's dialogue 2!
+Winter the Calm Teacher: You know, we spend a lot of our time reflecting back on our struggles and achievements.
+Winter the Calm Teacher: But I feel like the new year gives us a chance to look ahead, with resolutions and all.
+Winter the Calm Teacher: It's a nice surge of hope for the future.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 3>>
-Winter the Calm Teacher: Yes! Here's dialogue 3!
-<<declare $winter_question_newyears to "[INSERT QUESTION HERE]">>
-Winter the Calm Teacher: {$winter_question_newyears}
+Winter the Calm Teacher: I was thinking some more about resolutions, and now I'm curious.
+Winter the Calm Teacher: What New Year resolutions do you have for this year?
 <<setNextDialogueFor "Dialogue System" "winter">>
-<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_newyears}>>
+<<openCapsuleResponse "Dialogue System" "winter" "What New Year resolutions do you have for this year?">>
 <<stop>>
 <<endif>>
 
@@ -45,23 +48,28 @@ title: winter_valentines
 position: -416,236
 ---
 <<if GetNPCDialogueNumber("winter") is 1>>
-Winter the Calm Teacher: Yes! Here's dialogue 1!
+Winter the Calm Teacher: Valentine's already, eh?
+Winter the Calm Teacher: It's always nice to see people sharing their love for one another.
+Winter the Calm Teacher: The holiday itself's a bit overrated, though. Love prevails always.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 2>>
-Winter the Calm Teacher: Yes! Here's dialogue 2!
+Winter the Calm Teacher: I asked my wife if she wanted anything for Valentine's Day, and she said no.
+Winter the Calm Teacher: I guess when you get to this age, it can be tough to keep up with the holidays.
+Winter the Calm Teacher: I'll still get her flowers though. I know she'll love 'em.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 3>>
-Winter the Calm Teacher: Yes! Here's dialogue 3!
-<<declare $winter_question_valentines to "[INSERT QUESTION HERE]">>
-Winter the Calm Teacher: {$winter_question_valentines}
+Winter the Calm Teacher: Can you imagine a world without Valentine's Day?
+Winter the Calm Teacher: No holiday of red and pink hearts or romantic gestures.
+Winter the Calm Teacher: I don't know, always interesting to think about.
+Winter the Calm Teacher: How do you feel about Valentine's Day?
 <<setNextDialogueFor "Dialogue System" "winter">>
-<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_valentines}>>
+<<openCapsuleResponse "Dialogue System" "winter" "How do you feel about Valentine's Day?">>
 <<stop>>
 <<endif>>
 
@@ -73,23 +81,28 @@ title: winter_graduation
 position: -224,384
 ---
 <<if GetNPCDialogueNumber("winter") is 1>>
-Winter the Calm Teacher: Yes! Here's dialogue 1!
+Winter the Calm Teacher: Graduation already, eh?
+Winter the Calm Teacher: Yeah, my students will be graduating this year.
+Winter the Calm Teacher: It's a bittersweet moment.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 2>>
-Winter the Calm Teacher: Yes! Here's dialogue 2!
+Winter the Calm Teacher: Every year, I tell my students that they're more than welcome to come back and visit.
+Winter the Calm Teacher: Not many do, but it's still nice to catch up with them.
+Winter the Calm Teacher: Hey, maybe you could go visit your own teachers sometime.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 3>>
-Winter the Calm Teacher: Yes! Here's dialogue 3!
-<<declare $winter_question_graduation to "[INSERT QUESTION HERE]">>
-Winter the Calm Teacher: {$winter_question_graduation}
+Winter the Calm Teacher: Graduation's a milestone for everyone, really.
+Winter the Calm Teacher: The graduates, friends and family, teachers, generations.
+Winter the Calm Teacher: It's also a great time to look back and reflect on how you're doing.
+Winter the Calm Teacher: How's your graduation been? Anything you're proud of? Any regrets?
 <<setNextDialogueFor "Dialogue System" "winter">>
-<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_graduation}>>
+<<openCapsuleResponse "Dialogue System" "winter" "How's your graduation been? Anything you're proud of? Any regrets?">>
 <<stop>>
 <<endif>>
 
@@ -101,23 +114,30 @@ title: winter_fourthjuly
 position: -14,384
 ---
 <<if GetNPCDialogueNumber("winter") is 1>>
-Winter the Calm Teacher: Yes! Here's dialogue 1!
+Winter the Calm Teacher: Fourth of July already, eh?
+Winter the Calm Teacher: I feel like it's the only holiday where everyone gets the urge to go outside.
+Winter the Calm Teacher: It's kinda like a Super Bowl legacy celebration for America.
+Winter the Calm Teacher: ...Whatever that means.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 2>>
-Winter the Calm Teacher: Yes! Here's dialogue 2!
+Winter the Calm Teacher: Independence Day is a great excuse for a barbecue.
+Winter the Calm Teacher: In fact, I'd say a barbecue is almost a necessity.
+Winter the Calm Teacher: Can't have a 4th of July without some BBQ smoke.
+Winter the Calm Teacher: And fireworks, of course.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 3>>
-Winter the Calm Teacher: Yes! Here's dialogue 3!
-<<declare $winter_question_fourthjuly to "[INSERT QUESTION HERE]">>
-Winter the Calm Teacher: {$winter_question_fourthjuly}
+Winter the Calm Teacher: Ever thought about the meaning of Independence Day?
+Winter the Calm Teacher: Independence.
+Winter the Calm Teacher: Of course, it's about America, but maybe we can take a microcosmic perspective.
+Winter the Calm Teacher: In what ways do you want to be independent?
 <<setNextDialogueFor "Dialogue System" "winter">>
-<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_fourthjuly}>>
+<<openCapsuleResponse "Dialogue System" "winter" "In what ways do you want to be independent?">>
 <<stop>>
 <<endif>>
 
@@ -129,23 +149,28 @@ title: winter_halloween
 position: 198,377
 ---
 <<if GetNPCDialogueNumber("winter") is 1>>
-Winter the Calm Teacher: Yes! Here's dialogue 1!
+Winter the Calm Teacher: Halloween already, eh?
+Winter the Calm Teacher: You know, why don't we have Halloween caroling?
+Winter the Calm Teacher: I'll have to hit up Aldrich and ask for his opinion.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 2>>
-Winter the Calm Teacher: Yes! Here's dialogue 2!
+Winter the Calm Teacher: Skeletons, zombies, ghosts.
+Winter the Calm Teacher: This holiday really hones in on the idea that death is scary.
+Winter the Calm Teacher: I mean, yeah, I'm scared of dying too, but death itself?
+Winter the Calm Teacher: Seems pretty peaceful to me.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 3>>
-Winter the Calm Teacher: Yes! Here's dialogue 3!
-<<declare $winter_question_halloween to "[INSERT QUESTION HERE]">>
-Winter the Calm Teacher: {$winter_question_halloween}
+Winter the Calm Teacher: Personally, I've never gone trick-or-treating before.
+Winter the Calm Teacher: Never really liked candy, never felt comfortable ringing others' doorbells.
+Winter the Calm Teacher: Do you like candy? Or any other sweets?
 <<setNextDialogueFor "Dialogue System" "winter">>
-<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_halloween}>>
+<<openCapsuleResponse "Dialogue System" "winter" "Do you like candy? Or any other sweets?">>
 <<stop>>
 <<endif>>
 
@@ -157,23 +182,26 @@ title: winter_thanksgiving
 position: 386,234
 ---
 <<if GetNPCDialogueNumber("winter") is 1>>
-Winter the Calm Teacher: Yes! Here's dialogue 1!
+Winter the Calm Teacher: Thanksgiving already, eh?
+Winter the Calm Teacher: Always grateful for the opportunities I've been given and the students I've been honored to teach.
+Winter the Calm Teacher: Gotta love the food too.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 2>>
-Winter the Calm Teacher: Yes! Here's dialogue 2!
+Winter the Calm Teacher: I tried to roast a turkey in the oven once. Came out really dry though.
+Winter the Calm Teacher: Nothing beats good ol' fried chicken.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 3>>
-Winter the Calm Teacher: Yes! Here's dialogue 3!
-<<declare $winter_question_thanksgiving to "[INSERT QUESTION HERE]">>
-Winter the Calm Teacher: {$winter_question_thanksgiving}
+Winter the Calm Teacher: Thanksgiving's got a lot of sentiment behind it. I think it's important to focus on the positives, though.
+Winter the Calm Teacher: Like the melting pot of cultures! America wouldn't be the same without all of its peoples.
+Winter the Calm Teacher: What cultures are you invested in right now? Any you want to explore someday?
 <<setNextDialogueFor "Dialogue System" "winter">>
-<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_thanksgiving}>>
+<<openCapsuleResponse "Dialogue System" "winter" "What cultures are you invested in right now? Any you want to explore someday?">>
 <<stop>>
 <<endif>>
 
@@ -185,23 +213,27 @@ title: winter_christmas
 position: 496,88
 ---
 <<if GetNPCDialogueNumber("winter") is 1>>
-Winter the Calm Teacher: Yes! Here's dialogue 1!
+Winter the Calm Teacher: Christmas already, eh?
+Winter the Calm Teacher: I always love seeing all the lights and decorations at night.
+Winter the Calm Teacher: Especially when it snows, 'cause then you get all this snow halation.
+Winter the Calm Teacher: You can really feel the new year mamonaku start, yaknow?
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 2>>
-Winter the Calm Teacher: Yes! Here's dialogue 2!
+Winter the Calm Teacher: Thanksgiving's got some good food, but Christmas food can be a formidable foe.
+Winter the Calm Teacher: ...What even counts as a Christmas food? Never really thought about that.
 <<setNextDialogueFor "Dialogue System" "winter">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("winter") is 3>>
-Winter the Calm Teacher: Yes! Here's dialogue 3!
-<<declare $winter_question_christmas to "[INSERT QUESTION HERE]">>
-Winter the Calm Teacher: {$winter_question_christmas}
+Winter the Calm Teacher: Christmas has to be the most popular holiday, right?
+Winter the Calm Teacher: I can totally see why. It's just a great feeling.
+Winter the Calm Teacher: What would be your ideal Christmas day?
 <<setNextDialogueFor "Dialogue System" "winter">>
-<<openCapsuleResponse "Dialogue System" "winter" {$winter_question_christmas}>>
+<<openCapsuleResponse "Dialogue System" "winter" "What would be your ideal Christmas day?">>
 <<stop>>
 <<endif>>
 

@@ -36,6 +36,7 @@ public class CapsuleResponseViewer : MonoBehaviour
         FindObjectOfType<HUDButtons>().DisableHUD();
         npcIcon.sprite = sprites[npcNameToSpriteIndex[npcName]];
         questionText.SetText(question);
+        capsuleResponseCanvas.GetComponentInChildren<TMP_InputField>().enabled = true;
         capsuleResponseCanvas.GetComponentInChildren<TMP_InputField>().text = "";
         capsuleResponseCanvas.gameObject.SetActive(true);
     }

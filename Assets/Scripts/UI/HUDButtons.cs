@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using UnityEditor;
 
 public class HUDButtons : MonoBehaviour
 {
@@ -98,7 +99,7 @@ public class HUDButtons : MonoBehaviour
         //     Debug.LogError("Button not found");
         // }
 
-        menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
+        // menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
 
         settingsButton = buttonDocument.rootVisualElement.Q("settings-button") as Button;
         // if (settingsButton != null)
@@ -109,6 +110,7 @@ public class HUDButtons : MonoBehaviour
         // {
         //     Debug.LogError("Setting button not found");
         // }
+        // menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
 
         settingsButton.RegisterCallback<ClickEvent>(SettingsButtonClick);
 
@@ -131,10 +133,10 @@ public class HUDButtons : MonoBehaviour
         timeDay.text = timeController.timeTextDay;
     }
 
-    void MenuButtonClick(ClickEvent evt)
-    {
-        menuRoot.style.display = menuRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
-    }
+    // void MenuButtonClick(ClickEvent evt)
+    // {
+    //     menuRoot.style.display = menuRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
+    // }
 
     void SettingsButtonClick(ClickEvent evt)
     {

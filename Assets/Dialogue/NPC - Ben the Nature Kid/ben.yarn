@@ -15,23 +15,25 @@ title: ben_newyears
 position: -529,85
 ---
 <<if GetNPCDialogueNumber("ben") is 1>>
-Ben the Nature Kid: Yes! Here's dialogue 1!
+Ben the Nature Kid: Happy New Year! Did you see all the snow?
+Ben the Nature Kid: I love snow! It's so white and clean and I can throw snowballs.
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 2>>
-Ben the Nature Kid: Yes! Here's dialogue 2!
+Ben the Nature Kid: I learned that evergreen trees stay green all year long!
+Ben the Nature Kid: That's why green is my favorite color!
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 3>>
-Ben the Nature Kid: Yes! Here's dialogue 3!
-
-Ben the Nature Kid: Question?
+Ben the Nature Kid: For my New Year's resolution, I want to see a bunch of things. Geysers, waterfalls, and big big mountains!
+Ben the Nature Kid: How 'bout you?
+Ben the Nature Kid: What places do you want to go this year?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
+<<openCapsuleResponse "Dialogue System" "ben" "What places do you want to go this year?">>
 <<stop>>
 <<endif>>
 
@@ -43,22 +45,27 @@ title: ben_valentines
 position: -416,236
 ---
 <<if GetNPCDialogueNumber("ben") is 1>>
-Ben the Nature Kid: Yes! Here's dialogue 1!
+Ben the Nature Kid: Happy Valentine's Day! Want a chocolate?
+Ben the Nature Kid: Yeah, I don't really like chocolates either.
+Ben the Nature Kid: I do like Smarties though!
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 2>>
-Ben the Nature Kid: Yes! Here's dialogue 2!
+Ben the Nature Kid: We got a lot of candies at school, but I don't think it's healthy.
+Ben the Nature Kid: We got little cards too! Some of them are very funny.
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 3>>
-Ben the Nature Kid: Yes! Here's dialogue 3!
-Ben the Nature Kid: Question?
+Ben the Nature Kid: I have a secret, but you have to promise not to tell anyone, okay?
+Ben the Nature Kid: I have a crush on this girl, and I want to tell her today.
+Ben the Nature Kid: I'm scared though. This is my first time.
+Ben the Nature Kid: Do you have any advice for talking to someone you like?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
+<<openCapsuleResponse "Dialogue System" "ben" "Do you have any advice for talking to someone you like?">>
 <<stop>>
 <<endif>>
 
@@ -70,22 +77,25 @@ title: ben_graduation
 position: -224,384
 ---
 <<if GetNPCDialogueNumber("ben") is 1>>
-Ben the Nature Kid: Yes! Here's dialogue 1!
+Ben the Nature Kid: Happy graduation!
+Ben the Nature Kid: What's graduation?
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 2>>
-Ben the Nature Kid: Yes! Here's dialogue 2!
+Ben the Nature Kid: I think my mom told me my sister's doing something at her school, but I don't remember.
+Ben the Nature Kid: Oh yeah, I found a turtle in the pond today!
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 3>>
-Ben the Nature Kid: Yes! Here's dialogue 3!
-Ben the Nature Kid: Question?
+Ben the Nature Kid: Hmm, I am curious about graduation, though.
+Ben the Nature Kid: Maybe you can tell me more!
+Ben the Nature Kid: What does graduation mean? Why is it such an important day?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
+<<openCapsuleResponse "Dialogue System" "ben" "What does graduation mean? Why is it such an important day?">>
 <<stop>>
 <<endif>>
 
@@ -97,22 +107,26 @@ title: ben_fourthjuly
 position: -14,384
 ---
 <<if GetNPCDialogueNumber("ben") is 1>>
-Ben the Nature Kid: Yes! Here's dialogue 1!
+Ben the Nature Kid: Happy 4th of July!
+Ben the Nature Kid: I like fireworks, but they make the air all smoky.
+Ben the Nature Kid: Only you can prevent forest fires!
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 2>>
-Ben the Nature Kid: Yes! Here's dialogue 2!
+Ben the Nature Kid: I'm gonna go watch fireworks with my family today!
+Ben the Nature Kid: We go to the same park to watch every year. It's fun!
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 3>>
-Ben the Nature Kid: Yes! Here's dialogue 3!
-Ben the Nature Kid: Question?
+Ben the Nature Kid: My mom said something about today is about being in the pen dance.
+Ben the Nature Kid: I don't really know what that means, but I guess we get to dance.
+Ben the Nature Kid: When's the last time you danced? Did you have fun?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
+<<openCapsuleResponse "Dialogue System" "ben" "When's the last time you danced? Did you have fun?">>
 <<stop>>
 <<endif>>
 
@@ -124,22 +138,28 @@ title: ben_halloween
 position: 198,377
 ---
 <<if GetNPCDialogueNumber("ben") is 1>>
-Ben the Nature Kid: Yes! Here's dialogue 1!
+Ben the Nature Kid: Boo!
+Ben the Nature Kid: Ahh!
+Ben the Nature Kid: Did I scare you?
+Ben the Nature Kid: I scared myself!
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 2>>
-Ben the Nature Kid: Yes! Here's dialogue 2!
+Ben the Nature Kid: I don't really get why they call it trick-or-treat.
+Ben the Nature Kid: You say it, but no one ever gives a trick.
+Ben the Nature Kid: People should just say "treat."
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 3>>
-Ben the Nature Kid: Yes! Here's dialogue 3!
-Ben the Nature Kid: Question?
+Ben the Nature Kid: Treat!
+Ben the Nature Kid: Unless you want to do a trick, I guess.
+Ben the Nature Kid: What kind of tricks have you played before? Or have you ever been tricked really badly?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
+<<openCapsuleResponse "Dialogue System" "ben" "What kind of tricks have you played before? Or have you ever been tricked really badly?">>
 <<stop>>
 <<endif>>
 
@@ -151,22 +171,26 @@ title: ben_thanksgiving
 position: 386,234
 ---
 <<if GetNPCDialogueNumber("ben") is 1>>
-Ben the Nature Kid: Yes! Here's dialogue 1!
+Ben the Nature Kid: Happy Thanksgiving!
+Ben the Nature Kid: Turkeys are really cool animals. 
+Ben the Nature Kid: Did you know? Their floppy beard part is called a "snood"!
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 2>>
-Ben the Nature Kid: Yes! Here's dialogue 2!
+Ben the Nature Kid: There's a festival they do near our place, and it's really fun!
+Ben the Nature Kid: There's the bean bag toss, bean bag race...
+Ben the Nature Kid: A lot of bean bag stuff, huh?
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 3>>
-Ben the Nature Kid: Yes! Here's dialogue 3!
-Ben the Nature Kid: Question?
+Ben the Nature Kid: I really love the weather in fall! It's all breezy and fresh.
+Ben the Nature Kid: Do you have a favorite season?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
+<<openCapsuleResponse "Dialogue System" "ben" "Do you have a favorite season?">>
 <<stop>>
 <<endif>>
 
@@ -178,22 +202,27 @@ title: ben_christmas
 position: 496,88
 ---
 <<if GetNPCDialogueNumber("ben") is 1>>
-Ben the Nature Kid: Yes! Here's dialogue 1!
+Ben the Nature Kid: Christmas time is here!
+Ben the Nature Kid: Santa's not real, though.
+
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 2>>
-Ben the Nature Kid: Yes! Here's dialogue 2!
+Ben the Nature Kid: You know how you sometimes see in movies or games how there's bunnies hopping across the snow?
+Ben the Nature Kid: I've always wanted to see that in-person, but there are no bunnies here.
+Ben the Nature Kid: Snow bunnies, at least.
 <<setNextDialogueFor "Dialogue System" "ben">>
 <<stop>>
 <<endif>>
 
 <<if GetNPCDialogueNumber("ben") is 3>>
-Ben the Nature Kid: Yes! Here's dialogue 3!
-Ben the Nature Kid: Question?
+Ben the Nature Kid: Presents and food, presents and food!
+Ben the Nature Kid: I like getting presents, but I don't have any money to give presents.
+Ben the Nature Kid: What's your way of getting presents for people?
 <<setNextDialogueFor "Dialogue System" "ben">>
-<<openCapsuleResponse "Dialogue System" "ben" "Question?">>
+<<openCapsuleResponse "Dialogue System" "ben" "What's your way of getting presents for people?">>
 <<stop>>
 <<endif>>
 
