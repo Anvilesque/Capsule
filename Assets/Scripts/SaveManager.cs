@@ -122,18 +122,28 @@ public class SaveManager : MonoBehaviour
     public void LoadData()
     {
         myData = (SaveData)ScriptableObject.CreateInstance<SaveData>();
+        #if UNITY_WEBGL
+        string jsonData = PlayerPrefs.GetString("jsonData");
+        JsonUtility.FromJsonOverwrite(jsonData, myData);
+        #else
         using (FileStream fileStream = File.Open(jsonFilePath, FileMode.OpenOrCreate))
         using (StreamReader reader = new StreamReader(fileStream))
         {
             string jsonData = reader.ReadToEnd();
             JsonUtility.FromJsonOverwrite(jsonData, myData);
         }
+        #endif
     }
 
     public void SaveData(bool updateAllFirst = true)
     {
         if (updateAllFirst) UpdateDataAll();
         string jsonData = JsonUtility.ToJson(myData);
+        
+        #if UNITY_WEBGL
+        PlayerPrefs.SetString("jsonData", jsonData);
+        PlayerPrefs.Save();
+        #else
         // overwrite contents
         using (FileStream fileStream = File.Open(jsonFilePath, FileMode.OpenOrCreate))
         using (StreamWriter writer = new StreamWriter(fileStream))
@@ -141,6 +151,7 @@ public class SaveManager : MonoBehaviour
             fileStream.SetLength(0);
             writer.Write(jsonData);
         }
+        #endif
     }
 
     public void UpdateDataAll()
