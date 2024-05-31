@@ -23,6 +23,8 @@ public class HUDButtons : MonoBehaviour
     private Label timeDay;
     private TimeController timeController;
 
+    private Label currency;
+
     void Start()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
@@ -30,46 +32,29 @@ public class HUDButtons : MonoBehaviour
         timeController = FindObjectOfType<TimeController>();
         timeTime = root.Q<Label>("timeTime");
         timeDay = root.Q<Label>("timeDay");
+        currency = root.Q<Label>("currency");
         timeTime.text = timeController.timeTextTime;
         timeDay.text = timeController.timeTextDay;
+        currency.text = $"${FindObjectOfType<SaveManager>().myData.balance.ToString()}";
 
         // menu = GameObject.Find("HUD");
-        // if (menu != null)
-        // {
-        //     Debug.Log("Menu found");
-        // }
+        // if (menu != null) Debug.Log("Menu found");
 
         menuRoot = menu.GetComponent<UIDocument>().rootVisualElement;
-        // if (menuRoot != null)
-        // {
-        //     Debug.Log("Menu UI document found");
-        // }
+        // if (menuRoot != null) Debug.Log("Menu UI document found");
 
         // settings = GameObject.Find("SettingsHUD");
-        // if (settings != null)
-        // {
-        //     Debug.Log("Settings found");
-        // }
-
+        // if (settings != null) Debug.Log("Settings found");
 
         settingsRoot = settings.GetComponent<UIDocument>().rootVisualElement;
 
-        // if (settingsRoot != null)
-        // {
-        //     Debug.Log("Setting UI document found");
-        // }
+        // if (settingsRoot != null) Debug.Log("Setting UI document found");
 
         // tasks = GameObject.Find("TaskMap");
-        // if (tasks != null)
-        // {
-        //     Debug.Log("tasks found");
-        // }
+        // if (tasks != null) Debug.Log("tasks found");
 
         tasksRoot = tasks.GetComponent<UIDocument>().rootVisualElement;
-        // if (tasksRoot != null)
-        // {
-        //     Debug.Log("tasks UI document found");
-        // }
+        // if (tasksRoot != null) Debug.Log("tasks UI document found");
 
         tasksRoot.style.display = DisplayStyle.None;
     }
@@ -79,50 +64,25 @@ public class HUDButtons : MonoBehaviour
     {
         buttonDocument = GetComponent<UIDocument>();
 
-        // if (buttonDocument == null)
-        // {
-        //     Debug.LogError("No button document found.");
-        // }
-        // else 
-        // {
-        //     Debug.Log("Button document found.");
-        // }
+        // if (buttonDocument == null) Debug.LogError("No button document found.");
+        // else Debug.Log("Button document found.");
 
         menuButton = buttonDocument.rootVisualElement.Q("menu-button") as Button;
 
-        // if (menuButton != null)
-        // {
-        //     Debug.Log("Button found");
-        // }
-        // else
-        // {
-        //     Debug.LogError("Button not found");
-        // }
+        // if (menuButton != null) Debug.Log("Button found");
+        // else Debug.LogError("Button not found");
 
         // menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
 
         settingsButton = buttonDocument.rootVisualElement.Q("settings-button") as Button;
-        // if (settingsButton != null)
-        // {
-        //     Debug.Log("Setting button found");
-        // }
-        // else
-        // {
-        //     Debug.LogError("Setting button not found");
-        // }
-        // menuButton.RegisterCallback<ClickEvent>(MenuButtonClick);
+        // if (settingsButton != null) Debug.Log("Setting button found");
+        // else Debug.LogError("Setting button not found");
 
         settingsButton.RegisterCallback<ClickEvent>(SettingsButtonClick);
 
         tasksButton = buttonDocument.rootVisualElement.Q("map-button") as Button;
-        // if (tasksButton != null)
-        // {
-        //     Debug.Log("Task button found");
-        // }
-        // else
-        // {
-        //     Debug.LogError("Task button not found");
-        // }
+        // if (tasksButton != null) Debug.Log("Task button found");
+        // else Debug.LogError("Task button not found");
 
         tasksButton.RegisterCallback<ClickEvent>(TasksButtonClick);
     }
@@ -133,10 +93,10 @@ public class HUDButtons : MonoBehaviour
         timeDay.text = timeController.timeTextDay;
     }
 
-    // void MenuButtonClick(ClickEvent evt)
-    // {
-    //     menuRoot.style.display = menuRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
-    // }
+    void MenuButtonClick(ClickEvent evt)
+    {
+        menuRoot.style.display = menuRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
+    }
 
     void SettingsButtonClick(ClickEvent evt)
     {
@@ -145,14 +105,7 @@ public class HUDButtons : MonoBehaviour
 
     void TasksButtonClick(ClickEvent evt)
     {
-        if (tasksRoot.style.display == DisplayStyle.Flex) 
-        {
-            tasksRoot.style.display = DisplayStyle.None;
-        }
-        else 
-        {
-            tasksRoot.style.display = DisplayStyle.Flex;
-        }
+        tasksRoot.style.display = tasksRoot.style.display == DisplayStyle.Flex ? DisplayStyle.None : DisplayStyle.Flex;
     }
 
     public void EnableHUD()

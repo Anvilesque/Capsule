@@ -164,9 +164,9 @@ Joanne the Duck Lady: I'm grateful to spend time with my loving family, to be ab
 <<if GetNPCDialogueNumber("joanne") is 3>>
 Joanne the Duck Lady: I hope you're not working too hard this Thanksgiving.
 Joanne the Duck Lady: Talk to your family and friends! You can do a little reflection, while you're at it.
-Joanne the Duck Lady: What are you grateful for?
+Joanne the Duck Lady: What are you thankful for?
 <<setNextDialogueFor "Dialogue System" "joanne">>
-<<openCapsuleResponse "Dialogue System" "joanne" "What are you grateful for?">>
+<<openCapsuleResponse "Dialogue System" "joanne" "What are you thankful for?">>
 <<stop>>
 <<endif>>
 

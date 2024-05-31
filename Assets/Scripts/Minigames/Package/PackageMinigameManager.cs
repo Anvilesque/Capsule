@@ -15,6 +15,8 @@ public class PackageMinigameManager : MonoBehaviour
     {
         taskManager = FindObjectOfType<TaskManager>();
         StartCoroutine("SpawnObjects");
+        int newBalance = FindObjectOfType<SaveManager>().myData.balance;
+        balanceText.text = $"Balance: {newBalance}";
     }
 
     IEnumerator SpawnObjects()
@@ -31,6 +33,7 @@ public class PackageMinigameManager : MonoBehaviour
 
     public void UpdateBalanceText()
     {
-        balanceText.SetText($"Balance: {FindObjectOfType<SaveManager>().myData.balance}");
+        int newBalance = FindObjectOfType<SaveManager>().myData.balance;
+        balanceText.text = $"Balance: {newBalance}";
     }
 }
